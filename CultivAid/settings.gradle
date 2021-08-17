@@ -1,0 +1,3 @@
+rootProject.name = 'CultivAid'
+
+includeFlat 'JPACultivAid'
