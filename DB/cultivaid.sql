@@ -107,9 +107,9 @@ CREATE TABLE IF NOT EXISTS `garden_item` (
   `variety` VARCHAR(45) NULL,
   `pesticides` TINYINT NULL,
   `fertilizers` TINYINT NULL,
+  `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` INT NOT NULL,
   `produce_id` INT NOT NULL,
-  `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_garden_item_user1_idx` (`user_id` ASC),
   INDEX `fk_garden_item_produce1_idx` (`produce_id` ASC),
@@ -162,13 +162,13 @@ CREATE TABLE IF NOT EXISTS `exchange_item` (
   `garden_item_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_exchange_exchange_event1_idx` (`exchange_id` ASC),
-  INDEX `fk_exchange_garden_item1_idx` (`garden_item_id` ASC),
+  INDEX `fk_exchange_item_garden_item1_idx` (`garden_item_id` ASC),
   CONSTRAINT `fk_exchange_exchange_event1`
     FOREIGN KEY (`exchange_id`)
     REFERENCES `exchange` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_exchange_garden_item1`
+  CONSTRAINT `fk_exchange_item_garden_item1`
     FOREIGN KEY (`garden_item_id`)
     REFERENCES `garden_item` (`id`)
     ON DELETE NO ACTION
@@ -177,11 +177,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `desired_produce`
+-- Table `wishlist_produce`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `desired_produce` ;
+DROP TABLE IF EXISTS `wishlist_produce` ;
 
-CREATE TABLE IF NOT EXISTS `desired_produce` (
+CREATE TABLE IF NOT EXISTS `wishlist_produce` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `active` TINYINT NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -238,17 +238,10 @@ DROP TABLE IF EXISTS `exchange_image` ;
 
 CREATE TABLE IF NOT EXISTS `exchange_image` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `image_url` LONGBLOB NULL,
-  `user_id` INT NOT NULL,
+  `image_url` LONGTEXT NULL,
   `exchange_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_image_user1_idx` (`user_id` ASC),
   INDEX `fk_image_exchange1_idx` (`exchange_id` ASC),
-  CONSTRAINT `fk_image_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_image_exchange1`
     FOREIGN KEY (`exchange_id`)
     REFERENCES `exchange` (`id`)
@@ -306,7 +299,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (1, '1234 admin drive', NULL, 'Colorado Springs', 'CO', '80903');
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (1, '1234 admin drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (2, '1234 admin drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
 
 COMMIT;
 
@@ -316,7 +310,99 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `enabled`, `role`, `image_url`, `create_date`, `address_id`) VALUES (1, 'admin1', NULL, NULL, NULL, NULL, NULL, 1, 'admin', NULL, NULL, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `enabled`, `role`, `image_url`, `create_date`, `address_id`) VALUES (1, 'admin1', NULL, 'Bob', 'Smith', 'bobsmith@example.com', '1234567890', 1, 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `enabled`, `role`, `image_url`, `create_date`, `address_id`) VALUES (2, 'admin2', NULL, 'Jane', 'Smith', 'janesmith@example.com', '1234567891', 1, 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `category`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `category` (`id`, `name`) VALUES (1, 'Vegetable');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `produce`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `category_id`) VALUES (1, 'Carrot', 2, 'https://burea-uinsurance.com/en/wp-content/uploads/2019/11/how-much-does-a-medium-sized-carrot-weigh.jpg', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `garden_item`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `user_id`, `produce_id`) VALUES (1, 'Some delicious carrots.', 'Fast', '2021-08-17', 15, 'baby', 0, 0, '2021-08-17', 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `exchange`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `buyer_id`) VALUES (1, '2021-08-17', 5, 'Fricken\' amazing carrots!', 1, 1, '2021-08-17', 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `exchange_item`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`) VALUES (1, 10, 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `wishlist_produce`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `wishlist_produce` (`id`, `active`, `create_date`, `user_id`, `produce_id`) VALUES (1, 1, '2021-08-17', 1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `message`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `message` (`id`, `content`, `create_time`, `viewed`, `sender_id`, `reciever_id`) VALUES (1, 'Hello CultivAid!', '2021-08-17', 1, 1, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `exchange_image`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `exchange_image` (`id`, `image_url`, `exchange_id`) VALUES (1, 'https://burea-uinsurance.com/en/wp-content/uploads/2019/11/how-much-does-a-medium-sized-carrot-weigh.jpg', 1);
+INSERT INTO `exchange_image` (`id`, `image_url`, `exchange_id`) VALUES (2, 'https://burea-uinsurance.com/en/wp-content/uploads/2019/11/how-much-does-a-medium-sized-carrot-weigh.jpg', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `garden_item_comment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `cultivaiddb`;
+INSERT INTO `garden_item_comment` (`id`, `create_date`, `content`, `sender_id`, `garden_item_id`, `in_reply_to_id`) VALUES (1, '2021-08-17', 'Wow these carrots look great.', 2, 1, 1);
 
 COMMIT;
 
