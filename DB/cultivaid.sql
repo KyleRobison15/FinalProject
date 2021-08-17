@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` VARCHAR(25) NULL,
   `image_url` VARCHAR(2000) NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `address_id` INT NOT NULL,
+  `address_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_address_idx` (`address_id` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),

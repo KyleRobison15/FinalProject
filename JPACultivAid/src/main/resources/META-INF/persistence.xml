@@ -6,6 +6,7 @@
     
   		  <!-- list entities here -->
  
+		<class>com.skilldistillery.cultivaid.entities.Address</class>
 		<class>com.skilldistillery.cultivaid.entities.User</class>
 		
 		<properties>		
