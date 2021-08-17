@@ -1,5 +1,7 @@
 package com.skilldistillery.cultivaid.controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,9 @@ public class UserController {
 	private UserService userSvc;
 
 	@GetMapping("users/{username}")
-	public User getUserByUsername(@PathVariable String username, HttpServletResponse res) {
+	public User getUserByUsername(@PathVariable String username, HttpServletResponse res, Principal principal) {
 		
-		User user = userSvc.findByUsername(username);
+		User user = userSvc.findByUsername(principal.getName());
 		
 		return user;
 	}
