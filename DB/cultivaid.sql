@@ -402,7 +402,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `garden_item_comment` (`id`, `create_date`, `content`, `sender_id`, `garden_item_id`, `in_reply_to_id`) VALUES (1, '2021-08-17', 'Wow these carrots look great.', 2, 1, 1);
+INSERT INTO `garden_item_comment` (`id`, `create_date`, `content`, `sender_id`, `garden_item_id`, `in_reply_to_id`) VALUES (1, '2021-08-17', 'Wow these carrots look great.', 2, 1, NULL);
+INSERT INTO `garden_item_comment` (`id`, `create_date`, `content`, `sender_id`, `garden_item_id`, `in_reply_to_id`) VALUES (2, '2021-08-17', 'This is a reply', 1, 1, 1);
+INSERT INTO `garden_item_comment` (`id`, `create_date`, `content`, `sender_id`, `garden_item_id`, `in_reply_to_id`) VALUES (3, '2021-08-17', 'a reply to the reply', 2, 1, 1);
 
 COMMIT;
 

@@ -1,7 +1,9 @@
 package com.skilldistillery.cultivaid.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -48,7 +50,45 @@ class UserTest {
 	void test1() {
 		assertNotNull(user);
 		assertEquals("admin1", user.getUsername());
-
+		
 	}
-
+	
+	// Tested with user id# 2 & additional garden item comments as described in GardenItemCommentTest
+	@Test
+	@DisplayName("TEST: One User to Many GardenItemComments Mapping")
+	void test2() {
+		User user2 = em.find(User.class, 2);
+		assertEquals("admin2", user2.getUsername());
+		assertNotNull(user2.getGardenItemComments());
+		assertEquals(2, user2.getGardenItemComments().size());
+	}
+	
+	@Test
+	@DisplayName("TEST: Add/Remove GardenItemComments")
+	void test3() {
+		assertNotNull(user);
+		GardenItemComment gic = new GardenItemComment();
+		user.addGardenItemComment(gic);
+		assertTrue(user.getGardenItemComments().contains(gic));
+		user.removeGardenItemComment(gic);
+		assertFalse(user.getGardenItemComments().contains(gic));
+	}
+	
+	@Test
+	@DisplayName("TEST: One User to Many GardenItem Mapping")
+	void test4() {
+		assertNotNull(user.getGardenItems());
+		assertEquals("Some delicious carrots.", user.getGardenItems().get(0).getDescription());
+	}
+	
+	@Test
+	@DisplayName("TEST: Add/Remove GardenItem")
+	void test5() {
+		assertNotNull(user);
+		GardenItem gi = new GardenItem();
+		user.addGardenItem(gi);
+		assertTrue(user.getGardenItems().contains(gi));
+		user.removeGardenItem(gi);
+		assertFalse(user.getGardenItems().contains(gi));
+	}
 }
