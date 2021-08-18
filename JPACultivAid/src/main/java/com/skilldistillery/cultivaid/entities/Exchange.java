@@ -1,6 +1,7 @@
 package com.skilldistillery.cultivaid.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Exchange {
@@ -38,6 +40,10 @@ public class Exchange {
 	@JoinColumn(name="buyer_id")
 	private User buyer;
 	
+	@OneToMany(mappedBy="exchange")
+	private List<ExchangeItem> exchangeItems; 
+	
+
 	//no-arg constructor
 	public Exchange() {}
 
@@ -131,6 +137,15 @@ public class Exchange {
 	}
 
 
+	public List<ExchangeItem> getExchangeItems() {
+		return exchangeItems;
+	}
+	
+	
+	public void setExchangeItems(List<ExchangeItem> exchangeItems) {
+		this.exchangeItems = exchangeItems;
+	}
+	
 	@Override
 	public String toString() {
 		return "Exchange [id=" + id + ", rating=" + rating + ", active=" + active + ", buyerComment=" + buyerComment
