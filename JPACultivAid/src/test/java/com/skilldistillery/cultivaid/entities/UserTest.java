@@ -50,7 +50,7 @@ class UserTest {
 	void test1() {
 		assertNotNull(user);
 		assertEquals("admin1", user.getUsername());
-
+		
 	}
 	
 	// Tested with user id# 2 & additional garden item comments as described in GardenItemCommentTest
