@@ -8,6 +8,9 @@
  
 		<class>com.skilldistillery.cultivaid.entities.Address</class>
 		<class>com.skilldistillery.cultivaid.entities.User</class>
+		<class>com.skilldistillery.cultivaid.entities.GardenItem</class>
+		<class>com.skilldistillery.cultivaid.entities.GardenItemComment</class>
+		<class>com.skilldistillery.cultivaid.entities.ExchangeImage</class>
 		
 		<properties>		
  			<property name="javax.persistence.jdbc.url"
