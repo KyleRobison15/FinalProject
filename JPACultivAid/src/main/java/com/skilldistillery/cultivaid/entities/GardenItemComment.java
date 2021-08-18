@@ -45,6 +45,10 @@ public class GardenItemComment {
 	@JsonIgnore
 	@OneToMany(mappedBy = "inReplyToComment")
 	private List<GardenItemComment> replies;
+	
+	@ManyToOne
+	@JoinColumn(name = "sender_id")
+	private User leftByUser;
 
 //////////////////////////CONSTRUCTORS //////////////////////////////
 
@@ -118,7 +122,16 @@ public class GardenItemComment {
 		}
 	}
 
+	public User getLeftByUser() {
+		return leftByUser;
+	}
+	
+	public void setLeftByUser(User leftByUser) {
+		this.leftByUser = leftByUser;
+	}
+	
 //////////////////////////TO STRING //////////////////////////////
+
 
 	@Override
 	public String toString() {

@@ -86,4 +86,11 @@ class GardenItemCommentTest {
 		assertEquals(1, gic2.getInReplyToComment().getId());
 		assertEquals("Wow these carrots look great.", gic2.getInReplyToComment().getContent());
 	}
+	
+	@Test
+	@DisplayName("TEST: Many GardenItemComments to One User Mapping")
+	void test5() {
+		assertNotNull(gic);
+		assertEquals("admin2", gic.getLeftByUser().getUsername());
+	}
 }
