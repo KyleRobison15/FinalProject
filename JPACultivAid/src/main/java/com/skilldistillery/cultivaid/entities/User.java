@@ -55,9 +55,11 @@ public class User {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="sendingUser")
 	private List<Message> sentMessages;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="receivingUser")
 	private List<Message> receivedMessages;
 	
@@ -68,6 +70,14 @@ public class User {
 	@JsonIgnore
 	@OneToMany (mappedBy="user")
 	private List<GardenItem> gardenItems;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="buyer")
+	private List<Exchange> exchanges;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private List<WishlistProduce> wishListProduce;
 	
 	
 ////////////////////////// CONSTRUCTORS //////////////////////////////
@@ -236,6 +246,21 @@ public class User {
 		}
 	}
 
+	public List<Exchange> getExchanges() {
+		return exchanges;
+	}
+
+	public void setExchanges(List<Exchange> exchanges) {
+		this.exchanges = exchanges;
+	}
+
+	public List<WishlistProduce> getWishListProduce() {
+		return wishListProduce;
+	}
+
+	public void setWishListProduce(List<WishlistProduce> wishListProduce) {
+		this.wishListProduce = wishListProduce;
+	}
 
 	@Override
 	public String toString() {

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Exchange {
@@ -32,9 +34,9 @@ public class Exchange {
 	@Column(name="create_date")
 	private LocalDateTime createDate;
 	
-	
-	//buyer_id
-	
+	@ManyToOne
+	@JoinColumn(name="buyer_id")
+	private User buyer;
 	
 	//no-arg constructor
 	public Exchange() {}
@@ -117,11 +119,49 @@ public class Exchange {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	
+	public User getBuyer() {
+		return buyer;
+	}
+
+
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Exchange [id=" + id + ", rating=" + rating + ", buyerComment=" + buyerComment + ", complete=" + complete
-				+ ", accepted=" + accepted + ", exchangeDate=" + exchangeDate + ", createDate=" + createDate + "]";
+		return "Exchange [id=" + id + ", rating=" + rating + ", active=" + active + ", buyerComment=" + buyerComment
+				+ ", complete=" + complete + ", accepted=" + accepted + ", exchangeDate=" + exchangeDate
+				+ ", createDate=" + createDate + ", buyer=" + buyer + "]";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Exchange other = (Exchange) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
+	
+
 }

@@ -48,6 +48,7 @@ class ExchangeTest {
 		assertNotNull(exchange);
 		assertEquals("Fricken' amazing carrots!", exchange.getBuyerComment());
 		assertEquals(5, exchange.getRating());
+		assertEquals("Jane", exchange.getBuyer().getFirstName());
 	}
 
 }

@@ -111,12 +111,29 @@ class UserTest {
 	void test7() {
 		User user2 = em.find(User.class, 2);
 		assertNotNull(user);
-		assertEquals("Hello CultivAid!", user.getSentMessages().get(0).getContent());
-		assertEquals("Hello CultivAid!", user2.getReceivedMessages().get(0).getContent());
+		assertEquals("Hello CultivAid!", user2.getSentMessages().get(0).getContent());
+		assertEquals("Hello CultivAid!", user.getReceivedMessages().get(0).getContent());
 		
-		assertEquals(2021, user.getSentMessages().get(0).getCreateTime().getYear());
-		
-
+		assertEquals(2021, user2.getSentMessages().get(0).getCreateTime().getYear());
 		
 	}
+	
+	@Test
+	@DisplayName("TEST: User Exchange Mappings")
+	void test8() {
+		User user2 = em.find(User.class, 2);
+		assertNotNull(user);
+		assertEquals(1, user2.getExchanges().size());
+		
+	}
+	
+	@Test
+	@DisplayName("TEST: User WishListProduce Mappings")
+	void test9() {
+		assertNotNull(user);
+		assertEquals(1, user.getWishListProduce().size());
+		
+	}
+	
+	
 }
