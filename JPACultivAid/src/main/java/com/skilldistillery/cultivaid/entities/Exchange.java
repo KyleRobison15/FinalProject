@@ -43,6 +43,7 @@ public class Exchange {
 	@JoinColumn(name="buyer_id")
 	private User buyer;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeItem> exchangeItems; 
 	
@@ -124,7 +125,7 @@ public class Exchange {
 		this.createDate = createDate;
 	}
 
-	public boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 	
