@@ -1,7 +1,6 @@
 package com.skilldistillery.cultivaid.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,11 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UserTest {
+class ExchangeItemTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private User user; //Entity under test
+	private ExchangeItem eItem;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,21 +33,20 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager(); // Before each test, get an EM
-		user = em.find(User.class, 1); // Before each test get the User entity to test (test subject)
+		eItem = em.find(ExchangeItem.class, 1); // Before each test get the User entity to test (test subject)
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close(); // After each test close the EM
-		user = null; // After each test set user back to null to prevent cross contamination between tests
+		eItem = null; // After each test set user back to null to prevent cross contamination between tests
 	}
 	
 	@Test
-	@DisplayName("TEST: User Mappings")
+	@DisplayName("Test Exchange Mapping")
 	void test1() {
-		assertNotNull(user);
-		assertEquals("admin1", user.getUsername());
-		
+		assertNotNull(eItem);
+		assertEquals(10, eItem.getQuantity());
 	}
 
 }
