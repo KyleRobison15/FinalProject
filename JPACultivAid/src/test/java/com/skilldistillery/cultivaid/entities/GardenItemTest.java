@@ -89,4 +89,12 @@ class GardenItemTest {
 		assertNotNull(gi);
 		assertEquals("admin1", gi.getUser().getUsername());
 	}
+	
+	@Test
+	@DisplayName("Test GardenItem to ExchangeItem Mapping")
+	void test5() {
+		assertNotNull(gi.getExchangeItems().size());
+		assertTrue(gi.getExchangeItems().size() > 0); 
+		assertEquals(1, gi.getExchangeItems().size());
+	}
 }
