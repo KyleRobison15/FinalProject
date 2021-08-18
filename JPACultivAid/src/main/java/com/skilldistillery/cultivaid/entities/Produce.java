@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Produce {
 	
@@ -33,6 +35,7 @@ public class Produce {
 	@JoinColumn(name="category_id")
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "produce")
 	private List<WishlistProduce> wishlistProduce;
 	
