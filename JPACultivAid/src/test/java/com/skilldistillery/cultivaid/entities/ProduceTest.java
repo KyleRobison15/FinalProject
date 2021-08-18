@@ -58,5 +58,13 @@ class ProduceTest {
 		assertNotNull(produce.getCategory());
 		assertEquals("Vegetable", produce.getCategory().getName());
 	}
+	
+	@Test
+	@DisplayName("TEST: Produce to WishlistProduce relational mapping")
+	void test3() {
+		assertNotNull(produce.getWishlistProduce());
+		assertTrue(produce.getWishlistProduce().size() > 0);
+		assertEquals("Bob", produce.getWishlistProduce().get(0).getUser().getFirstName());
+	}
 
 }

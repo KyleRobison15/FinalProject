@@ -1,5 +1,7 @@
 package com.skilldistillery.cultivaid.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Produce {
@@ -29,6 +32,9 @@ public class Produce {
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	private Category category;
+	
+	@OneToMany(mappedBy = "produce")
+	private List<WishlistProduce> wishlistProduce;
 	
 	////////////
 	// Methods
@@ -71,6 +77,42 @@ public class Produce {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<WishlistProduce> getWishlistProduce() {
+		return wishlistProduce;
+	}
+
+	public void setWishlistProduce(List<WishlistProduce> wishlistProduce) {
+		this.wishlistProduce = wishlistProduce;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produce other = (Produce) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Produce [id=" + id + ", name=" + name + ", averageItemWeight=" + averageItemWeight + ", imageUrl="
+				+ imageUrl + ", category=" + category + ", wishlistProduce=" + wishlistProduce + "]";
 	}
 
 }
