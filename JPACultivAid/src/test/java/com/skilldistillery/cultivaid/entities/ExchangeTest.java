@@ -58,5 +58,23 @@ class ExchangeTest {
 		assertTrue(exchange.getExchangeItems().size() > 0); 
 		assertEquals(1, exchange.getExchangeItems().size());
 	}
+	
+	@Test
+	@DisplayName("Test One Exchange to Many ExchangeImage Mapping")
+	void test3() {
+		assertNotNull(exchange.getExchangeImages().size());
+		assertTrue(exchange.getExchangeImages().size() > 0); 
+		assertEquals(2, exchange.getExchangeImages().size());
+	}
+	
+	@Test
+	@DisplayName("TEST: Add/Remove ExchangeImage to Exchange")
+	void test4() {
+		ExchangeImage image = new ExchangeImage();
+		exchange.addExchangeImage(image);
+		assertTrue(exchange.getExchangeImages().contains(image));
+		exchange.removeExchangeImage(image);
+		assertFalse(exchange.getExchangeImages().contains(image));
+	}
 
 }

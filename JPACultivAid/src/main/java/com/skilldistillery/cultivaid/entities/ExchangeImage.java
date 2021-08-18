@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,10 @@ public class ExchangeImage {
 	private String imageUrl;
 	
 	private boolean active;
+	
+	@ManyToOne
+	@JoinColumn (name="exchange_id")
+	private Exchange exchange;
 	
 	
 //////////////////////////CONSTRUCTORS //////////////////////////////
@@ -57,15 +63,24 @@ public class ExchangeImage {
 		this.active = active;
 	}
 	
+	public Exchange getExchange() {
+		return exchange;
+	}
+	
+	
+	public void setExchange(Exchange exchange) {
+		this.exchange = exchange;
+	}
+	
+	
 //////////////////////////TO STRING //////////////////////////////
-
 
 
 	@Override
 	public String toString() {
-		return "ExchangeImage [id=" + id + ", imageUrl=" + imageUrl + ", active=" + active + "]";
+		return "ExchangeImage [id=" + id + ", imageUrl=" + imageUrl + ", active=" + active + ", exchange=" + exchange
+				+ "]";
 	}
-
 
 	
 //////////////////////////HASHCODE EQUALS //////////////////////////////
@@ -77,7 +92,6 @@ public class ExchangeImage {
 		result = prime * result + id;
 		return result;
 	}
-
 
 
 	@Override

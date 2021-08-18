@@ -1,6 +1,7 @@
 package com.skilldistillery.cultivaid.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Exchange {
@@ -42,6 +45,10 @@ public class Exchange {
 	
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeItem> exchangeItems; 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="exchange")
+	private List<ExchangeImage> exchangeImages;
 	
 
 	//no-arg constructor
@@ -146,6 +153,33 @@ public class Exchange {
 		this.exchangeItems = exchangeItems;
 	}
 	
+	
+	public List<ExchangeImage> getExchangeImages() {
+		return exchangeImages;
+	}
+
+
+	public void setExchangeImages(List<ExchangeImage> exchangeImages) {
+		this.exchangeImages = exchangeImages;
+	}
+	
+	public List<ExchangeImage> addExchangeImage(ExchangeImage image) {
+		if (this.exchangeImages == null || this.exchangeImages.size() == 0) {
+			this.exchangeImages = new ArrayList<>();
+		}
+		if (!this.exchangeImages.contains(image)) {
+			this.exchangeImages.add(image);
+		}
+		return this.exchangeImages;		
+	}
+	
+	public void removeExchangeImage(ExchangeImage image) {
+		if (this.exchangeImages != null && this.exchangeImages.contains(image)) {
+			this.exchangeImages.remove(image);
+		}
+	}
+
+
 	@Override
 	public String toString() {
 		return "Exchange [id=" + id + ", rating=" + rating + ", active=" + active + ", buyerComment=" + buyerComment
