@@ -51,5 +51,12 @@ class ExchangeImageTest {
 				exImg.getImageUrl());
 
 	}
+	
+	@Test
+	@DisplayName("TEST: Many ExchangeImages to One Exchange Mapping")
+	void test2() {
+		assertNotNull(exImg);
+		assertEquals("Fricken' amazing carrots!", exImg.getExchange().getBuyerComment());
+	}
 
 }
