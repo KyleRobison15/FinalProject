@@ -1,14 +1,19 @@
 package com.skilldistillery.cultivaid.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -43,6 +48,14 @@ public class User {
 	@Column(name = "create_date")
 	@CreationTimestamp
 	private LocalDateTime createDate;
+	
+	@JsonIgnore
+	@OneToMany (mappedBy="leftByUser")
+	private List<GardenItemComment> gardenItemComments;
+	
+	@JsonIgnore
+	@OneToMany (mappedBy="user")
+	private List<GardenItem> gardenItems;
 	
 	
 ////////////////////////// CONSTRUCTORS //////////////////////////////
@@ -149,6 +162,55 @@ public class User {
 		this.createDate = createDate;
 	}
 	
+	public List<GardenItemComment> getGardenItemComments() {
+		return gardenItemComments;
+	}
+
+	public void setGardenItemComments(List<GardenItemComment> gardenItemComments) {
+		this.gardenItemComments = gardenItemComments;
+	}
+	
+	public List<GardenItemComment> addGardenItemComment(GardenItemComment comment) {
+		if (this.gardenItemComments == null || this.gardenItemComments.size() == 0) {
+			this.gardenItemComments = new ArrayList<>();
+		}
+		if (!this.gardenItemComments.contains(comment)) {
+			this.gardenItemComments.add(comment);
+		}
+		return this.gardenItemComments;
+	}
+
+	public void removeGardenItemComment(GardenItemComment comment) {
+		if (this.gardenItemComments != null && this.gardenItemComments.contains(comment)) {
+			this.gardenItemComments.remove(comment);
+		}
+	}
+
+	public List<GardenItem> getGardenItems() {
+		return gardenItems;
+	}
+
+	public void setGardenItems(List<GardenItem> gardenItems) {
+		this.gardenItems = gardenItems;
+	}
+	
+	public List<GardenItem> addGardenItem(GardenItem item) {
+		if (this.gardenItems == null || this.gardenItems.size() == 0) {
+			this.gardenItems = new ArrayList<>();
+		}
+		if (!this.gardenItems.contains(item)) {
+			this.gardenItems.add(item);
+		}
+		return this.gardenItems;
+	}
+
+	public void removeGardenItem(GardenItem item) {
+		if (this.gardenItems != null && this.gardenItems.contains(item)) {
+			this.gardenItems.remove(item);
+		}
+	}
+
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName

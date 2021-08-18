@@ -61,13 +61,14 @@ class GardenItemTest {
 		assertEquals(LocalDateTime.of(2021, 8, 17, 0, 0), gi.getCreatedDate());
 	}
 	
+	
+	// Tested w/ additional garden item comments as described in GardenItemCommentTest
 	@Test
 	@DisplayName("TEST: One GardenItem to Many GardenItemComment Mappings")
 	void test2() {
 		assertNotNull(gi);
-		assertTrue(gi.getGardenItemComments().size() > 0);
-		assertEquals("Wow these carrots look great.",
-				gi.getGardenItemComments().get(0).getContent());
+		assertEquals(3, gi.getGardenItemComments().size());
+
 	}
 	
 	@Test
@@ -80,4 +81,10 @@ class GardenItemTest {
 		assertFalse(gi.getGardenItemComments().contains(gic));
 	}
 
+	@Test
+	@DisplayName("TEST: Many GardenItems to One User Mapping")
+	void test4() {
+		assertNotNull(gi);
+		assertEquals("admin1", gi.getUser().getUsername());
+	}
 }
