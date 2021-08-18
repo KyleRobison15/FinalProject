@@ -54,7 +54,7 @@ class UserTest {
 		assertEquals("Smith", user.getLastName());
 		assertEquals("bobsmith@example.com", user.getEmail());
 		assertEquals("1234567890", user.getPhone());
-		assertTrue(user.getActive());
+		assertTrue(user.isActive());
 		assertEquals("admin", user.getRole());
 		assertEquals("https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg", user.getImageUrl());
 	}

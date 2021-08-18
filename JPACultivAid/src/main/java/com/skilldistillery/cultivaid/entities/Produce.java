@@ -1,5 +1,6 @@
 package com.skilldistillery.cultivaid.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produce {
@@ -33,8 +36,15 @@ public class Produce {
 	@JoinColumn(name="category_id")
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "produce")
 	private List<WishlistProduce> wishlistProduce;
+	
+	@JsonIgnore
+	@OneToMany (mappedBy="produce")
+	private List<GardenItem> gardenItems;
+	
+	private boolean active;
 	
 	////////////
 	// Methods
@@ -87,6 +97,38 @@ public class Produce {
 		this.wishlistProduce = wishlistProduce;
 	}
 
+	public List<GardenItem> getGardenItems() {
+		return gardenItems;
+	}
+
+	public void setGardenItems(List<GardenItem> gardenItems) {
+		this.gardenItems = gardenItems;
+	}
+	
+	public List<GardenItem> addGardenItem(GardenItem gi) {
+		if (this.gardenItems == null || this.gardenItems.size() == 0) {
+			this.gardenItems = new ArrayList<>();
+		}
+		if (!this.gardenItems.contains(gi)) {
+			this.gardenItems.add(gi);
+		}
+		return this.gardenItems;		
+	}
+	
+	public void removeGardenItem(GardenItem gi) {
+		if (this.gardenItems != null && this.gardenItems.contains(gi)) {
+			this.gardenItems.remove(gi);
+		}
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -112,7 +154,7 @@ public class Produce {
 	@Override
 	public String toString() {
 		return "Produce [id=" + id + ", name=" + name + ", averageItemWeight=" + averageItemWeight + ", imageUrl="
-				+ imageUrl + ", category=" + category + "]";
+				+ imageUrl + ", category=" + category + ", isActive=" + active + "]";
 	}
 
 }

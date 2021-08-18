@@ -85,7 +85,7 @@ public class Message {
 		this.receivingUser = receivingUser;
 	}
 
-	public boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
@@ -95,7 +95,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", content=" + content + ", createTime=" + createTime + ", viewed=" + viewed + "]";
+		return "Message [id=" + id + ", content=" + content + ", createTime=" + createTime + ", viewed=" + viewed + ", isActive=" + active + "]";
 	}
 
 }

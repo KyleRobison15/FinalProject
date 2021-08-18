@@ -58,8 +58,13 @@ public class GardenItem {
 	
 	private boolean active;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="gardenItem")
 	private List<ExchangeItem> exchangeItems; 
+	
+	@ManyToOne
+	@JoinColumn (name = "produce_id")
+	private Produce produce;
 	
 //////////////////////////CONSTRUCTORS //////////////////////////////
 
@@ -231,11 +236,17 @@ public class GardenItem {
 		this.exchangeItems = exchangeItems;
 	}
 
+	public Produce getProduce() {
+		return produce;
+	}
+	
+	
+	public void setProduce(Produce produce) {
+		this.produce = produce;
+	}
+	
+	
 //////////////////////////TO STRING //////////////////////////////
-
-
-
-
 
 	@Override
 	public String toString() {
