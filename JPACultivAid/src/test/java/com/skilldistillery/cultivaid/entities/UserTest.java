@@ -102,7 +102,7 @@ class UserTest {
 	@DisplayName("TEST: User Address Mapping")
 	void test6() {
 		assertNotNull(user);
-		assertEquals("1234 admin drive", user.getAddress().getAddress());
+		assertEquals("1234 Admin Drive", user.getAddress().getAddress());
 		
 	}
 	
