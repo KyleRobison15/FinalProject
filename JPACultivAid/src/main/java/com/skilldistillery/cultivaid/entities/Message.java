@@ -29,7 +29,7 @@ public class Message {
 	private User sendingUser;
 	
 	@ManyToOne
-	@JoinColumn(name="receiver_id")
+	@JoinColumn(name="reciever_id")
 	private User receivingUser;
 	
 	private boolean active; 
