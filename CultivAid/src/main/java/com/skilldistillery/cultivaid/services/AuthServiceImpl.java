@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
 		user.setPassword(encoder.encode(user.getPassword())); // Take the clear text password from the front end. Encode it. Replace it with encoded version.
 		
 //		set the enabled field of the object to true.
-		user.setEnabled(true);
+		user.setActive(true);
 		
 //		set the role field of the object to "standard".
 		user.setRole("standard");
