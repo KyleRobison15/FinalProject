@@ -29,8 +29,10 @@ public class Message {
 	private User sendingUser;
 	
 	@ManyToOne
-	@JoinColumn(name="reciever_id")
+	@JoinColumn(name="receiver_id")
 	private User receivingUser;
+	
+	private boolean active; 
 	
 	//no-arg constructor
 	public Message() {}
@@ -65,6 +67,30 @@ public class Message {
 
 	public void setViewed(boolean viewed) {
 		this.viewed = viewed;
+	}
+
+	public User getSendingUser() {
+		return sendingUser;
+	}
+
+	public void setSendingUser(User sendingUser) {
+		this.sendingUser = sendingUser;
+	}
+
+	public User getReceivingUser() {
+		return receivingUser;
+	}
+
+	public void setReceivingUser(User receivingUser) {
+		this.receivingUser = receivingUser;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override

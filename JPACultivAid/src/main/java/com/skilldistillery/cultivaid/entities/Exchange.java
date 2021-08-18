@@ -17,6 +17,8 @@ public class Exchange {
 	
 	private int rating; 
 	
+	private boolean active;
+	
 	@Column(name="buyer_comment")
 	private String buyerComment;
 	
@@ -107,6 +109,14 @@ public class Exchange {
 		this.createDate = createDate;
 	}
 
+	public boolean getActive() {
+		return active;
+	}
+	
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	@Override
 	public String toString() {

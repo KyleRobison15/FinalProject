@@ -16,6 +16,8 @@ public class ExchangeItem {
 	
 	private int quantity; 
 	
+	private boolean active;
+	
 	//exchange_id
 	
 	//garden_item_id
@@ -38,6 +40,14 @@ public class ExchangeItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override
