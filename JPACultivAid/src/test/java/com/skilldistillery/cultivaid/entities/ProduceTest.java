@@ -13,40 +13,50 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class AddressTest {
-
+class ProduceTest {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Address address; //Entity under test
+	private Produce produce;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("JPACultivAid"); // Before all tests - set up an EMF
+		emf = Persistence.createEntityManagerFactory("JPACultivAid");
 		
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		emf.close(); // After all tests, close the EMF
+		emf.close(); 
 	}
 
 	@BeforeEach
 	void setUp() throws Exception {
-		em = emf.createEntityManager(); // Before each test, get an EM
-		address = em.find(Address.class, 1); // Before each test get the User entity to test (test subject)
+		em = emf.createEntityManager();
+		produce = em.find(Produce.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		em.close(); // After each test close the EM
-		address = null; // After each test set user back to null to prevent cross contamination between tests
+		em.close();
+		produce = null;
 	}
 	
 	@Test
-	@DisplayName("TEST: User Mappings")
+	@DisplayName("TEST: Produce Mappings")
 	void test1() {
-		assertNotNull(address);
-		assertEquals("1234 Admin drive", address.getAddress());
+		assertNotNull(produce);
+		assertEquals("Carrot", produce.getName());
+		assertEquals("https://burea-uinsurance.com/en/wp-content/uploads/2019/11/how-much-does-a-medium-sized-carrot-weigh.jpg",
+					 produce.getImageUrl());
+		assertEquals(2, produce.getAverageItemWeight());
+	}
+	
+	@Test
+	@DisplayName("TEST: Produce to Category relational mapping")
+	void test2() {
+		assertNotNull(produce.getCategory());
+		assertEquals("Vegetable", produce.getCategory().getName());
 	}
 
 }

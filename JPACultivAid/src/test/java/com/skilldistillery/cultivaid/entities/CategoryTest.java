@@ -13,40 +13,46 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class AddressTest {
+class CategoryTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Address address; //Entity under test
+	private Category category;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("JPACultivAid"); // Before all tests - set up an EMF
+		emf = Persistence.createEntityManagerFactory("JPACultivAid");
 		
 	}
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
-		emf.close(); // After all tests, close the EMF
+		emf.close(); 
 	}
 
 	@BeforeEach
 	void setUp() throws Exception {
-		em = emf.createEntityManager(); // Before each test, get an EM
-		address = em.find(Address.class, 1); // Before each test get the User entity to test (test subject)
+		em = emf.createEntityManager();
+		category = em.find(Category.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		em.close(); // After each test close the EM
-		address = null; // After each test set user back to null to prevent cross contamination between tests
+		em.close();
+		category = null;
 	}
 	
 	@Test
-	@DisplayName("TEST: User Mappings")
+	@DisplayName("TEST: Produce Mappings")
 	void test1() {
-		assertNotNull(address);
-		assertEquals("1234 Admin drive", address.getAddress());
+		assertNotNull(category);
+		assertEquals("Vegetable", category.getName());
 	}
-
+	
+	@Test
+	@DisplayName("TEST: Category to Produce relational mapping")
+	void test2() {
+		assertNotNull(category.getProduce());
+		assertTrue(category.getProduce().size() > 0);
+	}
 }
