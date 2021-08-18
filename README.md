@@ -7,7 +7,8 @@
 
 | HTTP Verb | URI                                 | Request Body                           | Response Body                        | Purpose                          |
 |-----------|-------------------------------------|----------------------------------------|--------------------------------------|----------------------------------|
-| GET       | `/api/gardenitems`                  |                                        | List of all garden item listings     | Get all garden item listings     |
+| GET       | `/gardenitems`                      |                                        | Garden items for non-authenticated   | Get all garden item listings     |
+| GET       | `/api/gardenitems`                  |                                        | Garden items for authenticated user  | Get all garden item listings     |
 | GET       | `/api/gardenitems/{distance}`       |                                        | Garden item listings for given distance | Get all listings for given distance|
 | POST      | `/api/gardenitems`                  | Representation of a garden item        | Representation of created garden item | Create a new garden item        |
 | PUT       | `/api/gardenitems`                  | Representation of a garden item        | Representation of updated garden item | Update a garden item            |
