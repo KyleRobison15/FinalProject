@@ -66,5 +66,24 @@ class ProduceTest {
 		assertTrue(produce.getWishlistProduce().size() > 0);
 		assertEquals("Bob", produce.getWishlistProduce().get(0).getUser().getFirstName());
 	}
+	
+	
+	@Test
+	@DisplayName("TEST: One Produce to Many GardenItem relational mapping")
+	void test4() {
+		assertNotNull(produce.getGardenItems());
+		assertTrue(produce.getGardenItems().size() > 0);
+		assertEquals("Some delicious carrots.", produce.getGardenItems().get(0).getDescription());
+	}
+	
+	@Test
+	@DisplayName("TEST: Add/Remove GardenItem to Produce")
+	void test5() {
+		GardenItem gi = new GardenItem();
+		produce.addGardenItem(gi);
+		assertTrue(produce.getGardenItems().contains(gi));
+		produce.removeGardenItem(gi);
+		assertFalse(produce.getGardenItems().contains(gi));
+	}
 
 }

@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -88,5 +86,12 @@ class GardenItemTest {
 	void test4() {
 		assertNotNull(gi);
 		assertEquals("admin1", gi.getUser().getUsername());
+	}
+	
+	@Test
+	@DisplayName("TEST: Many GardenItem to One Produce Mapping")
+	void test5() {
+		assertNotNull(gi);
+		assertEquals("Carrot", gi.getProduce().getName());
 	}
 }
