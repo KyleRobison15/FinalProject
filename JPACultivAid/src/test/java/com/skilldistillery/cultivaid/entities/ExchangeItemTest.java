@@ -43,10 +43,18 @@ class ExchangeItemTest {
 	}
 	
 	@Test
-	@DisplayName("Test Exchange Mapping")
+	@DisplayName("Test ExchangeItem Mapping")
 	void test1() {
 		assertNotNull(eItem);
 		assertEquals(10, eItem.getQuantity());
+	}
+	
+	@Test
+	@DisplayName("Test ExchangeItem to Exchange Mapping")
+	void test2() {
+		assertNotNull(eItem.getExchange());
+		assertEquals(1, eItem.getExchange().getId());
+		assertEquals("Fricken' amazing carrots!", eItem.getExchange().getBuyerComment());
 	}
 
 }

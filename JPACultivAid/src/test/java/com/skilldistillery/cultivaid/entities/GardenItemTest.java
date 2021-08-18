@@ -94,4 +94,12 @@ class GardenItemTest {
 		assertNotNull(gi);
 		assertEquals("Carrot", gi.getProduce().getName());
 	}
+
+	@Test	
+	@DisplayName("Test GardenItem to ExchangeItem Mapping")
+	void test6() {
+		assertNotNull(gi.getExchangeItems().size());
+		assertTrue(gi.getExchangeItems().size() > 0); 
+		assertEquals(1, gi.getExchangeItems().size());
+	}
 }

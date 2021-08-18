@@ -50,5 +50,13 @@ class ExchangeTest {
 		assertEquals(5, exchange.getRating());
 		assertEquals("Jane", exchange.getBuyer().getFirstName());
 	}
+	
+	@Test
+	@DisplayName("Test Exchange to ExchangeItem Mapping")
+	void test2() {
+		assertNotNull(exchange.getExchangeItems().size());
+		assertTrue(exchange.getExchangeItems().size() > 0); 
+		assertEquals(1, exchange.getExchangeItems().size());
+	}
 
 }

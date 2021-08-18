@@ -36,6 +36,7 @@ public class Produce {
 	@JoinColumn(name="category_id")
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "produce")
 	private List<WishlistProduce> wishlistProduce;
 	
