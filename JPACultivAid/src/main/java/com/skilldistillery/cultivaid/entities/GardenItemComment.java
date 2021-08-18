@@ -49,6 +49,8 @@ public class GardenItemComment {
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
 	private User leftByUser;
+	
+	private boolean active;
 
 //////////////////////////CONSTRUCTORS //////////////////////////////
 
@@ -130,13 +132,22 @@ public class GardenItemComment {
 		this.leftByUser = leftByUser;
 	}
 	
-//////////////////////////TO STRING //////////////////////////////
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	
+//////////////////////////TO STRING //////////////////////////////
 
 	@Override
 	public String toString() {
 		return "GardenItemComment [id=" + id + ", createdDate=" + createdDate + ", content=" + content + ", gardenItem="
-				+ gardenItem + "]";
+				+ gardenItem + ", isActive=" + active + "]";
 	}
 
 //////////////////////////HASHCODE EQUALS //////////////////////////////

@@ -40,7 +40,7 @@ public class User {
 	
 	private String phone;
 	
-	private Boolean enabled;
+	private Boolean active;
 	
 	private String role;
 	
@@ -132,12 +132,12 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public Boolean getActive() {
+		return active;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public String getRole() {
@@ -240,7 +240,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", phone=" + phone + ", enabled=" + enabled
+				+ ", lastName=" + lastName + ", email=" + email + ", phone=" + phone + ", active=" + active
 				+ ", role=" + role + ", imageUrl=" + imageUrl + ", createDate=" + createDate + "]";
 	}
 	

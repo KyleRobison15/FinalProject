@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Address {
@@ -22,12 +21,14 @@ public class Address {
 	
 	private String city;
 	
+	
 	@Column(name="state_abbreviation")
 	private String stateAbbr;
 	
 	@Column(name="postal_code")
 	private String postalCode;
 	
+	private Boolean active;
 
 ////////////////////////// CONSTRUCTORS //////////////////////////////
 	
@@ -83,10 +84,18 @@ public class Address {
 		this.postalCode = postalCode;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
 		return "Address [id=" + id + ", address=" + address + ", address2=" + address2 + ", city=" + city
-				+ ", stateAbbr=" + stateAbbr + ", postalCode=" + postalCode + "]";
+				+ ", stateAbbr=" + stateAbbr + ", postalCode=" + postalCode + ", active=" + active + "]";
 	}
 
 	@Override

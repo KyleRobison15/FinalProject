@@ -20,6 +20,8 @@ public class ExchangeImage {
 	@Column (name="image_url")
 	private String imageUrl;
 	
+	private boolean active;
+	
 	
 //////////////////////////CONSTRUCTORS //////////////////////////////
 
@@ -46,13 +48,24 @@ public class ExchangeImage {
 		this.imageUrl = imageUrl;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+	
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	
 //////////////////////////TO STRING //////////////////////////////
 
+
+
 	@Override
 	public String toString() {
-		return "ExchangeImage [id=" + id + ", imageUrl=" + imageUrl + "]";
+		return "ExchangeImage [id=" + id + ", imageUrl=" + imageUrl + ", active=" + active + "]";
 	}
+
 
 	
 //////////////////////////HASHCODE EQUALS //////////////////////////////
@@ -64,6 +77,8 @@ public class ExchangeImage {
 		result = prime * result + id;
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {

@@ -55,6 +55,8 @@ public class GardenItem {
 	@ManyToOne
 	@JoinColumn (name = "user_id")
 	private User user;
+	
+	private boolean active;
 
 	
 	
@@ -210,6 +212,16 @@ public class GardenItem {
 		this.user = user;
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
+	
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+
 //////////////////////////TO STRING //////////////////////////////
 
 
@@ -218,7 +230,7 @@ public class GardenItem {
 	public String toString() {
 		return "GardenItem [id=" + id + ", description=" + description + ", growMethod=" + growMethod
 				+ ", dateExpected=" + dateExpected + ", amount=" + amount + ", variety=" + variety + ", pesticides="
-				+ pesticides + ", fertilizers=" + fertilizers + ", createdDate=" + createdDate + "]";
+				+ pesticides + ", fertilizers=" + fertilizers + ", createdDate=" + createdDate + ", isActive=" + active + "]";
 	}
 
 //////////////////////////HASHCODE EQUALS //////////////////////////////
