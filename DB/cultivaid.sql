@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` VARCHAR(75) NULL,
   `state_abbreviation` VARCHAR(4) NULL,
   `postal_code` VARCHAR(45) NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` VARCHAR(25) NULL,
   `image_url` VARCHAR(2000) NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `address_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_address_idx` (`address_id` ASC),
@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS `category` ;
 CREATE TABLE IF NOT EXISTS `category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `produce` (
   `name` VARCHAR(75) NULL,
   `avg_item_weight` DOUBLE NULL,
   `image_url` VARCHAR(2000) NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_produce_category1_idx` (`category_id` ASC),
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `garden_item` (
   `pesticides` TINYINT NULL,
   `fertilizers` TINYINT NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `user_id` INT NOT NULL,
   `produce_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `exchange` (
   `complete` TINYINT NULL,
   `accepted` TINYINT NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `buyer_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_exchange_event_user1_idx` (`buyer_id` ASC),
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `exchange_item` (
   `quantity` SMALLINT NULL,
   `exchange_id` INT NOT NULL,
   `garden_item_id` INT NOT NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_exchange_exchange_event1_idx` (`exchange_id` ASC),
   INDEX `fk_exchange_item_garden_item1_idx` (`garden_item_id` ASC),
@@ -190,7 +190,7 @@ DROP TABLE IF EXISTS `wishlist_produce` ;
 CREATE TABLE IF NOT EXISTS `wishlist_produce` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `user_id` INT NOT NULL,
   `produce_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `content` TEXT NULL,
   `create_time` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `viewed` TINYINT NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `sender_id` INT NOT NULL,
   `reciever_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -246,7 +246,7 @@ DROP TABLE IF EXISTS `exchange_image` ;
 CREATE TABLE IF NOT EXISTS `exchange_image` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `image_url` LONGTEXT NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `exchange_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_image_exchange1_idx` (`exchange_id` ASC),
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `garden_item_comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `content` TEXT NULL,
-  `active` TINYINT NULL,
+  `active` TINYINT NOT NULL,
   `sender_id` INT NOT NULL,
   `garden_item_id` INT NOT NULL,
   `in_reply_to_id` INT NULL,
