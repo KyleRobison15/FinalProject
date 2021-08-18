@@ -46,11 +46,12 @@ class AddressTest {
 	@DisplayName("TEST: User Mappings")
 	void test1() {
 		assertNotNull(address);
-		assertEquals("1234 admin drive", address.getAddress());
+		assertEquals("1234 Admin Drive", address.getAddress());
 		assertEquals("Apt 204", address.getAddress2());
 		assertEquals("Colorado Springs", address.getCity());
 		assertEquals("CO", address.getStateAbbr());
 		assertEquals("80903", address.getPostalCode());
+
 	}
 
 }
