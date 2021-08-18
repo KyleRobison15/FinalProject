@@ -112,7 +112,7 @@ public class Produce {
 	@Override
 	public String toString() {
 		return "Produce [id=" + id + ", name=" + name + ", averageItemWeight=" + averageItemWeight + ", imageUrl="
-				+ imageUrl + ", category=" + category + ", wishlistProduce=" + wishlistProduce + "]";
+				+ imageUrl + ", category=" + category + "]";
 	}
 
 }
