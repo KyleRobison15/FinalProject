@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,9 +21,14 @@ public class ExchangeItem {
 	private boolean active;
 	
 	//exchange_id
+	@ManyToOne
+	@JoinColumn(name="exchange_id")
+	private Exchange exchange; 
 	
 	//garden_item_id
-	
+	@ManyToOne
+	@JoinColumn(name="garden_item_id")
+	private GardenItem gardenItem; 
 	
 	//no-arg constructor
 	public ExchangeItem() {}
@@ -48,6 +55,22 @@ public class ExchangeItem {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Exchange getExchange() {
+		return exchange;
+	}
+
+	public void setExchange(Exchange exchange) {
+		this.exchange = exchange;
+	}
+
+	public GardenItem getGardenItem() {
+		return gardenItem;
+	}
+
+	public void setGardenItem(GardenItem gardenItem) {
+		this.gardenItem = gardenItem;
 	}
 
 	@Override

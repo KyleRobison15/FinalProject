@@ -58,7 +58,8 @@ public class GardenItem {
 	
 	private boolean active;
 
-	
+	@OneToMany(mappedBy="gardenItem")
+	private List<ExchangeItem> exchangeItems; 
 	
 //////////////////////////CONSTRUCTORS //////////////////////////////
 
@@ -221,8 +222,18 @@ public class GardenItem {
 		this.active = active;
 	}
 
+	public List<ExchangeItem> getExchangeItems() {
+		return exchangeItems;
+	}
+	
+	
+	public void setExchangeItems(List<ExchangeItem> exchangeItems) {
+		this.exchangeItems = exchangeItems;
+	}
 
 //////////////////////////TO STRING //////////////////////////////
+
+
 
 
 
