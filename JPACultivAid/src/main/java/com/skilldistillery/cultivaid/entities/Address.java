@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address {
@@ -26,6 +27,7 @@ public class Address {
 	
 	@Column(name="postal_code")
 	private String postalCode;
+	
 
 ////////////////////////// CONSTRUCTORS //////////////////////////////
 	

@@ -50,10 +50,16 @@ class UserTest {
 	void test1() {
 		assertNotNull(user);
 		assertEquals("admin1", user.getUsername());
-		
+		assertEquals("Bob", user.getFirstName());
+		assertEquals("Smith", user.getLastName());
+		assertEquals("bobsmith@example.com", user.getEmail());
+		assertEquals("1234567890", user.getPhone());
+		assertTrue(user.getEnabled());
+		assertEquals("admin", user.getRole());
+		assertEquals("https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg", user.getImageUrl());
 	}
 	
-	// Tested with user id# 2 & additional garden item comments as described in GardenItemCommentTest
+//	 Tested with user id# 2 & additional garden item comments as described in GardenItemCommentTest
 	@Test
 	@DisplayName("TEST: One User to Many GardenItemComments Mapping")
 	void test2() {
@@ -90,5 +96,27 @@ class UserTest {
 		assertTrue(user.getGardenItems().contains(gi));
 		user.removeGardenItem(gi);
 		assertFalse(user.getGardenItems().contains(gi));
+	}
+	
+	@Test
+	@DisplayName("TEST: User Address Mapping")
+	void test6() {
+		assertNotNull(user);
+		assertEquals("1234 admin drive", user.getAddress().getAddress());
+		
+	}
+	
+	@Test
+	@DisplayName("TEST: User Messaging Mappings")
+	void test7() {
+		User user2 = em.find(User.class, 2);
+		assertNotNull(user);
+		assertEquals("Hello CultivAid!", user.getSentMessages().get(0).getContent());
+		assertEquals("Hello CultivAid!", user2.getReceivedMessages().get(0).getContent());
+		
+		assertEquals(2021, user.getSentMessages().get(0).getCreateTime().getYear());
+		
+
+		
 	}
 }

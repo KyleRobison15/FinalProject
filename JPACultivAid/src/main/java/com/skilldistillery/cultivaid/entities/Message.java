@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Message {
@@ -22,15 +24,13 @@ public class Message {
 	
 	private boolean viewed; 
 	
+	@ManyToOne
+	@JoinColumn(name="sender_id")
+	private User sendingUser;
 	
-	
-	//sender_id
-	
-	//receiver_id
-	
-	
-	
-	
+	@ManyToOne
+	@JoinColumn(name="reciever_id")
+	private User receivingUser;
 	
 	//no-arg constructor
 	public Message() {}

@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -49,6 +51,16 @@ public class User {
 	@CreationTimestamp
 	private LocalDateTime createDate;
 	
+	@OneToOne
+	@JoinColumn(name="address_id")
+	private Address address;
+	
+	@OneToMany(mappedBy="sendingUser")
+	private List<Message> sentMessages;
+	
+	@OneToMany(mappedBy="receivingUser")
+	private List<Message> receivedMessages;
+	
 	@JsonIgnore
 	@OneToMany (mappedBy="leftByUser")
 	private List<GardenItemComment> gardenItemComments;
@@ -63,16 +75,6 @@ public class User {
 	public User () {}
 
 ////////////////////////// METHODS //////////////////////////////
-	
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
 
 	public int getId() {
 		return id;
@@ -162,6 +164,30 @@ public class User {
 		this.createDate = createDate;
 	}
 	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	public List<Message> getSentMessages() {
+		return sentMessages;
+	}
+
+	public void setSentMessages(List<Message> sentMessages) {
+		this.sentMessages = sentMessages;
+	}
+
+	public List<Message> getReceivedMessages() {
+		return receivedMessages;
+	}
+
+	public void setReceivedMessages(List<Message> receivedMessages) {
+		this.receivedMessages = receivedMessages;
+	}
+
 	public List<GardenItemComment> getGardenItemComments() {
 		return gardenItemComments;
 	}
@@ -217,7 +243,15 @@ public class User {
 				+ ", lastName=" + lastName + ", email=" + email + ", phone=" + phone + ", enabled=" + enabled
 				+ ", role=" + role + ", imageUrl=" + imageUrl + ", createDate=" + createDate + "]";
 	}
-
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -231,8 +265,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 }
