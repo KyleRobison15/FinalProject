@@ -5,5 +5,6 @@ import com.skilldistillery.cultivaid.entities.User;
 public interface UserService {
 
 	User findByUsername(String username);
+	User updateUserPassword(User user); 
 	
 }
