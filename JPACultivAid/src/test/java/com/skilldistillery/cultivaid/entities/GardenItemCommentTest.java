@@ -51,7 +51,9 @@ class GardenItemCommentTest {
 	void test1() {
 		assertNotNull(gic);
 		assertEquals("Wow these carrots look great.", gic.getContent());
-		assertEquals(LocalDateTime.of(2021, 8, 17, 0, 0, 0), gic.getCreatedDate());
+		assertEquals(2021, gic.getCreatedDate().getYear());
+		assertEquals(8, gic.getCreatedDate().getMonthValue());
+		assertEquals(17, gic.getCreatedDate().getDayOfMonth());
 
 	}
 	

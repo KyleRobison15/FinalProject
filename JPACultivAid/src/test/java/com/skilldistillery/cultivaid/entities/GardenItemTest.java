@@ -58,7 +58,9 @@ class GardenItemTest {
 		assertEquals("baby", gi.getVariety());
 		assertFalse(gi.isPesticides());
 		assertFalse(gi.isFertilizers());
-		assertEquals(LocalDateTime.of(2021, 8, 17, 0, 0), gi.getCreatedDate());
+		assertEquals(2021, gi.getCreatedDate().getYear());
+		assertEquals(8, gi.getCreatedDate().getMonthValue());
+		assertEquals(17, gi.getCreatedDate().getDayOfMonth());
 	}
 	
 	
