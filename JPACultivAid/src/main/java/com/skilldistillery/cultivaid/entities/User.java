@@ -40,7 +40,7 @@ public class User {
 	
 	private String phone;
 	
-	private Boolean active;
+	private boolean active;
 	
 	private String role;
 	
@@ -142,11 +142,11 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
-	public void setActive(Boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 

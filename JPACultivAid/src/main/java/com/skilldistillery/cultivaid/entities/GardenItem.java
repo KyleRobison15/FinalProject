@@ -58,6 +58,7 @@ public class GardenItem {
 	
 	private boolean active;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="gardenItem")
 	private List<ExchangeItem> exchangeItems; 
 	

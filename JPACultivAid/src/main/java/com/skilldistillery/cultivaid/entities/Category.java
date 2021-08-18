@@ -26,6 +26,8 @@ public class Category {
 	@OneToMany(mappedBy="category")
 	private List<Produce> produce;
 	
+	private boolean active;
+	
 	////////////
 	// Methods
 
@@ -53,6 +55,14 @@ public class Category {
 		this.produce = produce;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,7 +87,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Category [id=" + id + ", name=" + name + ", isActive=" + active + "]";
 	}
 		
 }

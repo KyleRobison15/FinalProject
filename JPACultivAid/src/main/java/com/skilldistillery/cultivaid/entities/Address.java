@@ -28,7 +28,7 @@ public class Address {
 	@Column(name="postal_code")
 	private String postalCode;
 	
-	private Boolean active;
+	private boolean active;
 
 ////////////////////////// CONSTRUCTORS //////////////////////////////
 	
@@ -84,11 +84,11 @@ public class Address {
 		this.postalCode = postalCode;
 	}
 
-	public Boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
-	public void setActive(Boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 

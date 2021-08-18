@@ -44,6 +44,8 @@ public class Produce {
 	@OneToMany (mappedBy="produce")
 	private List<GardenItem> gardenItems;
 	
+	private boolean active;
+	
 	////////////
 	// Methods
 
@@ -119,6 +121,14 @@ public class Produce {
 		}
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -144,7 +154,7 @@ public class Produce {
 	@Override
 	public String toString() {
 		return "Produce [id=" + id + ", name=" + name + ", averageItemWeight=" + averageItemWeight + ", imageUrl="
-				+ imageUrl + ", category=" + category + "]";
+				+ imageUrl + ", category=" + category + ", isActive=" + active + "]";
 	}
 
 }

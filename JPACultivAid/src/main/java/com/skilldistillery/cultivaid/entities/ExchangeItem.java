@@ -49,7 +49,7 @@ public class ExchangeItem {
 		this.quantity = quantity;
 	}
 
-	public boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
@@ -75,7 +75,7 @@ public class ExchangeItem {
 
 	@Override
 	public String toString() {
-		return "ExchangeItem [id=" + id + ", quantity=" + quantity + "]";
+		return "ExchangeItem [id=" + id + ", quantity=" + quantity + ", isActive=" + active + "]";
 	}
 
 }

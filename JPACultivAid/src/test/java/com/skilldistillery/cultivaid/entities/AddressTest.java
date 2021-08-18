@@ -51,7 +51,7 @@ class AddressTest {
 		assertEquals("Colorado Springs", address.getCity());
 		assertEquals("CO", address.getStateAbbr());
 		assertEquals("80903", address.getPostalCode());
-		assertTrue(address.getActive());
+		assertTrue(address.isActive());
 
 	}
 
