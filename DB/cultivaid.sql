@@ -299,8 +299,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (1, '1234 admin drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (2, '1234 admin drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (1, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`) VALUES (2, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903');
 
 COMMIT;
 
