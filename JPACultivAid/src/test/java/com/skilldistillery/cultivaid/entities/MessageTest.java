@@ -48,5 +48,13 @@ class MessageTest {
 		assertNotNull(message);
 		assertEquals("Hello CultivAid!", message.getContent());
 	}
+	
+	@Test
+	@DisplayName("Test Message to User Mapping")
+	void test2() {
+		assertNotNull(message.getSendingUser());
+		assertEquals("bobsmith@example.com", message.getReceivingUser().getEmail());
+		assertEquals("janesmith@example.com", message.getSendingUser().getEmail());
+	}
 
 }
