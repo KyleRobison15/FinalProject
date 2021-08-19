@@ -24,15 +24,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUserPassword(User user) {
+	public User updateUser(User user) {
 		Optional<User> opt = userRepo.findById(user.getId());
 		User managed = null; 
 		if(opt.isPresent()) {
 			managed = opt.get();
+			
 			managed.setPassword(passEncode.encode(user.getPassword()));
 		}
 		
 		return userRepo.saveAndFlush(managed); 
+	}
+
+	@Override
+	public boolean deleteUser(User user, int uId) {
+		// TODO Auto-generated method stub
+		return false;
 	} 
 
 }

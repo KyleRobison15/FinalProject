@@ -33,8 +33,7 @@ public class UserController {
 	
 	@PutMapping("users/password")
 	public User updateUserPassword(@RequestBody User user) {
-		return userSvc.updateUserPassword(user);
+		return userSvc.updateUser(user);
 	}
-	
 	
 }
