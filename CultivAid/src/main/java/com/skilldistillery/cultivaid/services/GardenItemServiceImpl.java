@@ -1,16 +1,30 @@
 package com.skilldistillery.cultivaid.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.cultivaid.entities.GardenItem;
+import com.skilldistillery.cultivaid.entities.User;
 import com.skilldistillery.cultivaid.repositories.GardenItemRepository;
 import com.skilldistillery.cultivaid.repositories.UserRepository;
 
 @Service
 public class GardenItemServiceImpl implements GardenItemService {
+	
+	
+	class GardenItemComparator implements Comparator<ArrayList<Object>> {
+		@Override
+		public int compare(ArrayList<Object> o1, ArrayList<Object> o2) {
+			return ((Integer) o1.get(1)).compareTo((Integer)o2.get(1));
+		}
+	}
+	
 
 	public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
 
@@ -43,23 +57,31 @@ public class GardenItemServiceImpl implements GardenItemService {
 		return itemRepo.findByActiveTrueAndUser_Username(username);
 	}
 
-	// Return all garden items within specified distance of user
-//	@Override
-//	public List<GardenItem> indexWithinDistance(String username, int distance) {
-//		User loggedInUser = userRepo.findByUsername(username);
-//		List<User> allActiveUsers = userRepo.findAll();   // NEED REPO METHOD FOR FINDING ACTIVE ONLY
-//		Map<User, Integer> usersWithinSearchDistance = new LinkedHashMap<>();
-//		for (User user : allActiveUsers) {
-//			int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(), 
-//					loggedInUser.getAddress().getLongitude(), 
-//					user.getAddress().getLatitude(), 
-//					user.getAddress().getLongitude());
-//			if (distanceApart <= distance) {
-//				usersWithinSearchDistance.add(user);
-//			}
-//		}
-//		List<GardenItem>
-//	}
+//	 Return all garden items within specified distance of user
+	@Override
+	public List<ArrayList<Object>> indexWithinDistance(String username, int distance) {
+		User loggedInUser = userRepo.findByUsername(username);
+		List<User> allActiveUsers = userRepo.findByActiveTrue();   // NEED REPO METHOD FOR FINDING ACTIVE ONLY
+		List<ArrayList<Object>> usersWithinSearchDistance = new ArrayList<ArrayList<Object>>();
+		for (User user : allActiveUsers) {
+			if (!user.equals(loggedInUser)) {
+				int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(), 
+						loggedInUser.getAddress().getLongitude(), 
+						user.getAddress().getLatitude(), 
+						user.getAddress().getLongitude());
+				if (distanceApart <= distance) {
+					usersWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(user, distanceApart)));
+				}
+			}
+			
+		}
+		
+		
+		usersWithinSearchDistance.sort(new GardenItemComparator());
+		
+		System.out.println(usersWithinSearchDistance);
+		return usersWithinSearchDistance;
+	}
 	
 	@Override
 	public GardenItem retrieveById(int id) {
@@ -140,5 +162,6 @@ public class GardenItemServiceImpl implements GardenItemService {
 
 		return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c * 0.621371));
 	}
+
 
 }

@@ -1,5 +1,6 @@
 package com.skilldistillery.cultivaid.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.cultivaid.entities.GardenItem;
@@ -13,5 +14,6 @@ public interface GardenItemService {
 	public GardenItem create(GardenItem item, String username);
 	public GardenItem update(GardenItem item);
 	public boolean delete(int id);
+	List<ArrayList<Object>> indexWithinDistance(String username, int distance);
 
 }
