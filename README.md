@@ -9,20 +9,23 @@
 |-----------|-------------------------------------|----------------------------------------|--------------------------------------|----------------------------------|
 | GET       | `/gardenitems`                      |                                        | Garden items for non-authenticated   | Get all garden item listings     |
 | GET       | `/api/gardenitems`                  |                                        | Garden items for authenticated user  | Get all garden item listings     |
-| GET       | `/api/gardenitems/{distance}`       |                                        | Garden item listings for given distance | Get all listings for given distance|
+| GET       | `/api/gardenitems/{id}`             |                                        | Garden item for authenticated user   | Get single garden item listing   |
+| GET       | `/api/gardenitems/distancesearch/{distance}`|                                        | Garden item listings for given distance | Get all listings for given distance|
 | POST      | `/api/gardenitems`                  | Representation of a garden item        | Representation of created garden item | Create a new garden item        |
 | PUT       | `/api/gardenitems`                  | Representation of a garden item        | Representation of updated garden item | Update a garden item            |
+| DELETE    | `/api/gardenitems/{id}`             |                                        |                                       | Set garden item to inactive     |
 | GET       | `/api/users`                        |                                        | List of all users                     | Get all users for Admin view    |
 | GET       | `/api/users/{username}`             |                                        | Representation of single user         | Get a single user               |
 | POST      | `/api/register`                     | Representation of a user               | Representation of registered user     | Register a new User             |
 | PUT       | `/api/users`                        | Representation of logged in user       | Representation of updated user        | Allow users to update their info |
-| GET       | `/api/exchanges`                    |                                        | List of all exchanges                 | Get all exchanges                |
+| GET       | `/api/exchanges/buyer`              |                                        | List of all exchanges for a buyer     | Get all exchanges for given buyer|
+| GET       | `/api/exchanges/seller`             |                                        | List of all exchanges for a seller    | Get all exchanges for given seller|
+| GET       | `/api/exchanges`                    |                                        | List of all exchanges for auth user   | Get all exchanges for auth user  |
 | POST      | `/api/exchanges`                  | Representation of an exchange            | Representation of created exchange    | Create a new exchange            |
 | PUT       | `/api/exchanges`                  | Representation of an exchange            | Representation of updated exchange    | Update an exchange               |
-| GET      | `/api/exchange/{id}/exchangeitems`  |                                         | List of exchange items for an exchange| Get exchange items for an exchange |
-| POST      | `/api/exchange/{id}/exchangeitems`  | List of exchange items for an exchange | Representation of an exchange         | Add exchange items for an exchange |
-| GET      | `/api/exchange/{id}/exchangeimages`  |                                        | List of exchange images for an exchange| Get exchange images for an exchange |
-| POST      | `/api/exchange/{id}/exchangeimages`  | List of exchange images for an exchange | Representation of an exchange       | Add exchange images for an exchange |
+| GET      | `/api/exchanges/{id}/exchangeitems`  |                                         | List of exchange items for an exchange| Get exchange items for an exchange |
+| GET      | `/api/exchanges/{id}/exchangeimages`  |                                        | List of exchange images for an exchange| Get exchange images for an exchange |
+| POST      | `/api/exchanges/{id}/exchangeimages`  | List of exchange images for an exchange | Representation of an exchange       | Add exchange images for an exchange |
 | GET       | `/api/messages`                     |                                          | List of all messages                  | Get all messages                 |
 | GET       | `/api/messages/{uid}`               |                                          | List of all messages for a given user | Get all messages for a given user|
 | POST      | `/api/messages/{uid}`               | Representation of a new message          | Representation of created message     | Create a new message to another user|
