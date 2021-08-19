@@ -5,7 +5,9 @@ import com.skilldistillery.cultivaid.entities.User;
 public interface UserService {
 
 	User findByUsername(String username);
-	User updateUser(User user);
-	boolean deleteUser(User user, int uId);
+	User findByUserId(int uId);
+	User resetPassword(User user);
+	User updateUserAccount(User user);
+	boolean deleteUser(User user);
 
 }

@@ -16,6 +16,7 @@
 | GET       | `/api/users/{username}`             |                                        | Representation of single user         | Get a single user               |
 | POST      | `/api/register`                     | Representation of a user               | Representation of registered user     | Register a new User             |
 | PUT       | `/api/users`                        | Representation of logged in user       | Representation of updated user        | Allow users to update their info |
+| PUT       | `/api/users/password`               | Representation of logged in user       | Representation of updated user        | Allow users to change their password|
 | GET       | `/api/exchanges`                    |                                        | List of all exchanges                 | Get all exchanges                |
 | POST      | `/api/exchanges`                  | Representation of an exchange            | Representation of created exchange    | Create a new exchange            |
 | PUT       | `/api/exchanges`                  | Representation of an exchange            | Representation of updated exchange    | Update an exchange               |

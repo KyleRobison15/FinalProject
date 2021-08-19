@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 public class Message {
 	
@@ -19,6 +21,7 @@ public class Message {
 	
 	private String content;
 	
+	@CreationTimestamp
 	@Column(name="create_time")
 	private LocalDateTime createTime;
 	
