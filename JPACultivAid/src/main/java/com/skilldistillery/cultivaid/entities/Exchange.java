@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,7 +26,7 @@ public class Exchange {
 	
 	private int rating; 
 	
-	private boolean active;
+	private boolean active = true;
 	
 	@Column(name="buyer_comment")
 	private String buyerComment;
@@ -36,6 +38,7 @@ public class Exchange {
 	@Column(name="exchange_date")
 	private LocalDateTime exchangeDate;
 	
+	@CreationTimestamp
 	@Column(name="create_date")
 	private LocalDateTime createDate;
 	
