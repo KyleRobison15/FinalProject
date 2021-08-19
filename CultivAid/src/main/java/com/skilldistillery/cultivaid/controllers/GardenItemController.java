@@ -1,6 +1,7 @@
 package com.skilldistillery.cultivaid.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,15 +53,11 @@ public class GardenItemController {
 	}
 	
 	@GetMapping("api/gardenitems/distancesearch/{distance}")
-	public List<GardenItem> indexGardenItemsWithinDistanceOfUser(HttpServletResponse res, Principal principal) {
+	public List<ArrayList<Object>> indexGardenItemsWithinDistanceOfUser(HttpServletResponse res, Principal principal, @PathVariable Integer distance) {
 		
-		List<GardenItem> items = itemSvc.index(principal.getName());
-		
-		if (items == null) {
-			res.setStatus(404);
-		}
-		
-		return items;
+		List<ArrayList<Object>> users = itemSvc.indexWithinDistance(principal.getName(), distance);
+	
+		return users;
 	}
 	
 	@GetMapping("api/gardenitems/{id}")
