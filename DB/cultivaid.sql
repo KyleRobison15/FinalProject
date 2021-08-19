@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `state_abbreviation` VARCHAR(4) NULL,
   `postal_code` VARCHAR(45) NULL,
   `active` TINYINT NOT NULL,
+  `latitude` DECIMAL NULL,
+  `longitude` DECIMAL NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -308,8 +310,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`) VALUES (1, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1);
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`) VALUES (2, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (1, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1, NULL, NULL);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (2, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1, NULL, NULL);
 
 COMMIT;
 

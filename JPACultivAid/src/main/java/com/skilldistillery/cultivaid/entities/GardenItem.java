@@ -40,9 +40,9 @@ public class GardenItem {
 	
 	private String variety;
 	
-	private boolean pesticides;
+	private boolean pesticides = false;
 	
-	private boolean fertilizers;
+	private boolean fertilizers = false;
 	
 	@Column (name="create_date")
 	@CreationTimestamp
@@ -56,7 +56,7 @@ public class GardenItem {
 	@JoinColumn (name = "user_id")
 	private User user;
 	
-	private boolean active;
+	private boolean active = true;
 
 	@JsonIgnore
 	@OneToMany(mappedBy="gardenItem")
