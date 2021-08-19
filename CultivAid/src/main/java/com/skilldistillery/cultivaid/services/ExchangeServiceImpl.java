@@ -27,11 +27,11 @@ public class ExchangeServiceImpl implements ExchangeService{
 
 	@Override
 	public Exchange create(String buyerUsername, List<ExchangeItem> exchangeItems) {
-		Exchange exchange = new Exchange();
 		Exchange newExchange = null;
+		Exchange exchange = new Exchange();
 		
 		User buyer = uRepo.findByUsername(buyerUsername);
-
+//
 		exchange.setBuyer(buyer);
 		newExchange = eRepo.saveAndFlush(exchange);
 			
@@ -52,9 +52,54 @@ public class ExchangeServiceImpl implements ExchangeService{
 		
 		return exchanges;
 	}
+
+	@Override
+	public List<Exchange> findSellerExchangesByUserId(int userId) {
+		
+		return eRepo.findDistinctByExchangeItems_GardenItem_User_Id(userId);
+	}
+
+	@Override
+	public Exchange update(Exchange exchange) {
+		
+		Exchange managed = null;
+		
+		Optional<Exchange> opt = eRepo.findById(exchange.getId());
+		
+		if(opt.isPresent()) {
+			managed = eRepo.saveAndFlush(exchange);
+		}
+		
+		return managed;
+	}
 	
-	
-	
+
+	@Override
+	public List<ExchangeItem> findExchangeItemsByExchange(Exchange exchange) {
+		
+		Optional<Exchange> opt = eRepo.findById(exchange.getId());
+		Exchange managed = null;
+		List<ExchangeItem> exchangeItems = null;
+		
+		if(opt.isPresent()) {
+			managed = opt.get();
+			exchangeItems = managed.getExchangeItems();
+		}
+		
+		return exchangeItems;
+	}
+
+	@Override
+	public Exchange findByExchangeId(int id) {
+		Exchange exchange = null;
+		Optional<Exchange> opt = eRepo.findById(id);
+		
+		if(opt.isPresent()) {
+			exchange = opt.get();
+		}
+		
+		return exchange;
+	}
 	
 	
 }
