@@ -40,7 +40,7 @@ public class User {
 	
 	private String phone;
 	
-	private boolean active;
+	private boolean active = true;
 	
 	private String role;
 	

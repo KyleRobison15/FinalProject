@@ -8,6 +8,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +20,20 @@ import { RegisterComponent } from './components/register/register.component';
     NavigationComponent,
     HomeComponent,
     NotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

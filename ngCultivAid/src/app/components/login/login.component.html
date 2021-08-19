@@ -1,0 +1,6 @@
+<h1 class="display-4">Log In</h1>
+<form>
+  <label for="username" class="form-check-label">Username</label><input class="form-control" type="text" name="username" placeholder="Username" [(ngModel)]="loginUser.username">
+  <label for="username" class="form-check-label">Password</label><input class="form-control" type="password" name="password" placeholder="Password" [(ngModel)]="loginUser.password"><br>
+  <button class="btn btn-outline-success" (click)="login(loginUser)">Login</button>
+</form>
