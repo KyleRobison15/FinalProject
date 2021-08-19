@@ -9,5 +9,9 @@ public interface ExchangeService {
 	
 	public Exchange create(String username, List<ExchangeItem> exchangeItems);
 	public List<Exchange> findBuyerExchangesByUsername(String username);
+	public List<Exchange> findSellerExchangesByUserId(int userId);
+	public Exchange update(Exchange exchange);
+	public List<ExchangeItem> findExchangeItemsByExchange(Exchange exchange);
+	public Exchange findByExchangeId(int id);
 
 }
