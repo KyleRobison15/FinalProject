@@ -33,7 +33,6 @@
 | GET       | `/api/wishlist`                     |                                        | List of all produce                  | Get all produce                   |
 | POST      | `/api/wishlist`                     | Representation of a wishlist produce   | Representation of created wishlist produce | Create a new wishlist produce |
 | PUT       | `/api/wishlist`                     | Representation of a wish list produce  | Representation of updated wishlist produce | Update wishlist produce       |
-| GET       | `/api/gardenitems/{id}/comments`    |                                           | List of comments for given garden item| Get comments for given garden item |
 | POST      | `/api/gardenitems/{id}/comments`    | Representation of comment                 | Representation of added comment       | Get comment for given garden item  |
 
 
