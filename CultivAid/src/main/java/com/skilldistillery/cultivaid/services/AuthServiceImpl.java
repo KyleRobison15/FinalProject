@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.cultivaid.entities.User;
+import com.skilldistillery.cultivaid.repositories.AddressRepository;
 import com.skilldistillery.cultivaid.repositories.UserRepository;
 
 @Service
@@ -16,10 +17,12 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private UserRepository userRepo;
 	
+	@Autowired
+	private AddressRepository addressRepo;
+	
 	@Override
 	public User register(User user) {
-		
-		
+				
 //		encrypt and set the password for the User.
 		user.setPassword(encoder.encode(user.getPassword())); // Take the clear text password from the front end. Encode it. Replace it with encoded version.
 		
@@ -28,6 +31,8 @@ public class AuthServiceImpl implements AuthService {
 		
 //		set the role field of the object to "standard".
 		user.setRole("standard");
+		
+		addressRepo.saveAndFlush(user.getAddress());
 		
 //		saveAndFlush the user using the UserRepo.
 		userRepo.saveAndFlush(user);
