@@ -80,10 +80,15 @@ public class GardenItemServiceImpl implements GardenItemService {
 			}
 			
 		}
-		
-		
 		usersWithinSearchDistance.sort(new GardenItemComparator());
-		return usersWithinSearchDistance;
+		List<ArrayList<Object>> gardenItemsWithinSearchDistance = new ArrayList<ArrayList<Object>>();
+		for (ArrayList<Object> userList : usersWithinSearchDistance) {
+			List<GardenItem> userGardenItems = itemRepo.findByActiveTrueAndUserAndAmountGreaterThan((User)userList.get(0), 0);
+			for (GardenItem item : userGardenItems) {
+				gardenItemsWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(item, (Integer)userList.get(1))));
+			}
+		}
+		return gardenItemsWithinSearchDistance;
 	}
 	
 	@Override
