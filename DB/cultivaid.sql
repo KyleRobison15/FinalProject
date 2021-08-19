@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `state_abbreviation` VARCHAR(4) NULL,
   `postal_code` VARCHAR(45) NULL,
   `active` TINYINT NOT NULL,
-  `latitude` DECIMAL NULL,
-  `longitude` DECIMAL NULL,
+  `latitude` DOUBLE NULL,
+  `longitude` DOUBLE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

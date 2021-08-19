@@ -2,7 +2,6 @@ package com.skilldistillery.cultivaid.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -61,16 +60,22 @@ public class GardenItemServiceImpl implements GardenItemService {
 	@Override
 	public List<ArrayList<Object>> indexWithinDistance(String username, int distance) {
 		User loggedInUser = userRepo.findByUsername(username);
-		List<User> allActiveUsers = userRepo.findByActiveTrue();   // NEED REPO METHOD FOR FINDING ACTIVE ONLY
+		List<User> allActiveUsers = userRepo.findByActiveTrue();
 		List<ArrayList<Object>> usersWithinSearchDistance = new ArrayList<ArrayList<Object>>();
 		for (User user : allActiveUsers) {
 			if (!user.equals(loggedInUser)) {
-				int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(), 
-						loggedInUser.getAddress().getLongitude(), 
-						user.getAddress().getLatitude(), 
-						user.getAddress().getLongitude());
-				if (distanceApart <= distance) {
-					usersWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(user, distanceApart)));
+				try {
+
+					int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(), 
+							loggedInUser.getAddress().getLongitude(), 
+							user.getAddress().getLatitude(), 
+							user.getAddress().getLongitude());
+					if (distanceApart <= distance) {
+						usersWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(user, (Integer)distanceApart)));
+					}
+				}
+				catch(Exception e) {
+					continue;
 				}
 			}
 			
@@ -78,8 +83,6 @@ public class GardenItemServiceImpl implements GardenItemService {
 		
 		
 		usersWithinSearchDistance.sort(new GardenItemComparator());
-		
-		System.out.println(usersWithinSearchDistance);
 		return usersWithinSearchDistance;
 	}
 	
@@ -159,7 +162,8 @@ public class GardenItemServiceImpl implements GardenItemService {
 				* Math.cos(Math.toRadians(venueLat)) * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
 
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
+		
+		
 		return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c * 0.621371));
 	}
 
