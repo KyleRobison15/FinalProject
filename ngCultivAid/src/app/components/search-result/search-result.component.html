@@ -31,7 +31,7 @@
   </div>
 
   <div class="col-md-9">
-    <div class="card result-card" *ngFor="let item of gardenItemsAndDistance">
+    <div class="card result-card" *ngFor="let item of gardenItemsAndDistance" [routerLink]="['/publicProfile/', item[0].user.id]">
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
