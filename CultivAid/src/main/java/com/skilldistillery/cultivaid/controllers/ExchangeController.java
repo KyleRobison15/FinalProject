@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import com.skilldistillery.cultivaid.services.ExchangeService;
 import com.skilldistillery.cultivaid.services.UserService;
 
 @RestController
+@CrossOrigin({"*", "http://localhost:4210"})
 public class ExchangeController {
 	
 	@Autowired

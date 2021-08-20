@@ -1,0 +1,13 @@
+<h1>Create Listing</h1>
+
+<form name="createListingForm">
+  <label for="variety" class="form-check-label">Variety</label><input type="text" name="variety" class="form-control" [(ngModel)]="newListing.variety">
+  <label for="description" class="form-check-label">Description</label><input name="description" type="text" class="form-control" [(ngModel)]="newListing.description">
+  <label for="amount" class="form-check-label">Amount</label><input name="amount" type="number" class="form-control" [(ngModel)]="newListing.amount">
+  <label for="growMethod" class="form-check-label">Grow Method</label><input name="growMethod" type="text" class="form-control" [(ngModel)]="newListing.growMethod"><br>
+  <!-- <label for="growMethod" class="form-check-label">Date Expected</label><input name="growMethod" type="text" class="form-control" [(ngModel)]="newListing.growMethod"><br> -->
+  <label for="pesticides" class="form-check-label">Pesticides </label><input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
+  <label for="fertilizers" class="form-check-label">Fertilizers </label><input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
+  <input class="btn btn-outline-success" value="Create Listing" (click)="addGardenItem()">
+  <!-- <input class="btn btn-outline-success" (click)="register(thisForm)" value="Create Account"> -->
+
