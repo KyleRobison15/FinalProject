@@ -1,0 +1,33 @@
+.search-card {
+  transform: translate(0px, 50%);
+	margin: auto;
+	width: 60%;
+  height: 10rem;
+	border: 3px solid #f1f1f1;
+	background-color: rgba(77, 175, 21);
+	border-radius: 10px;
+  margin-bottom: 1rem !important;
+}
+
+.search-card h3 {
+  color: white;
+  text-decoration: underline;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.search-card .input-group-text {
+  color: white;
+  background-color: rgba(77, 175, 21, 0.6);
+  min-height: 150%;
+}
+
+.result-card {
+  transform: translate(0px, 50%);
+  position: relative;
+	margin: auto;
+	width: 60%;
+  height: 10rem;
+  border-radius: 10px;
+	border: 3px solid #f1f1f1;
+}
