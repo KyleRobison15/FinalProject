@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `state_abbreviation` VARCHAR(4) NULL,
   `postal_code` VARCHAR(45) NULL,
   `active` TINYINT NOT NULL,
-  `latitude` DECIMAL NULL,
-  `longitude` DECIMAL NULL,
+  `latitude` DOUBLE NULL,
+  `longitude` DOUBLE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -318,8 +318,11 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (1, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1, NULL, NULL);
-INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (2, '1234 Admin Drive', 'Apt 204', 'Colorado Springs', 'CO', '80903', 1, NULL, NULL);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (1, '702 S Cascade Ave', NULL, 'Colorado Springs', 'CO', '80903', 1, 38.82444, -104.82611);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (2, '201 N Circle Dr', NULL, 'Colorado Springs', 'CO', '80909', 1, 38.83628, -104.77553);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (3, '1685 Briargate Pkwy', NULL, 'Colorado Springs', 'CO', '80920', 1, 38.96292, -104.79560);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (4, '1000 Chopper Cir', NULL, 'Denver', 'CO', '80204', 1, 39.74889, -105.00759);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (5, '140 W Mountain Ave', NULL, 'Fort Collins', 'CO', '80524', 1, 40.58757, -105.07815);
 
 COMMIT;
 
@@ -331,6 +334,9 @@ START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (1, 'admin1', '$2a$10$uOxHXmKzZrMuYN2WlTUC8ugOBw9DYFA23ZADWvg3ZlQ.DopRF6rQ2', 'Bob', 'Smith', 'bobsmith@example.com', '1234567890', 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1, 1);
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (2, 'admin2', '$2a$10$xgsGns34p0IDBrLwfqDPxu7RrBq8iEO3vzNZ1NU.zrPIH9NWpOPye', 'Jane', 'Smith', 'janesmith@example.com', '1234567891', 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1, 2);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (3, 'TestUser1', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Nathan', 'MacKinnon', 'nathanm@example.com', '1111111111', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3041969.png&w=350&h=254', '2021-08-17', 1, 3);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (4, 'TestUser2', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Gabriel', 'Landeskog', 'gabriell@example.com', '2222222222', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/2562609.png&w=350&h=254', '2021-08-17', 1, 4);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (5, 'TestUser3', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mikko', 'Rantanen', 'mikkor@example.com', '3333333333', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3899938.png&w=350&h=254', '2021-08-17', 1, 5);
 
 COMMIT;
 
@@ -341,6 +347,9 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `category` (`id`, `name`, `active`) VALUES (1, 'Vegetable', 1);
+INSERT INTO `category` (`id`, `name`, `active`) VALUES (2, 'Fruit', 1);
+INSERT INTO `category` (`id`, `name`, `active`) VALUES (3, 'Herb', 1);
+INSERT INTO `category` (`id`, `name`, `active`) VALUES (4, 'Dairy', 1);
 
 COMMIT;
 
@@ -351,6 +360,27 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (1, 'Carrot', 2, 'https://burea-uinsurance.com/en/wp-content/uploads/2019/11/how-much-does-a-medium-sized-carrot-weigh.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (2, 'Zuchinni', 7, 'https://www.healthyseasonalrecipes.com/wp-content/uploads/2021/06/zucchini-spotlight-002.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (3, 'Cantaloupe', 48, 'https://solidstarts.com/wp-content/uploads/Cantaloupe-480x320.webp', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (4, 'Honeydew', 64, 'https://solidstarts.com/wp-content/uploads/Honeydew-Melon-480x320.webp', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (5, 'Cucumber', 7, 'https://solidstarts.com/wp-content/uploads/Cucumber_Edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (6, 'Romaine Lettuce', 24, 'https://scx1.b-cdn.net/csz/news/800a/2019/moreecoliill.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (7, 'Bell Pepper', 8, 'https://solidstarts.com/wp-content/uploads/Bell-Pepper_edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (8, 'Jalapeno Pepper', 1, 'https://solidstarts.com/wp-content/uploads/Jalapeno-Pepper_edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (9, 'Broccoli', 9, 'https://solidstarts.com/wp-content/uploads/Broccoli_edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (10, 'Tomato', 8, 'https://solidstarts.com/wp-content/uploads/Tomato_Edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (11, 'Apple', 8, 'https://solidstarts.com/wp-content/uploads/Apple_Golden-D_edited-480x320.jpg', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (12, 'Strawberry', 0.5, 'https://solidstarts.com/wp-content/uploads/introducing-strawberries-to-babies-480x320.jpg', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (13, 'Orange', 8, 'https://solidstarts.com/wp-content/uploads/Oranges-for-Babies-1-480x320.jpg', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (14, 'Lemon', 3, 'https://solidstarts.com/wp-content/uploads/Lemon_edited-480x320.jpg', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (15, 'Peach', 6, 'https://solidstarts.com/wp-content/uploads/peach_edited-480x320.jpg', 1, 2);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (16, 'Spinach', 1, 'https://solidstarts.com/wp-content/uploads/Spinach-for-Babies-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (17, 'Kale', 1, 'https://solidstarts.com/wp-content/uploads/Kale_edited-480x320.jpg', 1, 1);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (18, 'Egg', 2, 'https://solidstarts.com/wp-content/uploads/when-can-babies-eat-eggs-480x320.jpg', 1, 4);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (19, 'Basil', 0.5, 'https://solidstarts.com/wp-content/uploads/Basil_Edited-480x320.jpg', 1, 3);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (20, 'Oregano', 0.5, 'https://cdn.shopify.com/s/files/1/0156/0137/products/Oregano_plant_1200x960_735f0930-f793-41fb-8aa8-c8ba9f7e9917_1200x.jpg?v=1596114051', 1, 3);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (21, 'Parsley', 0.5, 'https://geturbanleaf.com/wp-content/uploads/2020/02/persley-hero.jpeg', 1, 3);
+INSERT INTO `produce` (`id`, `name`, `avg_item_weight`, `image_url`, `active`, `category_id`) VALUES (22, 'Mint', 0.5, 'https://solidstarts.com/wp-content/uploads/Mint_Edited-480x320.jpg', 1, 3);
 
 COMMIT;
 
@@ -361,6 +391,14 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (1, 'Some delicious carrots.', 'Fast', '2021-08-17', 15, 'baby', 0, 0, '2021-08-17', 1, 1, 1);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (2, 'Some beautiful looking zuchinni! I can\'t eat them all, so they must go!', 'Standard', '2021-08-17', 6, 'Dunja', 0, 0, '2021-08-17', 1, 1, 2);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (3, 'Extra cantaloupe!', 'Methodically', '2021-08-17', 3, 'Standard', 1, 0, '2021-08-17', 1, 3, 3);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (4, 'Extra cucumbers!', 'Methodically', '2021-08-17', 6, 'Standard', 0, 1, '2021-08-17', 1, 3, 5);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (5, 'Extra lettuce!', 'Methodically', '2021-08-17', 4, 'Romaine', 1, 1, '2021-08-17', 1, 3, 6);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (6, 'Extra bell peppers!', 'Sustainable', '2021-08-17', 8, 'Green', 0, 0, '2021-08-17', 1, 4, 7);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (7, 'Extra eggs!', 'Sustainable', '2021-08-17', 12, 'Chicken', 0, 0, '2021-08-17', 1, 4, 18);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (8, 'Extra apples!', 'Sustainable', '2021-08-17', 16, 'Honeycrisp', 0, 0, '2021-08-17', 1, 4, 11);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (9, 'Extra peaches', 'Non-Sustainable', '2021-08-17', 20, 'Palisaide', 1, 1, '2021-08-17', 1, 5, 15);
 
 COMMIT;
 
