@@ -50,13 +50,24 @@ export class UserService {
 
   getHttpOptions() {
     const credentials = this.auth.getCredentials();
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': `Basic ${credentials}`
-      }),
-    };
-    return httpOptions;
+    if (credentials) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': `Basic ${credentials}`
+        }),
+      };
+      return httpOptions;
+    }
+    else {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }),
+      };
+      return httpOptions;
+    }
   }
 }

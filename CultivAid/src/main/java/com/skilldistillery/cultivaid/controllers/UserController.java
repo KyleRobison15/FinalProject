@@ -25,7 +25,7 @@ public class UserController {
 	private UserService userSvc;
 
 	@GetMapping("users/{username}")
-	public User getUserByUsername(@PathVariable String username, HttpServletResponse res, Principal principal) {
+	public User getUserByUsername(@PathVariable String username, HttpServletResponse res) {
 		
 		User user = userSvc.findByUsername(username);
 		
