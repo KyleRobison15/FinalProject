@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `address` (
   `state_abbreviation` VARCHAR(4) NULL,
   `postal_code` VARCHAR(45) NULL,
   `active` TINYINT NOT NULL,
-  `latitude` DOUBLE NULL,
-  `longitude` DOUBLE NULL,
+  `latitude` DECIMAL NULL,
+  `longitude` DECIMAL NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -218,15 +218,18 @@ DROP TABLE IF EXISTS `message` ;
 
 CREATE TABLE IF NOT EXISTS `message` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `subject` VARCHAR(500) NULL,
   `content` TEXT NULL,
   `create_time` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `viewed` TINYINT NULL,
   `active` TINYINT NOT NULL,
   `sender_id` INT NOT NULL,
   `reciever_id` INT NOT NULL,
+  `in_reply_to_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_message_user1_idx` (`sender_id` ASC),
   INDEX `fk_message_user2_idx` (`reciever_id` ASC),
+  INDEX `fk_message_message1_idx` (`in_reply_to_id` ASC),
   CONSTRAINT `fk_message_user1`
     FOREIGN KEY (`sender_id`)
     REFERENCES `user` (`id`)
@@ -235,6 +238,11 @@ CREATE TABLE IF NOT EXISTS `message` (
   CONSTRAINT `fk_message_user2`
     FOREIGN KEY (`reciever_id`)
     REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_message_message1`
+    FOREIGN KEY (`in_reply_to_id`)
+    REFERENCES `message` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -392,7 +400,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `message` (`id`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`) VALUES (1, 'Hello CultivAid!', '2021-08-17', 1, 1, 2, 1);
+INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (1, 'Hello!', 'Hello CultivAid!', '2021-08-17', 1, 1, 2, 1, NULL);
+INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (2, 'Hello Reply', 'Reply to Hello!', '2021-08-17', 1, 1, 1, 2, 1);
 
 COMMIT;
 
