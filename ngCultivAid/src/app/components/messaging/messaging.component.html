@@ -1,1 +1,22 @@
-<p>messaging works!</p>
+<h1 class="display-1">Inbox</h1>
+<hr>
+
+<div id="messageTable">
+  <table class="table">
+    <thead>
+      <th>From</th>
+      <th>Subject</th>
+      <th>Content</th>
+      <th>Viewed</th>
+    </thead>
+    <tbody *ngFor="let message of messages">
+      <td>{{message.sendingUser.username}}</td>
+      <td>{{message.subject}}</td>
+      <td>{{message.content}}</td>
+      <td>{{message.viewed}}</td>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+<input class="btn btn-outline-success" value="New Message">
