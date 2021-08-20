@@ -24,10 +24,10 @@ public class UserController {
 	@Autowired
 	private UserService userSvc;
 
-	@GetMapping("api/users/{username}")
+	@GetMapping("users/{username}")
 	public User getUserByUsername(@PathVariable String username, HttpServletResponse res, Principal principal) {
 		
-		User user = userSvc.findByUsername(principal.getName());
+		User user = userSvc.findByUsername(username);
 		
 		return user;
 	}

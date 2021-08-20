@@ -15,13 +15,7 @@ export class PublicUserProfileComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private currentRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-
-    if (this.currentRoute.snapshot.paramMap.get('userId') !== null) {
-      let user = this.currentRoute.snapshot.params.user;
-
-
-      this.user = JSON.parse(user);
-
+      this.user = this.userService.user;
     }
 
     // this.userService.getUser().subscribe(
@@ -35,5 +29,3 @@ export class PublicUserProfileComponent implements OnInit {
     //   }
     // )
   }
-
-}
