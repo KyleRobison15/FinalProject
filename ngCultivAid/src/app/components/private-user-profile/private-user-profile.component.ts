@@ -27,4 +27,8 @@ export class PrivateUserProfileComponent implements OnInit {
     )
   }
 
+  goToPublicProfile(){
+    this.router.navigateByUrl('publicProfile');
+  }
+
 }
