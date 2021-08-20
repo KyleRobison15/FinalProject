@@ -91,6 +91,20 @@ export class PrivateUserProfileComponent implements OnInit {
     )
   }
 
+  completeExchange(exchange: Exchange){
+    exchange.complete = true;
+    this.exchangeService.updateExchange(exchange).subscribe(
+      exchanges => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      fail => {
+        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+        this.router.navigateByUrl('notFound');
+      }
+    )
+  }
+
   getOutgoingExchangeStatus(exchange: Exchange): string{
 
     if(!exchange.accepted && !exchange.complete){
@@ -99,10 +113,10 @@ export class PrivateUserProfileComponent implements OnInit {
     if(!exchange.accepted && exchange.complete){
       return "denied";
     }
-    if(exchange.accepted){
+    if(exchange.accepted && !exchange.complete){
       return "accepted";
     }
-    if(exchange.complete){
+    if(exchange.complete && exchange.accepted){
       return "complete";
     }
     else{
