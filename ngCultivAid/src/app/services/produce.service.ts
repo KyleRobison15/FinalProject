@@ -2,28 +2,28 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Message } from '../models/message';
+import { Produce } from '../models/produce';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MessageService {
+export class ProduceService {
 
   private baseUrl = 'http://localhost:8095/';
-  private url = this.baseUrl + 'api/messages'
+  private url = this.baseUrl + 'api/produce'
   // private baseUrl = environment.baseUrl;
 
-  private messages: Message[] = [];
+  private produceList: Produce[] = [];
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   public index(){
-    return this.http.get<Message[]>(this.url, this.getHttpOptions())
+    return this.http.get<Produce[]>(this.url, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError('Error getting messages ' + err);
+        return throwError('Error getting produce ' + err);
       })
     );
   }
@@ -39,5 +39,4 @@ export class MessageService {
     };
     return httpOptions;
   }
-
 }

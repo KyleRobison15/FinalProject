@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-public-user-profile',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicUserProfileComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User();
+
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.userService.getUser().subscribe(
+      user => {
+        this.user = user;
+        console.log("Logged In User: " + this.user.username);
+      },
+      fail => {
+        console.log('Invalid User ');
+        this.router.navigateByUrl('notFound');
+      }
+    )
   }
 
 }
