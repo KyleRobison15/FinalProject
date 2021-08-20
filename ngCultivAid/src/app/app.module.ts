@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +14,11 @@ import { MessagingComponent } from './components/messaging/messaging.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GardenItemListingsComponent } from './components/garden-item-listings/garden-item-listings.component';
 import { CreateListingComponent } from './components/create-listing/create-listing.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import { PrivateUserProfileComponent } from './components/private-user-profile/private-user-profile.component';
+import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
+import { HomeComponent } from './components/home/home.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { CreateListingComponent } from './components/create-listing/create-listi
     LogoutComponent,
     MessagingComponent,
     GardenItemListingsComponent,
-    CreateListingComponent
+    CreateListingComponent,
+    SearchResultComponent,
+    PrivateUserProfileComponent,
+    PublicUserProfileComponent
   ],
   imports: [
     BrowserModule,
