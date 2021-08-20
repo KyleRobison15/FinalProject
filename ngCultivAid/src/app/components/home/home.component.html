@@ -1,1 +1,11 @@
 <h1 class="display-1">CultivAid Home Page</h1>
+
+<form #searchByZipForm=ngForm>
+  <input type="number" name="zip" placeholder="Search By Zip Code" ngModel><br>
+  <input type="number" name="distance" placeholder="Search Radius In Miles" ngModel><br>
+  <button name="submit" class="btn btn-outline-success" (click)="searchByZip(searchByZipForm)">Submit</button>
+</form>
+
+<ul>
+  <li *ngFor="let item of gardenItemsAndDistance">{{item[0].description}} -------- {{item[1]}} miles away ------- Posted By: {{item[0].user.username}}</li>
+</ul>

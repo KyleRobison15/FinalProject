@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.skilldistillery.cultivaid.entities.GardenItem;
 import com.skilldistillery.cultivaid.services.GardenItemService;
 
 @RestController
+@CrossOrigin({"*", "http://localhost:4210"})
 public class GardenItemController {
 	
 	@Autowired
@@ -52,12 +54,20 @@ public class GardenItemController {
 		return itemSvc.index(principal.getName());
 	}
 	
+	@GetMapping("gardenitems/zipsearch/{latitude}&{longitude}&{distance}")
+	public List<ArrayList<Object>> indexGardenItemsWithinDistanceOfZip(HttpServletResponse res, @PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Integer distance) {
+		
+		List<ArrayList<Object>> items = itemSvc.indexWithinDistance(latitude, longitude, distance);
+		
+		return items;
+	}
+	
 	@GetMapping("api/gardenitems/distancesearch/{distance}")
 	public List<ArrayList<Object>> indexGardenItemsWithinDistanceOfUser(HttpServletResponse res, Principal principal, @PathVariable Integer distance) {
 		
-		List<ArrayList<Object>> users = itemSvc.indexWithinDistance(principal.getName(), distance);
+		List<ArrayList<Object>> items = itemSvc.indexWithinDistance(principal.getName(), distance);
 	
-		return users;
+		return items;
 	}
 	
 	@GetMapping("api/gardenitems/{id}")

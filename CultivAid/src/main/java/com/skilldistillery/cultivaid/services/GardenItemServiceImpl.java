@@ -15,15 +15,13 @@ import com.skilldistillery.cultivaid.repositories.UserRepository;
 
 @Service
 public class GardenItemServiceImpl implements GardenItemService {
-	
-	
+
 	class GardenItemComparator implements Comparator<ArrayList<Object>> {
 		@Override
 		public int compare(ArrayList<Object> o1, ArrayList<Object> o2) {
-			return ((Integer) o1.get(1)).compareTo((Integer)o2.get(1));
+			return ((Integer) o1.get(1)).compareTo((Integer) o2.get(1));
 		}
 	}
-	
 
 	public final static double AVERAGE_RADIUS_OF_EARTH_KM = 6371;
 
@@ -56,6 +54,35 @@ public class GardenItemServiceImpl implements GardenItemService {
 		return itemRepo.findByActiveTrueAndUser_Username(username);
 	}
 
+//	 Return all garden items within specified distance of PostalCode (NOT AUTHENTICATED)
+	@Override
+	public List<ArrayList<Object>> indexWithinDistance(Double latitude, Double longitude, int distance) {
+		List<User> allActiveUsers = userRepo.findByActiveTrue();
+		List<ArrayList<Object>> usersWithinSearchDistance = new ArrayList<ArrayList<Object>>();
+		for (User user : allActiveUsers) {
+			try {
+				int distanceApart = calculateDistanceInMiles(latitude, longitude, user.getAddress().getLatitude(), user.getAddress().getLongitude());
+				if (distanceApart <= distance) {
+					usersWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(user, (Integer) distanceApart)));
+				}
+			} catch (Exception e) {
+				continue;
+			}
+
+		}
+		usersWithinSearchDistance.sort(new GardenItemComparator());
+		List<ArrayList<Object>> gardenItemsWithinSearchDistance = new ArrayList<ArrayList<Object>>();
+		for (ArrayList<Object> userList : usersWithinSearchDistance) {
+			List<GardenItem> userGardenItems = itemRepo
+					.findByActiveTrueAndUserAndAmountGreaterThan((User) userList.get(0), 0);
+			for (GardenItem item : userGardenItems) {
+				gardenItemsWithinSearchDistance
+						.add(new ArrayList<Object>(Arrays.asList(item, (Integer) userList.get(1))));
+			}
+		}
+		return gardenItemsWithinSearchDistance;
+	}
+
 //	 Return all garden items within specified distance of user
 	@Override
 	public List<ArrayList<Object>> indexWithinDistance(String username, int distance) {
@@ -66,56 +93,54 @@ public class GardenItemServiceImpl implements GardenItemService {
 			if (!user.equals(loggedInUser)) {
 				try {
 
-					int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(), 
-							loggedInUser.getAddress().getLongitude(), 
-							user.getAddress().getLatitude(), 
+					int distanceApart = calculateDistanceInMiles(loggedInUser.getAddress().getLatitude(),
+							loggedInUser.getAddress().getLongitude(), user.getAddress().getLatitude(),
 							user.getAddress().getLongitude());
 					if (distanceApart <= distance) {
-						usersWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(user, (Integer)distanceApart)));
+						usersWithinSearchDistance
+								.add(new ArrayList<Object>(Arrays.asList(user, (Integer) distanceApart)));
 					}
-				}
-				catch(Exception e) {
+				} catch (Exception e) {
 					continue;
 				}
 			}
-			
+
 		}
 		usersWithinSearchDistance.sort(new GardenItemComparator());
 		List<ArrayList<Object>> gardenItemsWithinSearchDistance = new ArrayList<ArrayList<Object>>();
 		for (ArrayList<Object> userList : usersWithinSearchDistance) {
-			List<GardenItem> userGardenItems = itemRepo.findByActiveTrueAndUserAndAmountGreaterThan((User)userList.get(0), 0);
+			List<GardenItem> userGardenItems = itemRepo
+					.findByActiveTrueAndUserAndAmountGreaterThan((User) userList.get(0), 0);
 			for (GardenItem item : userGardenItems) {
-				gardenItemsWithinSearchDistance.add(new ArrayList<Object>(Arrays.asList(item, (Integer)userList.get(1))));
+				gardenItemsWithinSearchDistance
+						.add(new ArrayList<Object>(Arrays.asList(item, (Integer) userList.get(1))));
 			}
 		}
 		return gardenItemsWithinSearchDistance;
 	}
-	
+
 	@Override
 	public GardenItem retrieveById(int id) {
 		GardenItem item = null;
 		try {
 			item = itemRepo.findByActiveTrueAndId(id);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return item;
 	}
-	
-	
+
 	@Override
 	public GardenItem create(GardenItem item, String username) {
 		item.setUser(userRepo.findByUsername(username));
 		try {
 			return itemRepo.saveAndFlush(item);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	@Override
 	public GardenItem update(GardenItem item) {
 		GardenItem itemToUpdate = retrieveById(item.getId());
@@ -131,13 +156,12 @@ public class GardenItemServiceImpl implements GardenItemService {
 		}
 		try {
 			return itemRepo.saveAndFlush(itemToUpdate);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	@Override
 	public boolean delete(int id) {
 		GardenItem itemToDelete = retrieveById(id);
@@ -147,12 +171,10 @@ public class GardenItemServiceImpl implements GardenItemService {
 			try {
 				retrieveById(id).isActive();
 				return false;
-			}
-			catch (NullPointerException e) {
+			} catch (NullPointerException e) {
 				return true;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -167,10 +189,8 @@ public class GardenItemServiceImpl implements GardenItemService {
 				* Math.cos(Math.toRadians(venueLat)) * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
 
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		
-		
+
 		return (int) (Math.round(AVERAGE_RADIUS_OF_EARTH_KM * c * 0.621371));
 	}
-
 
 }
