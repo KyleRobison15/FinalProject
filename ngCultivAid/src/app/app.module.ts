@@ -14,6 +14,8 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GardenItemListingsComponent } from './components/garden-item-listings/garden-item-listings.component';
+import { CreateListingComponent } from './components/create-listing/create-listing.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     LoginComponent,
     LogoutComponent,
-    MessagingComponent
+    MessagingComponent,
+    GardenItemListingsComponent,
+    CreateListingComponent
   ],
   imports: [
     BrowserModule,
