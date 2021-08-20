@@ -25,28 +25,31 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   searchByZip(form: NgForm) {
-    console.log(form.value);
-    this.apiExt.getLocationForZip(form.value.zip).subscribe(
-      (data) => {
-        let lat = data.results[0].geometry.location.lat;
-        let long = data.results[0].geometry.location.lng;
 
-        this.gardenItemSvc.getItemsWithinDistanceOfZip(lat, long, form.value.distance).subscribe(
-          (data) => {
-            this.gardenItemsAndDistance = data;
-          },
-          (err) => {
-            console.error('HomeComponent.searchByZip(): error getting items');
-            this.router.navigateByUrl('/home');
-          }
-        );
+    this.router.navigateByUrl(`searchResult/${form.value.zip}/${form.value.distance}`);
+
+    // console.log(form.value);
+    // this.apiExt.getLocationForZip(form.value.zip).subscribe(
+    //   (data) => {
+    //     let lat = data.results[0].geometry.location.lat;
+    //     let long = data.results[0].geometry.location.lng;
+
+    //     this.gardenItemSvc.getItemsWithinDistanceOfZip(lat, long, form.value.distance).subscribe(
+    //       (data) => {
+    //         this.gardenItemsAndDistance = data;
+    //       },
+    //       (err) => {
+    //         console.error('HomeComponent.searchByZip(): error getting items');
+    //         this.router.navigateByUrl('/home');
+    //       }
+    //     );
 
 
-      },
-      (err) => {
-        console.error('HomeComponent.searchByZip(): error getting location');
-        this.router.navigateByUrl('/home');
-      }
-    );
+    //   },
+    //   (err) => {
+    //     console.error('HomeComponent.searchByZip(): error getting location');
+    //     this.router.navigateByUrl('/home');
+    //   }
+    // );
   }
 }

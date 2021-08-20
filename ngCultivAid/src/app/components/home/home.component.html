@@ -20,25 +20,3 @@
     </form>
   </div>
 </div>
-
-<div class="card result-card" *ngFor="let item of gardenItemsAndDistance">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
-        <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
-      </div>
-      <div class="col-md-6" id="postedByText">
-        Grown By: {{ item[0].user.username }} (picture here)
-      </div>
-    </div>
-    <span>
-      {{ item[0].description }}<br><br>
-    </span>
-    <div class="row">
-      <div class="col-md-6">
-      Qty available: {{ item[0].amount }}
-      </div>
-      <div class="col-md-6" id="distanceAwayText">{{ item[1] }} miles away</div>
-    </div>
-  </div>
-</div>

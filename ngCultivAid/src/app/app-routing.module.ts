@@ -8,6 +8,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PrivateUserProfileComponent } from './components/private-user-profile/private-user-profile.component';
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'messages', component: MessagingComponent },
+  { path: 'searchResult/:zip/:miles', component: SearchResultComponent },
   { path: 'privateProfile', component: PrivateUserProfileComponent },
   { path: 'publicProfile', component: PublicUserProfileComponent },
   { path: '**', component: NotFoundComponent } // '**' is a wild card catch all path. We use this for our 404 page
