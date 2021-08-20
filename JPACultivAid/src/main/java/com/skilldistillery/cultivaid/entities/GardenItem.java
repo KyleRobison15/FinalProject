@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table (name="garden_item")
@@ -54,6 +55,7 @@ public class GardenItem {
 	
 	@ManyToOne
 	@JoinColumn (name = "user_id")
+	@JsonIgnoreProperties({"gardenItems"})
 	private User user;
 	
 	private boolean active = true;

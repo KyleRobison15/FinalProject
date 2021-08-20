@@ -67,7 +67,7 @@ public class User {
 	@OneToMany (mappedBy="leftByUser")
 	private List<GardenItemComment> gardenItemComments;
 	
-	@JsonIgnore
+
 	@OneToMany (mappedBy="user")
 	private List<GardenItem> gardenItems;
 	
