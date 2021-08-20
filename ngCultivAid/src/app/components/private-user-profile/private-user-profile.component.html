@@ -64,9 +64,9 @@
 <!-- ///// Incoming Requests ///// -->
 <div>
   <div>
-    incoming requests here
+    <h3>Incoming Exchanges</h3>
 
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>Username</th>
@@ -74,23 +74,41 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let exchange of buyerExchanges">
-          <div *ngIf="exchange.active">
-            <td>{{exchange.buyer.username}}</td>
-            <td>{{exchange.createDate}}</td>
-            <td><button (click)="acceptIncomingExchange(exchange)">Accept</button></td>
-            <td><button (click)="denyIncomingExchange(exchange)">Deny</button></td>
-          </div>
+        <tr *ngFor="let exchange of sellerExchanges">
+            <td *ngIf="exchange.active && !exchange.accepted">{{exchange.buyer.username}}</td>
+            <td *ngIf="exchange.active && !exchange.accepted">{{exchange.createDate}}</td>
+            <td *ngIf="exchange.active && !exchange.accepted"><button (click)="acceptIncomingExchange(exchange)">Accept</button> | <button (click)="denyIncomingExchange(exchange)">Deny</button>
         </tr>
       </tbody>
     </table>
 
   </div>
+
+<!-- ///// In Progress Requests ///// -->
+<div>
+  <h3>Exchanges In Progress: </h3>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Date Requested</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exchange of sellerExchanges">
+          <td *ngIf="exchange.accepted && !exchange.complete">{{exchange.buyer.username}}</td>
+          <td *ngIf="exchange.accepted && !exchange.complete">{{exchange.createDate}}</td>
+          <td *ngIf="exchange.accepted && !exchange.complete"><button (click)="completeExchange(exchange)">Complete</button>
+      </tr>
+    </tbody>
+  </table>
+
 <!-- ///// Outgoing Requests ///// -->
   <div>
-    outgoing requests here
+    <h3>Your Requests: </h3>
 
-    <table>
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th>Username</th>
@@ -99,14 +117,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let exchange of sellerExchanges">
-          <td>{{exchange.buyer.username}}</td>
+        <tr *ngFor="let exchange of buyerExchanges">
+          <td>{{exchange.exchangeItems[0].gardenItem.user.username}}</td>
           <td>{{exchange.createDate}}</td>
           <td>{{getOutgoingExchangeStatus(exchange)}}</td>
+          <td><button *ngIf="exchange.complete">Review</button></td>
         </tr>
       </tbody>
     </table>
-
 
   </div>
 </div>

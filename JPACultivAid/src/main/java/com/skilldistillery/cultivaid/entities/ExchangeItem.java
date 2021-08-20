@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="exchange_item")
 public class ExchangeItem {
@@ -23,6 +25,7 @@ public class ExchangeItem {
 	//exchange_id
 	@ManyToOne
 	@JoinColumn(name="exchange_id")
+	@JsonIgnoreProperties({"exchangeItems"})
 	private Exchange exchange; 
 	
 	//garden_item_id
