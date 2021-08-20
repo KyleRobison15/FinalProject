@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateListingComponent } from './components/create-listing/create-listing.component';
+import { GardenItemListingsComponent } from './components/garden-item-listings/garden-item-listings.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'messages', component: MessagingComponent },
+  { path: 'listings', component: GardenItemListingsComponent},
+  { path: 'createListings', component: CreateListingComponent},
   { path: 'searchResult/:zip/:miles', component: SearchResultComponent },
   { path: 'privateProfile', component: PrivateUserProfileComponent },
   { path: 'publicProfile', component: PublicUserProfileComponent },
