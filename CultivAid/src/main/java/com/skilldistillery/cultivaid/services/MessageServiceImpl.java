@@ -29,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
 			messages = messageRepo.findBySendingUser_Username(username);
 		}
 		
-		return messages; 
+		return messages;
 	}
 
 	@Override
