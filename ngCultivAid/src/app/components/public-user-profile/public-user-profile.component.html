@@ -1,5 +1,5 @@
 <div class="container">
-<h1 class="display-2">{{this.user.username}} Profile</h1>
+<h1 class="display-2">{{user.username}} Profile</h1>
 
 <div class="row">
   <div class="col">
@@ -15,9 +15,9 @@
   </div>
 </div>
 
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 18rem;" *ngFor="let item of user.gardenItems">
   <!-- TODO: Change image url to produce image -->
-  <img src="{{user.imageUrl}}" class="card-img-top" alt="...">
+  <img src="{{item.produce}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
