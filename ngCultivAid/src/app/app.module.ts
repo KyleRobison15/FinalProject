@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { MessagingComponent } from './components/messaging/messaging.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgModule,
+    NgbModule,
     FormsModule,
     HttpClientModule
   ],
