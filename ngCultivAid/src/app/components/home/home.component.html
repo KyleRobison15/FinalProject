@@ -1,11 +1,44 @@
 <h1 class="display-1">CultivAid Home Page</h1>
 
-<form #searchByZipForm=ngForm>
-  <input type="number" name="zip" placeholder="Search By Zip Code" ngModel><br>
-  <input type="number" name="distance" placeholder="Search Radius In Miles" ngModel><br>
-  <button name="submit" class="btn btn-outline-success" (click)="searchByZip(searchByZipForm)">Submit</button>
-</form>
+<div class="card search-card">
+  <div class="card-body">
+    <H3>FIND FRESH PRODUCE NEAR YOU!</H3><br />
+    <form #searchByZipForm="ngForm">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Zip Code: </span>
+        <input class="form-control" type="text" name="zip" ngModel />
+        <span class="input-group-text">Radius (Miles): </span>
+        <input class="form-control" type="text" name="distance" ngModel />
+        <button
+          name="submit"
+          class="btn btn-outline-light"
+          (click)="searchByZip(searchByZipForm)"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
-<ul>
-  <li *ngFor="let item of gardenItemsAndDistance">{{item[0].description}} -------- {{item[1]}} miles away ------- Posted By: {{item[0].user.username}}</li>
-</ul>
+<div class="card result-card" *ngFor="let item of gardenItemsAndDistance">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
+      </div>
+      <div class="col-md-6" id="postedByText">
+        Grown By: {{ item[0].user.username }} (picture here)
+      </div>
+    </div>
+    <span>
+      {{ item[0].description }}<br><br>
+    </span>
+    <div class="row">
+      <div class="col-md-6">
+      Qty available: {{ item[0].amount }}
+      </div>
+      <div class="col-md-6" id="distanceAwayText">{{ item[1] }} miles away</div>
+    </div>
+  </div>
+</div>
