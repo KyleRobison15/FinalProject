@@ -46,6 +46,7 @@ class MessageTest {
 	@DisplayName("Test Message Mapping")
 	void test1() {
 		assertNotNull(message);
+		assertEquals("Hello!", message.getSubject());
 		assertEquals("Hello CultivAid!", message.getContent());
 	}
 	
@@ -55,6 +56,16 @@ class MessageTest {
 		assertNotNull(message.getSendingUser());
 		assertEquals("bobsmith@example.com", message.getReceivingUser().getEmail());
 		assertEquals("janesmith@example.com", message.getSendingUser().getEmail());
+	}
+	
+	@Test
+	@DisplayName("TEST: Many Messages to One Message (the message replied to)")
+	void test3() {
+		assertNull(message.getInReplyToMessage());
+		Message message2 = em.find(Message.class, 2);
+		assertEquals(1, message2.getInReplyToMessage().getId());
+		assertEquals("Hello!", message2.getInReplyToMessage().getSubject());
+		assertEquals("Hello CultivAid!", message2.getInReplyToMessage().getContent());
 	}
 
 }
