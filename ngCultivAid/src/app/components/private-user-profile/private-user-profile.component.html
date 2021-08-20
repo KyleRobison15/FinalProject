@@ -1,0 +1,61 @@
+<p>private-user-profile works!</p>
+
+<h3>User Info: </h3>
+
+<table>
+
+  <tbody>
+    <tr>
+      <th>Username: </th>
+      <td>{{user.username}}</td>
+    </tr>
+    <tr>
+      <th>First Name: </th>
+      <td>{{user.firstName}}</td>
+    </tr>
+    <tr>
+      <th>Last Name: </th>
+      <td>{{user.lastName}}</td>
+    </tr>
+    <tr>
+      <th>Email: </th>
+      <td>{{user.email}}</td>
+    </tr>
+    <tr>
+      <th>Phone: </th>
+      <td>{{user.phone}}</td>
+    </tr>
+    <tr>
+      <th>Picture: </th>
+      <td><img src="{{user.imageUrl}}" width="128px" height="128px"/></td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+
+<!-- {
+  "id": 2,
+  "username": "admin2",
+  "password": "$2a$10$xgsGns34p0IDBrLwfqDPxu7RrBq8iEO3vzNZ1NU.zrPIH9NWpOPye",
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "email": "janesmith@example.com",
+  "phone": "1234567891",
+  "active": true,
+  "role": "admin",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg",
+  "createDate": "2021-08-17T02:00:00",
+  "address": {
+      "id": 2,
+      "address": "1234 Admin Drive",
+      "address2": "Apt 204",
+      "city": "Colorado Springs",
+      "stateAbbr": "CO",
+      "postalCode": "80903",
+      "latitude": null,
+      "longitude": null,
+      "active": true
+  }
+} -->
