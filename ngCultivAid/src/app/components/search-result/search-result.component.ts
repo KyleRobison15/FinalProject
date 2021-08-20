@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiExternalService } from 'src/app/services/api-external.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { GardenItemService } from 'src/app/services/garden-item.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-search-result',
@@ -16,6 +17,7 @@ export class SearchResultComponent implements OnInit {
     private router: Router,
     private apiExt: ApiExternalService,
     private gardenItemSvc: GardenItemService,
+    private userService: UserService,
     private currentRoute: ActivatedRoute
   ) { }
 
@@ -64,4 +66,15 @@ export class SearchResultComponent implements OnInit {
     );
   }
 
-}
+  getUser(username: string){
+    this.userService.getUserByUsername(username).subscribe(
+      user => {
+        this.userService.reroute(user);
+      },
+      fail=> {
+        console.error('publicUserProfileComponent: error getting user by username');
+      }
+
+    )
+  }
+  }

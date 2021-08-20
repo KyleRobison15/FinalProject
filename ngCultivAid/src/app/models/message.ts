@@ -2,7 +2,7 @@ import { User } from "./user";
 
 export class Message {
 
-  id: string;
+  id: number;
   subject: string;
   content: string;
   createTime: string;
@@ -14,7 +14,7 @@ export class Message {
   replies: Message [];
 
   constructor(
-    id: string = '',
+    id: number = 0,
     subject: string = '',
     content: string = '',
     createTime: string = '',

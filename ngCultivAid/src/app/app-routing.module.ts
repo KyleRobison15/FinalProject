@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'searchResult/:zip/:miles', component: SearchResultComponent },
   { path: 'privateProfile', component: PrivateUserProfileComponent },
   { path: 'publicProfile', component: PublicUserProfileComponent },
+  { path: 'publicProfile/:username', component: PublicUserProfileComponent },
   { path: '**', component: NotFoundComponent } // '**' is a wild card catch all path. We use this for our 404 page
 
 ];
