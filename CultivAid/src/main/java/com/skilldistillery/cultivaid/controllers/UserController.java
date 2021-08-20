@@ -32,6 +32,14 @@ public class UserController {
 		return user;
 	}
 	
+	@GetMapping("api/users")
+	public User getLoggedInUser(HttpServletResponse res, Principal principal) {
+		
+		User user = userSvc.findByUsername(principal.getName());
+		
+		return user;
+	}
+	
 	@PutMapping("api/users/password")
 	public User resetPassword(@RequestBody User user, Principal principal) {
 		return userSvc.resetPassword(user);
