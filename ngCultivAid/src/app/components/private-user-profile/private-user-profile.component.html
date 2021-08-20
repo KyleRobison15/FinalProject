@@ -64,9 +64,9 @@
 <!-- ///// Incoming Requests ///// -->
 <div>
   <div>
-    incoming requests here
+    <h3>Incoming Exchanges</h3>
 
-    <table>
+    <table border="1px">
       <thead>
         <tr>
           <th>Username</th>
@@ -74,8 +74,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let exchange of buyerExchanges">
-          <div *ngIf="exchange.active">
+        <tr *ngFor="let exchange of sellerExchanges">
+          <div *ngIf="exchange.active && !exchange.accepted">
             <td>{{exchange.buyer.username}}</td>
             <td>{{exchange.createDate}}</td>
             <td><button (click)="acceptIncomingExchange(exchange)">Accept</button></td>
@@ -86,11 +86,34 @@
     </table>
 
   </div>
+
+<!-- ///// In Progress Requests ///// -->
+<div>
+  <h3>Exchanges In Progress: </h3>
+
+  <table border="1px">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Date Requested</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exchange of sellerExchanges">
+        <div *ngIf="exchange.accepted && !exchange.complete">
+          <td>{{exchange.buyer.username}}</td>
+          <td>{{exchange.createDate}}</td>
+          <td><button (click)="completeExchange(exchange)">Complete</button></td>
+      </div>
+      </tr>
+    </tbody>
+  </table>
+
 <!-- ///// Outgoing Requests ///// -->
   <div>
-    outgoing requests here
+    <h3>Your Requests: </h3>
 
-    <table>
+    <table border="1px">
       <thead>
         <tr>
           <th>Username</th>
@@ -99,14 +122,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let exchange of sellerExchanges">
+        <tr *ngFor="let exchange of buyerExchanges">
           <td>{{exchange.buyer.username}}</td>
           <td>{{exchange.createDate}}</td>
           <td>{{getOutgoingExchangeStatus(exchange)}}</td>
+          <td><button *ngIf="exchange.complete">Review</button></td>
         </tr>
       </tbody>
     </table>
-
 
   </div>
 </div>
