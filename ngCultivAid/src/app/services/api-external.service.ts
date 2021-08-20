@@ -39,7 +39,6 @@ export class ApiExternalService {
     let addrRequestString = `${zip}`
     let component = `&components=postal_code:${zip}`
     let requestString = `${this.geotagBaseUrl}${addrRequestString}${component}${this.mapsKey}`;
-    console.log(requestString);
 
     return this.http.get<any>(requestString)
     .pipe(
