@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     LoginComponent,
     LogoutComponent,
-    MessagingComponent
+    MessagingComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
