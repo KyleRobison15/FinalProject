@@ -15,14 +15,12 @@ export class UserService {
 
   private baseUrl = 'http://localhost:8095/';
 
-  loggedInUser: User | null = null;
-
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   ///////////
   //Methods
 
-  getUser(): Observable<User> {
+  getLoggedInUser(): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'api/users', this.getHttpOptions())
     .pipe(
       catchError((err: any) => {

@@ -61,17 +61,57 @@
 </div>
 
 <!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
-
+<!-- ///// Incoming Requests ///// -->
 <div>
   <div>
     incoming requests here
-  </div>
 
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Date Requested</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exchange of buyerExchanges">
+          <div *ngIf="exchange.active">
+            <td>{{exchange.buyer.username}}</td>
+            <td>{{exchange.createDate}}</td>
+            <td><button (click)="acceptIncomingExchange(exchange)">Accept</button></td>
+            <td><button (click)="denyIncomingExchange(exchange)">Deny</button></td>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+<!-- ///// Outgoing Requests ///// -->
   <div>
     outgoing requests here
+
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Date Requested</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exchange of sellerExchanges">
+          <td>{{exchange.buyer.username}}</td>
+          <td>{{exchange.createDate}}</td>
+          <td>{{getOutgoingExchangeStatus(exchange)}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+
   </div>
 </div>
 
+<!-- /////////////////////// B U T T O N S //////////////////////////////// -->
 <button>Exchange History</button>
 <button (click)='goToPublicProfile()'>Public Profile</button>
 
