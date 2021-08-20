@@ -16,6 +16,8 @@ export class PublicUserProfileComponent implements OnInit {
 
   ngOnInit(): void {
       this.user = this.userService.user;
+      console.log(this.user);
+
     }
 
     // this.userService.getUser().subscribe(
