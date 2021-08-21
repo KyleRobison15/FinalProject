@@ -1,33 +1,86 @@
-.search-card {
+.container-home {
+  background-image: url("https://www.naturesproduce.com/wp-content/uploads/2018/08/healthy-eating-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68279554.jpg");
+	background-repeat: repeat-y;
+  background-size: cover;
+  min-height: calc(100vh - 56px);
+  overflow: hidden;
+}
+
+.display-1 {
+  color: white;
+  text-align: center;
+}
+.display-8 {
+  color: white;
+  text-align: center;
+}
+
+.loggedInCss {
+  width: 80% !important;
+  height: 7rem !important;
+  border: 3px solid #f1f1f1;
+  background-color: rgba(77, 175, 21);
+  border-radius: 10px;
+  margin-bottom: 1rem !important;
+  margin-top: none !important;
+  transform: translate(0px, 0px) !important;
+  position: relative !important;
+}
+
+#search-card {
   transform: translate(0px, 50%);
 	margin: auto;
 	width: 60%;
   height: 10rem;
 	border: 3px solid #f1f1f1;
-	background-color: rgba(77, 175, 21);
+	background-color: rgba(77, 175, 21, 0.8);
 	border-radius: 10px;
   margin-bottom: 1rem !important;
 }
 
-.search-card h3 {
+#search-card h3 {
   color: white;
   text-decoration: underline;
   font-weight: bolder;
   text-align: center;
 }
 
-.search-card .input-group-text {
+#search-card .input-group-text {
   color: white;
   background-color: rgba(77, 175, 21, 0.6);
   min-height: 150%;
 }
 
-.result-card {
-  transform: translate(0px, 50%);
-  position: relative;
-	margin: auto;
-	width: 60%;
-  height: 10rem;
+.recent-post-div {
+  margin:auto;
+  text-align: center;
+  width: 70%;
+  transform: translate(0px, 0px) !important;
+  position: relative !important;
+  min-height: calc(100vh - 56px - 7rem - 1rem);
+}
+
+.recent-post-div h3 {
+  color: white;
+  text-decoration: underline;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.recent-post-card {
+  margin-bottom: 0.5rem;;
+  height: 6rem;
   border-radius: 10px;
 	border: 3px solid #f1f1f1;
+  padding: 0px;
+  background-color: rgb(255, 255, 255, 0.9);
 }
+
+#postedByText, #qty-dist-text{
+  font-size: small;
+}
+
+#description-text {
+  text-align: left !important;
+}
+
