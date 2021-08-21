@@ -18,6 +18,7 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { PrivateUserProfileComponent } from './components/private-user-profile/private-user-profile.component';
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { HomeComponent } from './components/home/home.component';
+import { SortRecentPipe } from './pipes/sort-recent.pipe';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { HomeComponent } from './components/home/home.component';
     CreateListingComponent,
     SearchResultComponent,
     PrivateUserProfileComponent,
-    PublicUserProfileComponent
+    PublicUserProfileComponent,
+    SortRecentPipe
   ],
   imports: [
     BrowserModule,

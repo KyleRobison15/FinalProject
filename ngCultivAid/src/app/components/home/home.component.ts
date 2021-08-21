@@ -21,12 +21,31 @@ export class HomeComponent implements OnInit {
 
   searchByZipForm: number[] = [];
   gardenItemsAndDistance: any[] = [];
+  defaultDistance: number = 1000;
+  loggedInCss: string = '';
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loggedInCss = '';
+    if (this.loggedIn()) {
+      this.loggedInCss = 'loggedInCss';
+      this.gardenItemSvc
+        .getItemsWithinDistanceOfUser(this.defaultDistance)
+        .subscribe(
+          (data) => {
+            this.gardenItemsAndDistance = data;
+          },
+          (err) => {
+            console.error('HomeComponent.searchByZip(): error getting items');
+            this.router.navigateByUrl('/home');
+          }
+        );
+    }
+  }
 
   searchByZip(form: NgForm) {
-
-    this.router.navigateByUrl(`searchResult/${form.value.zip}/${form.value.distance}`);
+    this.router.navigateByUrl(
+      `searchResult/${form.value.zip}/${form.value.distance}`
+    );
 
     // console.log(form.value);
     // this.apiExt.getLocationForZip(form.value.zip).subscribe(
@@ -44,12 +63,15 @@ export class HomeComponent implements OnInit {
     //       }
     //     );
 
-
     //   },
     //   (err) => {
     //     console.error('HomeComponent.searchByZip(): error getting location');
     //     this.router.navigateByUrl('/home');
     //   }
     // );
+  }
+
+  loggedIn(): boolean {
+    return this.auth.checkLogin();
   }
 }

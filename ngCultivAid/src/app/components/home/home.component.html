@@ -1,22 +1,51 @@
-<h1 class="display-1">CultivAid Home Page</h1>
+<div class="container-home">
+  <h1 class="display-1" *ngIf="!loggedIn()">CultivAid</h1>
+  <h3 class="display-8" *ngIf="!loggedIn()">Saving produce 1 neighbor at a time.</h3>
 
-<div class="card search-card">
-  <div class="card-body">
-    <H3>FIND FRESH PRODUCE NEAR YOU!</H3><br />
-    <form #searchByZipForm="ngForm">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Zip Code: </span>
-        <input class="form-control" type="text" name="zip" ngModel />
-        <span class="input-group-text">Radius (Miles): </span>
-        <input class="form-control" type="text" name="distance" ngModel />
-        <button
-          name="submit"
-          class="btn btn-outline-light"
-          (click)="searchByZip(searchByZipForm)"
-        >
-          Search
-        </button>
+  <div class="card" id="search-card" [ngClass]="loggedInCss">
+    <div class="card-body">
+      <H3>FIND FRESH PRODUCE NEAR YOU!</H3><br *ngIf="!loggedIn()" />
+      <form #searchByZipForm="ngForm">
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text">Zip Code: </span>
+          <input class="form-control" type="text" name="zip" ngModel />
+          <span class="input-group-text">Radius (Miles): </span>
+          <input class="form-control" type="text" name="distance" ngModel />
+          <button
+            name="submit"
+            class="btn btn-outline-light"ß
+            (click)="searchByZip(searchByZipForm)"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="recent-post-div" *ngIf="loggedIn()">
+    <H3>Recent Posts Near You!</H3><br />
+    <div
+      class="card recent-post-card"
+      *ngFor="let item of gardenItemsAndDistance | sortRecent"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6" id="item-name-text">
+            <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
+          </div>
+          <div class="col-md-6" id="postedByText">
+            Grown By: {{ item[0].user.username }} (picture here)
+          </div>
+        </div>
+        <span id="description-text"> {{ item[0].description }}<br /></span>
+        <div class="row" id="qty-dist-text">
+          <div class="col-md-6">Qty available: {{ item[0].amount }}</div>
+          <div class="col-md-6" id="distanceAwayText">
+            {{ item[1] }} miles away
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
