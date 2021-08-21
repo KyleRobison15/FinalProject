@@ -22,6 +22,7 @@
                     Additional Info: The request body to add a form is a list of exhcnage items. /////////////////////////// -->
 
 <div>
+  <form>
   <table class = "table">
     <thead>
       <tr>
@@ -31,14 +32,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of user.gardenItems">
-        <td><input type="checkbox" (click)="setExchangeItemId(item.id)" /></td>   //only add checked items to the request body
+      <tr *ngFor="let item of user.gardenItems, let i = index">
+        <td><input type="checkbox" name="exchangeItem + i" [(ngModel)]="exchangeData[i].checked"/></td>
         <td>{{item.produce.name}}</td>
-        <td><input type="number"/> / {{item.amount}} [(ngModel)]="exchangeItem.quantity"</td>   //specify the amount for each item in the request body
+        <td><input type="number" name="amount + i" [(ngModel)]="exchangeData[i].amount"/> / {{item.amount}}</td>
       </tr>
     </tbody>
     <button class="btn btn-success" (click)="submitExchangeRequest()">Submit Request</button>
   </table>
+  </form>
 </div>
 
 <!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->

@@ -4,6 +4,7 @@ import { Exchange } from '../models/exchange';
 import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { ExchangeItem } from '../models/exchange-item';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,16 @@ export class ExchangeService {
         return throwError('ExchangeService.getSellerExchanges(): error getting seller exchanges.');
       })
     );
+  }
+
+  createExchange(exchangeItems: ExchangeItem[]) {
+    return this.http.post<Exchange>(this.baseUrl + 'api/exchanges/', exchangeItems, this.getHttpOptions())
+      .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('ExchangeService.createExchange(): error creating exchange');
+        })
+      );
   }
 
   updateExchange(exchange: Exchange){
