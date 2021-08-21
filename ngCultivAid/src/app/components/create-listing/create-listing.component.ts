@@ -18,6 +18,8 @@ export class CreateListingComponent implements OnInit {
   produces: Produce[] = [];
   produceItem: Produce = new Produce();
 
+  noProduceName: Boolean = false;
+
   constructor(
     private gvc: GardenItemService,
     private router: Router,
