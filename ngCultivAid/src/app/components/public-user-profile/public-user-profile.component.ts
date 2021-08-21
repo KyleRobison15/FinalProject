@@ -36,11 +36,13 @@ export class PublicUserProfileComponent implements OnInit {
   }
 
   submitExchangeRequest() {
+    console.log(this.exchangeData);
     this.exchangeData.forEach(dataRow => {
       if (dataRow.checked) {
         this.exchangeItem.gardenItem.id = dataRow.itemId;
         this.exchangeItem.quantity = dataRow.amount;
         this.exchangeItems.push(this.exchangeItem);
+        this.exchangeItem = new ExchangeItem();
       }
     });
     this.exchangeSvc.createExchange(this.exchangeItems).subscribe(
