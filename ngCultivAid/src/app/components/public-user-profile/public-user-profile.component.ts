@@ -1,63 +1,60 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExchangeItem } from 'src/app/models/exchange-item';
-import { GardenItem } from 'src/app/models/garden-item';
 import { User } from 'src/app/models/user';
+import { ExchangeService } from 'src/app/services/exchange.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-public-user-profile',
   templateUrl: './public-user-profile.component.html',
-  styleUrls: ['./public-user-profile.component.css']
+  styleUrls: ['./public-user-profile.component.css'],
 })
 export class PublicUserProfileComponent implements OnInit {
-
   user: User = new User();
 
-  exchangeItems: ExchangeItem[] = [];  //request body
+  exchangeItems: ExchangeItem[] = []; //request body
   exchangeItem = new ExchangeItem();
+  exchangeData: any[] = [];
 
-//   [
-//     {
-//         "quantity": 12,
-//         "gardenItem":{
-//             "id": 1
-//         },
-//         "active": true
-//     },
-//     {
-//         "quantity": 3,
-//         "gardenItem":{
-//             "id": 1
-//         },
-//         "active": true
-//     }
-// ]
-
-  constructor(private userService: UserService, private router: Router, private currentRoute: ActivatedRoute) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private currentRoute: ActivatedRoute,
+    private exchangeSvc: ExchangeService
+  ) {}
 
   ngOnInit(): void {
-      this.user = this.userService.user;
-      console.log(this.user);
-
-    }
-
-    submitExchangeRequest(){
-
-    }
-
-    setExchangeItemId(gardenItemId: number){
-      this.exchangeItem.gardenItem.id = gardenItemId;
-    }
-
-    // this.userService.getUser().subscribe(
-    //   user => {
-    //     this.user = user;
-    //     console.log("Logged In User: " + this.user.username);
-    //   },
-    //   fail => {
-    //     console.log('Invalid User ');
-    //     this.router.navigateByUrl('notFound');
-    //   }
-    // )
+    this.user = this.userService.user;
+    this.user.gardenItems.forEach((item) => {
+      let exchangeObject = Object();
+      exchangeObject['itemId'] = item.id;
+      exchangeObject['amount'] = 0;
+      exchangeObject['checked'] = false;
+      this.exchangeData.push(exchangeObject);
+    });
   }
+
+  submitExchangeRequest() {
+    this.exchangeData.forEach(dataRow => {
+      if (dataRow.checked) {
+        this.exchangeItem.gardenItem.id = dataRow.itemId;
+        this.exchangeItem.quantity = dataRow.amount;
+        this.exchangeItems.push(this.exchangeItem);
+      }
+    });
+    this.exchangeSvc.createExchange(this.exchangeItems).subscribe(
+      exchange => {
+        console.log('succesfully created exchange and items');
+        this.exchangeItems = [];
+        this.exchangeItem = new ExchangeItem();
+      },
+      error => {
+        console.log('failed to create exchange and exchange items');
+      }
+    );
+  }
+
+
+
+}
