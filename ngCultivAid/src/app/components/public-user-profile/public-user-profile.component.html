@@ -15,6 +15,34 @@
   </div>
 </div>
 
+ <!-- ///////////////////////// EXCHANGE REQUEST FORM /////////////////////////// -->
+
+ <!-- //////// NOTE: The click events and ngModels for the Exchange Request Form are not working.
+                    Feel free to mess around with them.
+                    Additional Info: The request body to add a form is a list of exhcnage items. /////////////////////////// -->
+
+<div>
+  <table class = "table">
+    <thead>
+      <tr>
+        <th>Add</th>
+        <th>Garden Item</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of user.gardenItems">
+        <td><input type="checkbox" (click)="setExchangeItemId(item.id)" /></td>   //only add checked items to the request body
+        <td>{{item.produce.name}}</td>
+        <td><input type="number"/> / {{item.amount}} [(ngModel)]="exchangeItem.quantity"</td>   //specify the amount for each item in the request body
+      </tr>
+    </tbody>
+    <button class="btn btn-success" (click)="submitExchangeRequest()">Submit Request</button>
+  </table>
+</div>
+
+<!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->
+
 <div class="card" style="width: 18rem;" *ngFor="let item of user.gardenItems">
   <!-- TODO: Change image url to produce image -->
   <img src="{{item.produce.imageUrl}}" class="card-img-top" alt="...">

@@ -409,11 +409,7 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (1, '2021-08-17', 5, 'Fricken\' amazing carrots!', 1, 1, '2021-08-17', 1, 2);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (2, '2021-08-17', 5, 'Dis veggie do be slappin', 0, 1, '2021-08-17', 1, 1);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (3, '2021-08-17', 5, 'Yum yum in my tum tum', 0, 0, '2021-08-17', 1, 1);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (4, '2021-08-17', 5, 'This is some pristine produce!', 0, 0, '2021-08-17', 1, 1);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (5, '2021-08-17', 5, 'Super nice guy, threw in some extra honey too!', 0, 0, '2021-08-17', 1, 2);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (6, '2021-08-17', 5, 'Thanks a bunch! These look great!', 0, 0, '2021-08-17', 1, 2);
+INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (2, NULL, 0, NULL, 0, 0, '2021-08-17', 1, 1);
 
 COMMIT;
 
@@ -424,15 +420,8 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (1, 10, 1, 1, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (2, 1, 2, 2, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (3, 2, 2, 3, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (4, 3, 3, 4, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (5, 4, 3, 5, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (6, 1, 4, 6, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (7, 2, 5, 7, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (8, 3, 6, 8, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (9, 4, 3, 9, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (10, 1, 6, 2, 1);
+INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (2, 3, 2, 3, 1);
+INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (3, 2, 2, 4, 1);
 
 COMMIT;
 
