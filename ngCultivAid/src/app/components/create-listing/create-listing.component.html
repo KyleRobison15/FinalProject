@@ -1,5 +1,14 @@
 <h1>Create Listing</h1>
 
+<alert type="danger" *ngIf=noProduceName>
+  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</alert>
+
+<alert type="danger">
+  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</alert>
+
+
 <form>
   Variety<input type="text" name="variety" class="form-control" [(ngModel)]="newListing.variety">
   Description<input name="description" type="text" class="form-control" [(ngModel)]="newListing.description">
@@ -13,6 +22,21 @@
 
   Pesticides<input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
   Fertilizers<input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
-  <input class="btn btn-outline-success" value="Create Listing" (click)="addGardenItem()">
+  <input class="btn btn-outline-success" value="Create Listing" (click)="addGardenItem()" *ngIf=produceItem.id=0 >
   </form>
+
+  <accordion>
+    <accordion-group heading="Static Header">
+      This content is straight in the template.
+    </accordion-group>
+    <accordion-group heading="Another group">
+      <p>Some content</p>
+    </accordion-group>
+    <accordion-group heading="Another group">
+      <p>Some content</p>
+    </accordion-group>
+    <accordion-group heading="Another group">
+      <p>Some content</p>
+    </accordion-group>
+  </accordion>
 

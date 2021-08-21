@@ -19,6 +19,8 @@ import { PrivateUserProfileComponent } from './components/private-user-profile/p
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { SortRecentPipe } from './pipes/sort-recent.pipe';
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AccordionModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService
