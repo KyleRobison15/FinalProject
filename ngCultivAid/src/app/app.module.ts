@@ -19,8 +19,12 @@ import { PrivateUserProfileComponent } from './components/private-user-profile/p
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
+import { FilterCategoryPipe } from './pipes/filter-category.pipe';
+import { FilterProducePipe } from './pipes/filter-produce.pipe';
+import { AgmCoreModule } from '@agm/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 
 @NgModule({
@@ -38,7 +42,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchResultComponent,
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
-    SortRecentPipe
+    SortRecentPipe,
+    FilterCategoryPipe,
+    FilterProducePipe
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     FormsModule,
     HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
+    }),
     AccordionModule.forRoot(),
+    AlertModule.forRoot(),
     BrowserAnimationsModule
   ],
   providers: [
