@@ -18,6 +18,8 @@ export class CreateListingComponent implements OnInit {
   produces: Produce[] = [];
   produceItem: Produce = new Produce();
 
+  noProduceName: Boolean = false;
+
   constructor(
     private gvc: GardenItemService,
     private router: Router,
@@ -59,8 +61,6 @@ export class CreateListingComponent implements OnInit {
     this.gvc.create(this.newListing).subscribe(
       data => {
         console.log("Successfully created Garden Item Listing");
-        this.newListing = new GardenItem();
-        this.produceItem = new Produce();
         console.log("Items resetted");
       },
       fail => {
@@ -69,6 +69,8 @@ export class CreateListingComponent implements OnInit {
         console.error(fail);
       });
 
+      this.newListing = new GardenItem();
+      this.produceItem = new Produce();
   }
 
 }

@@ -22,6 +22,8 @@ import { SortRecentPipe } from './pipes/sort-recent.pipe';
 import { FilterCategoryPipe } from './pipes/filter-category.pipe';
 import { FilterProducePipe } from './pipes/filter-produce.pipe';
 import { AgmCoreModule } from '@agm/core';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { AgmCoreModule } from '@agm/core';
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
-    })
+    }),
+    AccordionModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService

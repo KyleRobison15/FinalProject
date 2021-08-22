@@ -60,6 +60,25 @@
   <br>
 </div>
 
+<!-- ///////////////////////////////// User Listings Manager Wireframe //////////////////////////////////////// -->
+
+<table class="table table-bordered">
+  <thead>
+
+  </thead>
+  <tbody>
+    <tr>
+      <td>Listing 1 Here... (iterate over all listings)</td>
+      <td><button>Remove</button></td>
+      <td><button>Update</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ///////////////////////////////// Create a New Listing Route //////////////////////////////////////// -->
+<button class="btn btn-success" [routerLink]="['/createListings']">Create New Listing</button><br><br>
+
+
 <!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
 <!-- ///// Incoming Requests ///// -->
 <div>
@@ -69,6 +88,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Requested Garden Items</th>
           <th>Username</th>
           <th>Date Requested</th>
         </tr>
@@ -132,4 +152,23 @@
 <!-- /////////////////////// B U T T O N S //////////////////////////////// -->
 <button>Exchange History</button>
 <button (click)='goToPublicProfile()'>Public Profile</button>
+
+<!-- ///////////////////////////////// ACCORDIAN TEST //////////////////////////////////////// -->
+
+<h1>Accordion Test</h1>
+
+<accordion>
+  <accordion-group heading="Static Header">
+    This content is straight in the template.
+  </accordion-group>
+  <accordion-group heading="Another group">
+    <p>Some content</p>
+  </accordion-group>
+  <accordion-group heading="Another group">
+    <p>Some content</p>
+  </accordion-group>
+  <accordion-group heading="Another group">
+    <p>Some content</p>
+  </accordion-group>
+</accordion>
 
