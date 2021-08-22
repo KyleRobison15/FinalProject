@@ -19,6 +19,9 @@ import { PrivateUserProfileComponent } from './components/private-user-profile/p
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
+import { FilterCategoryPipe } from './pipes/filter-category.pipe';
+import { FilterProducePipe } from './pipes/filter-produce.pipe';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -36,14 +39,19 @@ import { SortRecentPipe } from './pipes/sort-recent.pipe';
     SearchResultComponent,
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
-    SortRecentPipe
+    SortRecentPipe,
+    FilterCategoryPipe,
+    FilterProducePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
+    })
   ],
   providers: [
     AuthService

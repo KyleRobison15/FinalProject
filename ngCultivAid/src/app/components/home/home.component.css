@@ -1,9 +1,11 @@
 .container-home {
-  background-image: url("https://www.naturesproduce.com/wp-content/uploads/2018/08/healthy-eating-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68279554.jpg");
-	background-repeat: repeat-y;
-  background-size: cover;
   min-height: calc(100vh - 56px);
   overflow: hidden;
+  background-image: url("https://www.naturesproduce.com/wp-content/uploads/2018/08/healthy-eating-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68279554.jpg");
+	background-repeat: none;
+  background-size: cover;
+  background-position: static;
+  background-attachment: fixed;
 }
 
 .display-1 {

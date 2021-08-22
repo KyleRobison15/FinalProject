@@ -22,7 +22,7 @@ export class GardenItemService {
   }
 
   getItemsWithinDistanceOfZip(lat: number, lng: number, distance: number) : Observable<GardenItem[]> {
-    return this.http.get<GardenItem[]>(`${this.baseUrl}gardenitems/zipsearch/${lat}&${lng}&${distance}`).pipe(
+    return this.http.get<GardenItem[]>(`${this.baseUrl}gardenitems/zipsearch/${lat}&${lng}&${distance}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError('GardenItemService.getItemsWithinDistanceOfZip(): error getting items');
@@ -40,18 +40,6 @@ export class GardenItemService {
   }
 
 
-  //Get Http Options
-  getHttpOptions(){
-    const credentials = this.auth.getCredentials();
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': `Basic ${credentials}`
-      })
-    };
-    return httpOptions;
-  }
 
   create(gardenItem: GardenItem): Observable<GardenItem> {
     return this.http.post<GardenItem>(this.url, gardenItem, this.getHttpOptions()).pipe(
@@ -59,8 +47,31 @@ export class GardenItemService {
         console.error('GardenItemService.create(): error creating gardenItem');
         return throwError(err);
       })
-    );
-  }
+      );
+    }
 
+    //Get Http Options
+    getHttpOptions() {
+      const credentials = this.auth.getCredentials();
+      if (credentials) {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': `Basic ${credentials}`
+          }),
+        };
+        return httpOptions;
+      }
+      else {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }),
+        };
+        return httpOptions;
+      }
+    }
 
 }
