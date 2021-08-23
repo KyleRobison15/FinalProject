@@ -148,4 +148,18 @@ export class PrivateUserProfileComponent implements OnInit {
 
   }
 
+  deactivateExchange(exchange: Exchange){
+    exchange.active = false;
+    this.exchangeService.updateExchange(exchange).subscribe(
+      exchanges => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      fail => {
+        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+        this.router.navigateByUrl('notFound');
+      }
+    );
+  }
+
 }
