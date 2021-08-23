@@ -148,4 +148,17 @@ export class PrivateUserProfileComponent implements OnInit {
 
   }
 
+  getUser(username: string) {
+    this.userService.getUserByUsername(username).subscribe(
+      (user) => {
+        this.userService.reroute(user);
+      },
+      (fail) => {
+        console.error(
+          'publicUserProfileComponent: error getting user by username'
+        );
+      }
+    );
+  }
+
 }
