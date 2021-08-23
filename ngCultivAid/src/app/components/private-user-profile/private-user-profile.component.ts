@@ -12,11 +12,18 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PrivateUserProfileComponent implements OnInit {
 
+  isBuyerCollapsed: boolean[] = [];
+  isSellerCollapsed: boolean[] = [];
+  isInProgressCollapsed: boolean[] = [];
+
   user: User = new User();
 
   buyerExchanges: Exchange[] = [];
 
+  buyerExchangesLoaded: boolean = false;
+
   sellerExchanges: Exchange[] = [];
+
 
   constructor(private userService: UserService, private exchangeService: ExchangeService, private router: Router) { }
 
@@ -36,6 +43,10 @@ export class PrivateUserProfileComponent implements OnInit {
       exchanges => {
         this.buyerExchanges = exchanges;
         console.log("in exchangeService init call private profile");
+        for(let i=0; i<exchanges.length; i++){
+          this.isBuyerCollapsed.push(true);
+          this.buyerExchangesLoaded = true;
+        }
       },
       fail => {
         console.log('In Private Profile Init(): Could not get buyer exchanges ');
@@ -47,12 +58,17 @@ export class PrivateUserProfileComponent implements OnInit {
       exchanges => {
         this.sellerExchanges = exchanges;
         console.log("in exchangeService init call private profile");
+        for(let i=0; i<exchanges.length; i++){
+          this.isSellerCollapsed.push(true);
+          this.isInProgressCollapsed.push(true);
+        }
       },
       fail => {
         console.log('In Private Profile Init(): Could not get seller exchanges ');
         this.router.navigateByUrl('notFound');
       }
     )
+
   }
 
 
@@ -122,6 +138,12 @@ export class PrivateUserProfileComponent implements OnInit {
     else{
       return "";
     }
+  }
+
+  displayExchangeDetails(): string{
+
+    return "details details details";
+
   }
 
 }

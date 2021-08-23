@@ -17,6 +17,8 @@ export class PublicUserProfileComponent implements OnInit {
   exchangeItem = new ExchangeItem();
   exchangeData: any[] = [];
 
+  isCollapsed: boolean = true;
+
   constructor(
     private userService: UserService,
     private router: Router,

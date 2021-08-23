@@ -21,6 +21,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     AccordionModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CollapseModule.forRoot(),
+    RatingModule.forRoot()
   ],
   providers: [
     AuthService
