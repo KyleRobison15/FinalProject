@@ -24,6 +24,8 @@ import { FilterProducePipe } from './pipes/filter-produce.pipe';
 import { AgmCoreModule } from '@agm/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { RatingModule } from 'ngx-bootstrap/rating';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
 
@@ -56,6 +58,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
       apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
     }),
     AccordionModule.forRoot(),
+    BrowserAnimationsModule,
+    CollapseModule.forRoot(),
+    RatingModule.forRoot(),
     AlertModule.forRoot(),
     BrowserAnimationsModule
   ],

@@ -8,7 +8,19 @@
   <div class="col">
     <h6>{{user.username}}</h6>
     <h6></h6>
-    <button class="btn btn-outline-dark">Message</button>
+    <button class="btn btn-outline-dark" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Message</button>
+    <div [collapse]="isCollapsed" [isAnimated]="true">
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1"></label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <button class="btn btn-outline-dark">Send</button>
+      </div>
+    </div>
+
+
+
+
   </div>
   <div class="col">
     <h1>MAP</h1>

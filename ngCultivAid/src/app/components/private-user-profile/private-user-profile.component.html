@@ -64,7 +64,6 @@
 
 <table class="table table-bordered">
   <thead>
-
   </thead>
   <tbody>
     <tr>
@@ -124,27 +123,83 @@
     </tbody>
   </table>
 
-<!-- ///// Outgoing Requests ///// -->
   <div>
-    <h3>Your Requests: </h3>
+    <h3>In Progress Requests: </h3>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="col">Username</div>
+        <div class="col">Date Requested</div>
+      </div>
+      <div class="row" *ngFor="let exchange of sellerExchanges, let i = index" (click)="isInProgressCollapsed[i] = !isInProgressCollapsed[i]"
+      [attr.aria-expanded]="!isInProgressCollapsed[i]" aria-controls="collapseBasic">
+        <div class="col">{{exchange.buyer.username}}</div>
+        <div class="col">{{exchange.createDate}}</div>
+        <div class="col"><button (click)="completeExchange(exchange)">Complete</button></div>
+        <hr>
+        <div class="row" [collapse]="isInProgressCollapsed[i]" [isAnimated]="true" *ngFor="let item of exchange.exchangeItems">
+          {{item.gardenItem.produce.name}}
+        </div>
+      </div>
+    </div>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Date Requested</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exchange of buyerExchanges">
-          <td>{{exchange.exchangeItems[0].gardenItem.user.username}}</td>
-          <td>{{exchange.createDate}}</td>
-          <td>{{getOutgoingExchangeStatus(exchange)}}</td>
-          <td><button *ngIf="exchange.complete">Review</button></td>
-        </tr>
-      </tbody>
-    </table>
+  </div>
+
+
+
+<!-- ///// Outgoing Requests ///// -->
+  <!-- Parent Container -->
+  <div class="container-fluid bg-secondary px-0">
+    <h3>Your Requests: </h3>
+    <hr>
+    <!-- Button Block Container -->
+    <div class="container px-0 gx-0">
+      <div class="row px-0 gx-0">
+        <div class="col">Username</div>
+        <div class="col">Date Completed</div>
+        <div class="col">Status</div>
+      </div>
+      <div class="row bg-primary text-light py-3 px-0 border rounded" *ngFor="let exchange of buyerExchanges, let i = index" >
+        <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
+        <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
+        <!-- Status Column And Review Button Column -->
+        <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
+          <div class="row">
+            <div class="col">
+              {{getOutgoingExchangeStatus(exchange)}}
+            </div>
+            <div class="col" *ngIf="exchange.complete && exchange.accepted">
+              <button>Review</button>
+            </div>
+          </div>
+        </div>
+
+          <!-- Review Drop Down -->
+          <div class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true">
+            Review:
+            <div class="row">
+              <div class="col">* S T A R S * H E R E *</div>
+              <div class="col"><input type=text/></div>
+              <div class="col"><button>Submit</button></div>
+            </div>
+          </div>
+
+
+         <!-- Details Drop Down  -->
+        <div class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true" >
+
+          <div class="row">
+            <div class = "row>">Exchange Items:</div>
+            <div class="col">Name:</div>
+            <div class="col">Amount:</div>
+          </div>
+          <div class="row" *ngFor="let item of exchange.exchangeItems">
+            <div class="col">{{item.gardenItem.produce.name}}</div>
+            <div class="col">{{item.quantity}}</div>
+          </div>
+
+        </div>
+    </div>
 
   </div>
 </div>
@@ -155,20 +210,7 @@
 
 <!-- ///////////////////////////////// ACCORDIAN TEST //////////////////////////////////////// -->
 
-<h1>Accordion Test</h1>
 
-<accordion>
-  <accordion-group heading="Static Header">
-    This content is straight in the template.
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-</accordion>
+
+
 
