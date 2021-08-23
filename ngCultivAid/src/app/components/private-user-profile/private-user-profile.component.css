@@ -1,0 +1,23 @@
+#detailsDiv{
+  transform:translate(12px, 0);
+}
+
+h1:hover{
+  background-color: lightblue;
+}
+
+h3{
+  transform:translate()(0px, -8px);
+  margin-bottom: 0px;
+}
+
+#exchangeManager{
+  background-color: rgb(42, 145, 33);
+}
+
+#exchangeRow{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+

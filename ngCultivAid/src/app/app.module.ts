@@ -27,6 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progress.pipe';
+import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     PublicUserProfileComponent,
     SortRecentPipe,
     FilterCategoryPipe,
-    FilterProducePipe
+    FilterProducePipe,
+    FilterExchangesInProgressPipe,
+    FilterIncomingExchangesPipe
   ],
   imports: [
     BrowserModule,

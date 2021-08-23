@@ -15,6 +15,7 @@ export class PrivateUserProfileComponent implements OnInit {
   isBuyerCollapsed: boolean[] = [];
   isSellerCollapsed: boolean[] = [];
   isInProgressCollapsed: boolean[] = [];
+  isReviewCollapsed: boolean[] = [];
 
   user: User = new User();
 
@@ -45,6 +46,7 @@ export class PrivateUserProfileComponent implements OnInit {
         console.log("in exchangeService init call private profile");
         for(let i=0; i<exchanges.length; i++){
           this.isBuyerCollapsed.push(true);
+          this.isReviewCollapsed.push(true);
           this.buyerExchangesLoaded = true;
         }
       },
