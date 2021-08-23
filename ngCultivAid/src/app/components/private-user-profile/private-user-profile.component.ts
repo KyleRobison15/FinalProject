@@ -148,6 +148,7 @@ export class PrivateUserProfileComponent implements OnInit {
 
   }
 
+
   deactivateExchange(exchange: Exchange){
     exchange.active = false;
     this.exchangeService.updateExchange(exchange).subscribe(
@@ -158,6 +159,19 @@ export class PrivateUserProfileComponent implements OnInit {
       fail => {
         console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
         this.router.navigateByUrl('notFound');
+      });
+    }
+
+  getUser(username: string) {
+    this.userService.getUserByUsername(username).subscribe(
+      (user) => {
+        this.userService.reroute(user);
+      },
+      (fail) => {
+        console.error(
+          'publicUserProfileComponent: error getting user by username'
+        );
+
       }
     );
   }

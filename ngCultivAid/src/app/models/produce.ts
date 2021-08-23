@@ -1,3 +1,4 @@
+import { Category } from "./category";
 import { GardenItem } from "./garden-item";
 
 export class Produce {
@@ -8,6 +9,7 @@ export class Produce {
   imageUrl: string;
   active: boolean;
   gardenItems: GardenItem [];
+  category: Category;
 
   constructor(
     id: number = 0,
@@ -15,7 +17,8 @@ export class Produce {
     avgItemWeight: number = 0,
     imageUrl: string = '',
     active: boolean = true,
-    gardenItems: GardenItem [] = []
+    gardenItems: GardenItem [] = [],
+    category: Category = new Category()
   )
   {
     this.id = id;
@@ -24,6 +27,7 @@ export class Produce {
     this.imageUrl = imageUrl;
     this.active = active;
     this.gardenItems = gardenItems;
+    this.category = category;
   }
 
 }
