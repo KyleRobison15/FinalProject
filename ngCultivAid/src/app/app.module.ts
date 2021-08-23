@@ -19,10 +19,14 @@ import { PrivateUserProfileComponent } from './components/private-user-profile/p
 import { PublicUserProfileComponent } from './components/public-user-profile/public-user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
+import { FilterCategoryPipe } from './pipes/filter-category.pipe';
+import { FilterProducePipe } from './pipes/filter-produce.pipe';
+import { AgmCoreModule } from '@agm/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 
 @NgModule({
@@ -40,7 +44,9 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     SearchResultComponent,
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
-    SortRecentPipe
+    SortRecentPipe,
+    FilterCategoryPipe,
+    FilterProducePipe
   ],
   imports: [
     BrowserModule,
@@ -48,10 +54,15 @@ import { RatingModule } from 'ngx-bootstrap/rating';
     NgbModule,
     FormsModule,
     HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
+    }),
     AccordionModule.forRoot(),
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
-    RatingModule.forRoot()
+    RatingModule.forRoot(),
+    AlertModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService
