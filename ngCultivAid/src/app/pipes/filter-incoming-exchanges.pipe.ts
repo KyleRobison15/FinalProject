@@ -10,10 +10,16 @@ export class FilterIncomingExchangesPipe implements PipeTransform {
     let results: Exchange[] = [];
 
     for(let i=0; i<exchanges.length; i++){
-      if(exchanges[i].active && !exchanges[i].accepted){
+      if(exchanges[i].active && !exchanges[i].complete){
         results.push(exchanges[i]);
       }
     }
+
+    // for(let i=0; i<exchanges.length; i++){
+    //   if(!exchanges[i].complete && !exchanges[i].accepted){
+    //     results.push(exchanges[i]);
+    //   }
+    // }
     return results;
   }
 }
