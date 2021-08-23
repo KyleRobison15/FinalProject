@@ -1,6 +1,8 @@
 <div class="container-home">
   <h1 class="display-1" *ngIf="!loggedIn()">CultivAid</h1>
-  <h3 class="display-8" *ngIf="!loggedIn()">Saving produce 1 neighbor at a time.</h3>
+  <h3 class="display-8" *ngIf="!loggedIn()">
+    Saving produce 1 neighbor at a time.
+  </h3>
 
   <div class="card" id="search-card" [ngClass]="loggedInCss">
     <div class="card-body">
@@ -13,7 +15,8 @@
           <input class="form-control" type="text" name="distance" ngModel />
           <button
             name="submit"
-            class="btn btn-outline-light"ß
+            class="btn btn-outline-light"
+            ß
             (click)="searchByZip(searchByZipForm)"
           >
             Search
@@ -28,13 +31,14 @@
     <div
       class="card recent-post-card"
       *ngFor="let item of gardenItemsAndDistance | sortRecent"
+      (click)="getUser(item[0].user.username)"
     >
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6" id="item-name-text">
+      <!-- <div class="card-body result-card-body"> -->
+        <!-- <div class="row">
+          <div class="col-md-4" id="item-name-text">
             <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
           </div>
-          <div class="col-md-6" id="postedByText">
+          <div class="col-md-4" id="postedByText">
             Grown By: {{ item[0].user.username }} (picture here)
           </div>
         </div>
@@ -44,8 +48,41 @@
           <div class="col-md-6" id="distanceAwayText">
             {{ item[1] }} miles away
           </div>
+        </div> -->
+
+        <div class="row" id="details">
+          <div class="col-md-2" id="imageCol">
+            <img src="{{ item[0].produce.imageUrl }}" alt="" id="image" />
+          </div>
+
+          <div class="col-md-10" id="detailsCol">
+            <div class="row" id="topRow">
+              <div class="col-md-8" id="title">
+                <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
+              </div>
+              <div class="col-md-4" id="grownBy">
+                {{ item[0].user.username }}
+                <img src="{{item[0].user.imageUrl}}" alt="" id="avatar">
+              </div>
+            </div>
+
+            <div class="row" id="middleRow">
+              <div class="col-md-12" id="description">
+                {{ item[0].description }}
+              </div>
+            </div>
+
+            <div class="row" id="bottomRow">
+              <div class="col-md-8" id="amount">
+                Qty available: {{ item[0].amount }}
+              </div>
+              <div class="col-md-4" id="distance">
+                {{ item[1] }} miles away
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </div>

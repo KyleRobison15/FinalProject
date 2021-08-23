@@ -61,29 +61,52 @@
       </div>
     </div>
 
+
+
     <div class="col-md-9" id="result-col">
       <div
         class="card result-card"
         *ngFor="let item of gardenItemsAndDistance | filterCategory: this.searchByZipForm.category | filterProduce: this.searchByZipForm.produce"
         (click)="getUser(item[0].user.username)"
       >
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
+
+
+      <div class="row" id="details">
+        <div class="col-md-2" id="imageCol">
+          <img src="{{ item[0].produce.imageUrl }}" alt="" id="image" />
+        </div>
+
+        <div class="col-md-10" id="detailsCol">
+          <div class="row" id="topRow">
+            <div class="col-md-8" id="title">
               <h5>{{ item[0].produce.name }} -- {{ item[0].variety }}</h5>
             </div>
-            <div class="col-md-6" id="postedByText">
-              Grown By: {{ item[0].user.username }} (picture here)
+            <div class="col-md-4" id="grownBy">
+              {{ item[0].user.username }}
+              <img src="{{item[0].user.imageUrl}}" alt="" id="avatar">
             </div>
           </div>
-          <span> {{ item[0].description }}<br /><br /> </span>
-          <div class="row">
-            <div class="col-md-6">Qty available: {{ item[0].amount }}</div>
-            <div class="col-md-6" id="distanceAwayText">
+
+          <div class="row" id="middleRow">
+            <div class="col-md-12" id="description">
+              {{ item[0].description }}
+            </div>
+          </div>
+
+          <div class="row" id="bottomRow">
+            <div class="col-md-8" id="amount">
+              Qty available: {{ item[0].amount }}
+            </div>
+            <div class="col-md-4" id="distance">
               {{ item[1] }} miles away
             </div>
           </div>
         </div>
+      </div>
+
+
+
+
       </div>
     </div>
   </div>
