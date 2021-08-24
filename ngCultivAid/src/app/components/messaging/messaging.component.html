@@ -37,7 +37,7 @@
         <th scope="col">From</th>
         <th scope="col">Subject</th>
         <th scope="col">Date Received</th>
-        <th scope="col">Viewed</th>
+        <th scope="col">Time Received</th>
         <th scope="col">Delete</th>
       </thead>
       <tbody *ngFor="let message of receivedMessages">
@@ -45,7 +45,7 @@
           <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.sendingUser.username }}</td>
           <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.subject }}</td>
           <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.createTime | date}}</td>
-          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.viewed}}</td>
+          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.createTime | date:'shortTime'}}</td>
           <td><button class="btn btn-outline-danger" (click)="openDeleteMessage(deleteMessageModal); messageToDelete = message">X</button></td>
         </tr>
       </tbody>
@@ -61,12 +61,14 @@
       <th>To</th>
       <th>Subject</th>
       <th>Date Sent</th>
+      <th>Time Sent</th>
     </thead>
     <tbody *ngFor="let message of sentMessages">
       <tr [ngClass]="markRead(message)" (click)="displaySingleMessage(message); message.viewed=true">
         <td>{{ message.receivingUser.username }}</td>
         <td>{{ message.subject }}</td>
-        <td>{{ message.createTime }}</td>
+        <td>{{ message.createTime | date}}</td>
+        <td>{{ message.createTime | date:'shortTime'}}</td>
       </tr>
     </tbody>
   </table>

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 import { UserService } from 'src/app/services/user.service';
-import { MessagingComponent } from '../messaging/messaging.component';
 
 @Component({
   selector: 'app-navigation',
@@ -11,8 +10,6 @@ import { MessagingComponent } from '../messaging/messaging.component';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-
-  unreadMessageCount: string = '';
   user: User = new User();
 
   constructor(private auth: AuthService,
@@ -21,22 +18,15 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.userService.getLoggedInUser().subscribe(
-    //   user => {
-    //     this.user = user;
-    //     this.getMessageCount(user);
-    //   },
-    //   fail => {
-    //     console.log('Invalid User ');
-    //   }
-    // )
-
   }
 
   loggedIn(): boolean {
     return this.auth.checkLogin();
   }
 
+  updateMessageCount(){
+    return localStorage.getItem('messageCount');
+  }
   // getMessageCount(user: User){
   //   this.messageService.index().subscribe(
   //     data => {

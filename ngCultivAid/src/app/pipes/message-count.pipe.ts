@@ -1,12 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
+// import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'messageCount'
-})
-export class MessageCountPipe implements PipeTransform {
+// @Pipe({
+//   name: 'messageCount'
+// })
+// export class MessageCountPipe implements PipeTransform {
 
-  transform(count: string): string | null{
-    return localStorage.getItem('messageCount');
-  }
+//   transform(count: any): any{
+//     return localStorage.getItem('messageCount');
+//   }
 
-}
+// }

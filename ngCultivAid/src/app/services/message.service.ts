@@ -67,7 +67,7 @@ export class MessageService {
       data => {
         data.forEach( (message) => {
 
-          if (message.viewed === false && message.receivingUser.username === localStorage.getItem('loggedInUser') && message.active === true) {
+          if (message.viewed === false && message.receivingUser.username === localStorage.getItem('loggedInUsername') && message.active === true) {
             unreadMessageCount += 1;
           }
           localStorage.setItem('messageCount', '' + unreadMessageCount);
