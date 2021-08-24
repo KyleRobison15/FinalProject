@@ -22,8 +22,13 @@ export class MessagingComponent implements OnInit {
   viewingSent: boolean = false;
   newMessage: Message = new Message();
   closeResult = '';
+  activeTab: string = 'inbox';
+  messageToDelete: Message = new Message();
+  unreadMessageCount: number = 0;
 
-  constructor(private messageService: MessageService, private modalService: NgbModal, private userService: UserService) { }
+  constructor(private messageService: MessageService,
+              private modalService: NgbModal,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.reload();
@@ -52,6 +57,9 @@ export class MessagingComponent implements OnInit {
           if (message.sendingUser.id === this.user.id) {
             this.sentMessages.push(message);
           }
+
+          this.messageService.getMessageCount();
+
         });
       },
       err => {
@@ -74,13 +82,58 @@ export class MessagingComponent implements OnInit {
     this.sendingMessage = true;
   }
 
+  // getMessageCount(user: User){
+  //   this.messageService.index().subscribe(
+  //     data => {
+  //       data.forEach( (message) => {
+
+  //         if (message.viewed === false && message.receivingUser.id === user.id && message.active === true) {
+  //           this.unreadMessageCount += 1;
+  //         }
+
+  //       });
+  //     },
+  //     err => {
+  //       console.error('Error getting message count from service: ' + err);
+  //     }
+  //   );
+  // }
+
   markRead(message: Message){
-    if (message.viewed === true) {
-      return 'viewed';
+    if (message.viewed === false) {
+      return 'notViewed';
     }
     else{
       return '';
     }
+  }
+
+  markAsViewed(message: Message){
+    this.messageService.markAsViewed(message).subscribe(
+      data => {
+        this.receivedMessages = [];
+        this.sentMessages = [];
+        this.reload();
+      },
+      error =>{
+        console.log(error);
+        console.log("MessagingComponent.markAsViewed(): Error marking message as viewed");
+      }
+    );
+  }
+
+  deactivateMessage(message: Message){
+    this.messageService.deactivateMessage(message).subscribe(
+      data => {
+        this.receivedMessages = [];
+        this.sentMessages = [];
+        this.reload();
+      },
+      error =>{
+        console.log(error);
+        console.log("MessagingComponent.deactivateMessage(): Error deactivating message");
+      }
+    );
   }
 
   createMessage(){
@@ -98,8 +151,17 @@ export class MessagingComponent implements OnInit {
     this.newMessage = new Message();
   }
 
-  open(addOrder: any) {
-    this.modalService.open(addOrder, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+  openNewMessage(newMessage: any) {
+    this.modalService.open(newMessage, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    },
+    );
+  }
+
+  openDeleteMessage(message: any) {
+    this.modalService.open(message, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

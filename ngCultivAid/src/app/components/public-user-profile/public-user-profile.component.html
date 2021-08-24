@@ -18,9 +18,7 @@
       <div class="row">
       <button
         class="btn btn-dark"
-        (click)="isCollapsed = !isCollapsed"
-        [attr.aria-expanded]="!isCollapsed"
-        aria-controls="collapseBasic"
+        (click)="open(newMessageModal)"
       >
         Message
       </button>
@@ -192,7 +190,27 @@
   </div>
 </div>
 
-
-
+<!-- /////////////////////////////////// NEW MESSAGE MODAL ////////////////////////////////////// -->
+<ng-template #newMessageModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Message To: {{user.username}}</h4>
+    <button type="button" class="btn btn-outline-dark" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div id="newMessageForm">
+      <form>
+        <input type="hidden" name="receivingUser" class="form-control" value="{{user.username}}" [(ngModel)]="newMessage.receivingUser.username">
+        <br><label for="subject" class="form-check-label">Subject: </label><input type="text" name="subject" class="form-control" [(ngModel)]="newMessage.subject">
+        <label for="content" class="form-check-label">Message Body: </label>
+        <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="newMessage.content"></textarea>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click'); createMessage()">Send</button>
+  </div>
+</ng-template>
 
 </div>

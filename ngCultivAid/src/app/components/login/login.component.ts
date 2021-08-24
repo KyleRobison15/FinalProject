@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginUser: User = new User();
 
   constructor(private auth: AuthService,
+              private messageService: MessageService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
       loggedInUser => {
         console.log('LoginComponent.login(): User logged in');
         this.router.navigateByUrl('/home');
+        this.messageService.getMessageCount();
       },
       fail => {
         console.error('LoginComponent.login(): login failed')
