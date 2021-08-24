@@ -1,22 +1,52 @@
-<h1 class="display-1">Inbox</h1>
-<hr>
+<!-- /////////////////////////////////// MESSAGING NAV ////////////////////////////////////// -->
 
-<div id="messageTable">
-  <table class="table">
-    <thead>
-      <th>From</th>
-      <th>Subject</th>
-      <th>Content</th>
-      <th>Viewed</th>
-    </thead>
-    <tbody *ngFor="let message of messages">
-      <td>{{message.sendingUser.username}}</td>
-      <td>{{message.subject}}</td>
-      <td>{{message.content}}</td>
-      <td>{{message.viewed}}</td>
-    </tbody>
-  </table>
+<div class="container">
+  <div id="messageNav">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" (click)="sendingMessage = false">Inbox</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Sent</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="sendingMessage = true">New Message</a>
+      </li>
+    </ul>
+  </div>
+
+<!-- /////////////////////////////////// INBOX ////////////////////////////////////// -->
+
+  <div id="messageTable" *ngIf="!sendingMessage">
+    <table class="table">
+      <thead>
+        <th>From</th>
+        <th>Subject</th>
+        <th>Content</th>
+        <th>Viewed</th>
+      </thead>
+      <tbody *ngFor="let message of messages">
+        <tr [ngClass]="markRead(message)">
+          <td>{{ message.sendingUser.username }}</td>
+          <td>{{ message.subject }}</td>
+          <td>{{ message.content }}</td>
+          <td>{{ message.viewed }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+<!-- /////////////////////////////////// SENT ////////////////////////////////////// -->
+
+<!-- /////////////////////////////////// NEW MESSAGE ////////////////////////////////////// -->
+  <div id="newMessageForm" *ngIf="sendingMessage">
+    <form>
+      <label for="subject" class="form-check-label display-6">Subject: </label><input type="text" name="subject" class="form-control" [(ngModel)]="newMessage.subject">
+      <label for="receivingUser" class="form-check-label display-6">Username: </label><input type="text" name="receivingUser" class="form-control" [(ngModel)]="newMessage.receivingUser.username">
+      <label for="content" class="form-check-label display-6">Message Body: </label>
+      <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="newMessage.content"></textarea>
+      <button type="submit" class="btn btn-outline-success" (click)="createMessage(); sendingMessage=false">Send</button>
+    </form>
+  </div>
 </div>
-
-<hr>
-<button class="btn btn-outline-success">New Message</button>

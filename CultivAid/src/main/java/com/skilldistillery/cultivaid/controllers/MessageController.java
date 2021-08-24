@@ -45,15 +45,15 @@ public class MessageController {
 		return messageSvc.show(principal.getName(), userId);
 	}
 	
-	@PostMapping("api/messages/{receivingUserId}")
+	@PostMapping("api/messages/{username}")
 	public Message create(
 			HttpServletResponse res, 
 			Principal principal, 
-			@PathVariable int receivingUserId, 
+			@PathVariable("username") String username2, 
 			@RequestBody Message message
 			) {
 		
-		return messageSvc.create(message, principal.getName(), receivingUserId);
+		return messageSvc.create(message, principal.getName(), username2);
 	}
 
 }
