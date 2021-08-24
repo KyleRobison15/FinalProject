@@ -156,7 +156,7 @@
 
     <!-- Button Block Container -->
     <div class="container px-0 gx-0 bg-primary ">
-      <div class="row px-0 gx-0 bg-primary text-light py-3 px-0 border border-dark rounded">
+      <div class="row px-0 gx-0 bg-success text-light py-3 px-0 border border-dark rounded">
         <div class="col">Username</div>
         <div class="col">Date Completed</div>
         <div class="col">Status</div>
@@ -184,10 +184,8 @@
             <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
             Review:
               <div class="row">
-
-
-
                 <div class="col">
+                  <!-- Stars -->
                   <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" [titles]="['one','two','three']"></rating>
                   <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
                 </div>

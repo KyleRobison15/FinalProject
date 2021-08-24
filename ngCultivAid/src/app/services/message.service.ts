@@ -36,7 +36,7 @@ export class MessageService {
     return this.http.post<Message>(`${this.url}/${message.receivingUser.username}`, message, this.getHttpOptions())
     .pipe(catchError((err: any) => {
       console.log(err);
-      return throwError(`Error creating todo: ${err}`);
+      return throwError(`Error creating message: ${err}`);
     })
     );
   }
