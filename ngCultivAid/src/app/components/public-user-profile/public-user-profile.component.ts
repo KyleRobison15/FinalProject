@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Exchange } from 'src/app/models/exchange';
 import { ExchangeItem } from 'src/app/models/exchange-item';
 import { User } from 'src/app/models/user';
 import { ApiExternalService } from 'src/app/services/api-external.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -23,27 +25,61 @@ export class PublicUserProfileComponent implements OnInit {
 
   isCollapsed: boolean = true;
 
+  userExchanges: Exchange[] = [];
+  rating:number = 0;
+
   constructor(
     private userService: UserService,
     private router: Router,
     private currentRoute: ActivatedRoute,
     private exchangeSvc: ExchangeService,
     private apiExt: ApiExternalService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.user;
-    this.user.gardenItems.forEach((item) => {
-      let exchangeObject = Object();
-      exchangeObject['itemId'] = item.id;
-      exchangeObject['amount'] = 0;
-      exchangeObject['checked'] = false;
-      this.exchangeData.push(exchangeObject);
-      console.log(this.exchangeData);
+    let username = this.currentRoute.snapshot.paramMap.get('username');
 
-    });
-    // this.searchByZip();
-  }
+    if (!username) {
+      username = this.authService.getLoggedInUsername();
+    }
+    if(username){
+      this.userService.getUserByUsername(username).subscribe(
+        user => {
+            this.user = user;
+
+            this.user.gardenItems.forEach((item) => {
+                let exchangeObject = Object();
+                exchangeObject['itemId'] = item.id;
+                exchangeObject['amount'] = 0;
+                exchangeObject['checked'] = false;
+                this.exchangeData.push(exchangeObject);
+                console.log(this.exchangeData);
+              });
+
+            this.exchangeSvc.getSellerExchangesByUser(this.user).subscribe(
+                exchanges => {
+                  this.userExchanges = exchanges;
+                  console.log("User exchanges: " + this.userExchanges.length);
+                  for(let exchange of this.userExchanges){
+                    this.rating += exchange.rating;
+                  }
+                  this.rating /= this.userExchanges.length;
+                },
+                error => {
+                  console.log('failed to create exchange and exchange items');
+                }
+              );
+          },
+          error => {
+            console.log('failed to get user');
+          }
+      );
+    }
+    else{
+      this.router.navigateByUrl("/notFound");
+    }
+}
 
   submitExchangeRequest() {
     console.log(this.exchangeData);

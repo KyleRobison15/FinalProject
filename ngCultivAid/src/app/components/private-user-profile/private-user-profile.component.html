@@ -79,7 +79,8 @@
 
 <!-- ///////////////////////////////// EXCHANGE CARDS //////////////////////////////////////// -->
 
-<h1>Incoming Requests:</h1>
+<hr>
+<div class="row" id="title"> <h1>Incoming Requests:</h1> </div>
 
 <div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length > 0">
   <div class="row">
@@ -107,7 +108,7 @@
 </div>
 
 <div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
-  No Incoming Requests
+  <div class="row" id="title"> No Incoming Requests </div>
 </div>
 
 <!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
@@ -115,8 +116,9 @@
 
 <!-- ///// Outgoing Requests ///// -->
   <!-- Parent Container -->
-  <div class="container-fluid bg-light px-0"  id="exchangeManager" >
-    <h3  id="exchangeManager" >Your Orders: </h3>
+  <hr>
+  <div class="container-fluid bg-light px-0">
+    <div id="title" class="row "> <h1>Your Orders: </h1> </div>
 
     <!-- Button Block Container -->
     <div class="container px-0 gx-0 bg-primary ">
@@ -148,9 +150,15 @@
             <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
             Review:
               <div class="row">
-                <div class="col">* S T A R S * H E R E *</div>
-                <div class="col"><input type=text/></div>
-                <div class="col"><button>Submit</button></div>
+
+
+
+                <div class="col">
+                  <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" [titles]="['one','two','three']"></rating>
+                  <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+                </div>
+                <div class="col"><input type="text" [(ngModel)]="exchange.buyerComment"/></div>
+                <div class="col"><button (click)="updateExchangeReview(exchange)">Submit</button></div>
               </div>
             </div>
 
@@ -169,7 +177,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid" *ngIf="(buyerExchanges | filterBuyerExchanges).length == 0">
+    <div class="container-fluid bg-light" *ngIf="(buyerExchanges | filterBuyerExchanges).length == 0">
       No Active Orders...
     </div>
   </div>
@@ -181,7 +189,6 @@
 <button (click)="getUser(user.username)">Public Profile</button>
 
 <!-- ///////////////////////////////// ACCORDIAN TEST //////////////////////////////////////// -->
-
 
 
 

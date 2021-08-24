@@ -25,6 +25,8 @@ export class PrivateUserProfileComponent implements OnInit {
 
   sellerExchanges: Exchange[] = [];
 
+  reviewedExchange: Exchange[] = [];
+
 
   constructor(private userService: UserService, private exchangeService: ExchangeService, private router: Router) { }
 
@@ -174,6 +176,36 @@ export class PrivateUserProfileComponent implements OnInit {
 
       }
     );
+  }
+
+  updateExchangeReview(exchange: Exchange){
+    exchange.active = false;
+    exchange.rating = this.rate;
+    this.exchangeService.updateExchange(exchange).subscribe(
+      exchanges => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      fail => {
+        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+        this.router.navigateByUrl('notFound');
+      });
+  }
+
+  max = 5;
+  rate = 7;
+  isReadonly = false;
+
+  overStar: number | undefined;
+  percent: number = 0;
+
+  hoveringOver(value: number): void {
+    this.overStar = value;
+    this.percent = (value / this.max) * 100;
+  }
+
+  resetStar(): void {
+    this.overStar = void 0;
   }
 
 }
