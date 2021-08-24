@@ -32,6 +32,7 @@ export class AuthService {
       .pipe(
         tap((res) => {
           localStorage.setItem('credentials' , credentials);
+          localStorage.setItem("loggedInUsername", username);
           return res;
         }),
         catchError((err: any) => {
@@ -54,6 +55,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('credentials');
+    localStorage.removeItem('loggedInUsername');
     console.log('logged out');
   }
 
@@ -70,5 +72,9 @@ export class AuthService {
 
   getCredentials() {
     return localStorage.getItem('credentials');
+  }
+
+  getLoggedInUsername(){
+    return localStorage.getItem('loggedInUsername');
   }
 }

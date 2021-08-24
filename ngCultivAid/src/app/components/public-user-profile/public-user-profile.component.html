@@ -13,7 +13,7 @@
         <h1 class="display-3">{{ user.username }}</h1>
       </div>
       <div class="row text-center">
-        <h1 class="display-5">Rating</h1>
+        <h1 class="display-5">Rating: {{rating}}</h1>
       </div>
       <div class="row">
       <button
@@ -164,6 +164,29 @@
       </div>
     </div>
   </div>
+  </div>
+
+  <!-- ///////////////////////// REVIEWS /////////////////////////// -->
+
+  <div class="row">
+    <h1 class="row">Reviews:</h1>
+    <div class="row">
+      <div class="col-sm-3">Username</div>
+      <div class="col-sm-1">Rating</div>
+      <div class="col">Comment</div>
+    </div>
+    <div *ngFor="let exchange of userExchanges, let i = index">
+      <div class="row border border-dark rounded" >
+        <div class="col-sm-1"><img src="{{exchange.buyer.imageUrl}}" id="reviewImage"/> </div>
+        <div class="col-sm-2">{{exchange.buyer.username}}</div>
+        <div class="col-sm-1 text-left">{{exchange.rating}}</div>
+        <div class="col-sm-6 text-left">{{exchange.buyerComment}}</div>
+        <div class="col"><button class="btn btn-outline-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">See Photos</button></div>
+      </div>
+      <div id="detailsDiv" class="row bg-light text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
+        Show Photos Here
+      </div>
+    </div>
   </div>
 </div>
 

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Exchange } from 'src/app/models/exchange';
 import { ExchangeItem } from 'src/app/models/exchange-item';
 import { Message } from 'src/app/models/message';
 import { User } from 'src/app/models/user';
 import { ApiExternalService } from 'src/app/services/api-external.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { MessageService } from 'src/app/services/message.service';
 import { UserService } from 'src/app/services/user.service';
@@ -27,6 +29,10 @@ export class PublicUserProfileComponent implements OnInit {
   lng: number = -104.77553;
 
   isCollapsed: boolean = true;
+  isReviewCollapsed: boolean[] = [];
+
+  userExchanges: Exchange[] = [];
+  rating:number = 0;
 
   constructor(
     private userService: UserService,
@@ -35,22 +41,61 @@ export class PublicUserProfileComponent implements OnInit {
     private exchangeSvc: ExchangeService,
     private apiExt: ApiExternalService,
     private messageService: MessageService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.user;
-    this.user.gardenItems.forEach((item) => {
-      let exchangeObject = Object();
-      exchangeObject['itemId'] = item.id;
-      exchangeObject['amount'] = 0;
-      exchangeObject['checked'] = false;
-      this.exchangeData.push(exchangeObject);
-      console.log(this.exchangeData);
+    let username = this.currentRoute.snapshot.paramMap.get('username');
 
-    });
-    // this.searchByZip();
-  }
+    if (!username) {
+      username = this.authService.getLoggedInUsername();
+    }
+    if(username){
+      this.userService.getUserByUsername(username).subscribe(
+        user => {
+            this.user = user;
+
+            this.user.gardenItems.forEach((item) => {
+                let exchangeObject = Object();
+                exchangeObject['itemId'] = item.id;
+                exchangeObject['amount'] = 0;
+                exchangeObject['checked'] = false;
+                this.exchangeData.push(exchangeObject);
+                console.log(this.exchangeData);
+              });
+
+            this.exchangeSvc.getSellerExchangesByUser(this.user).subscribe(
+                exchanges => {
+
+                  for(let i=0; i<exchanges.length; i++){
+                    if(exchanges[i].complete){
+                      this.userExchanges.push(exchanges[i]);
+                      this.isReviewCollapsed.push(true);
+                    }
+                  }
+
+                  //this.userExchanges = exchanges;
+                  console.log("User exchanges: " + this.userExchanges.length);
+                  for(let exchange of this.userExchanges){
+                    this.rating += exchange.rating;
+                  }
+                  this.rating /= this.userExchanges.length;
+                },
+                error => {
+                  console.log('failed to create exchange and exchange items');
+                }
+              );
+          },
+          error => {
+            console.log('failed to get user');
+          }
+      );
+    }
+    else{
+      this.router.navigateByUrl("/notFound");
+    }
+}
 
   submitExchangeRequest() {
     console.log(this.exchangeData);

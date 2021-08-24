@@ -93,6 +93,12 @@
   border-radius: 50%;
 }
 
+#reviewImage{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
 .recent-post-card {
   min-width: 100%;
   margin: auto;

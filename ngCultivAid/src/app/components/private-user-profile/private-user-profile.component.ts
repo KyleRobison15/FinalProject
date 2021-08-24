@@ -9,6 +9,7 @@ import { FormControl, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { resourceLimits } from 'worker_threads';
 import { isConstructorDeclaration } from 'typescript';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-private-user-profile',
@@ -29,6 +30,10 @@ export class PrivateUserProfileComponent implements OnInit {
   buyerExchangesLoaded: boolean = false;
 
   sellerExchanges: Exchange[] = [];
+
+
+  reviewedExchange: Exchange[] = [];
+
 
   editing: boolean = false;
   editingPicture: boolean = false;
@@ -104,6 +109,9 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
   acceptIncomingExchange(exchange: Exchange) {
+
+    //send default message to user here
+
     exchange.accepted = true;
     this.exchangeService.updateExchange(exchange).subscribe(
       (exchanges) => {
@@ -200,6 +208,40 @@ export class PrivateUserProfileComponent implements OnInit {
       }
     );
   }
+
+  updateExchangeReview(exchange: Exchange){
+    exchange.active = false;
+    exchange.rating = this.rate;
+    this.exchangeService.updateExchange(exchange).subscribe(
+      exchanges => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      fail => {
+        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+        this.router.navigateByUrl('notFound');
+      });
+  }
+
+  /////////////////////// Star Rating Variables /////////////////////
+  max = 5;
+  rate = 7;
+  isReadonly = false;
+
+  overStar: number | undefined;
+  percent: number = 0;
+
+  /////////////////////////////////////////////////////////////////////
+
+  hoveringOver(value: number): void {
+    this.overStar = value;
+    this.percent = (value / this.max) * 100;
+  }
+
+  resetStar(): void {
+    this.overStar = void 0;
+  }
+
 
   saveEdit() {
     this.userService.editUser(this.editedUser).subscribe(

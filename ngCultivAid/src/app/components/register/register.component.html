@@ -1,16 +1,116 @@
-<h1 class="display-4">Create an account to get started </h1>
-<form name="registerForm">
-  <label for="username" class="form-check-label">Username</label><input type="text" name="username" class="form-control" [(ngModel)]="newUser.username">
-  <label for="email" class="form-check-label">First Name</label><input name="firstName" type="text" class="form-control" [(ngModel)]="newUser.firstName">
-  <label for="email" class="form-check-label">Last Name</label><input name="lastName" type="text" class="form-control" [(ngModel)]="newUser.lastName">
-  <label for="email" class="form-check-label">Email</label><input name="email" type="email" class="form-control" [(ngModel)]="newUser.email">
-  <label for="email" class="form-check-label">Phone</label><input name="phone" type="text" class="form-control" [(ngModel)]="newUser.phone">
-  <label for="email" class="form-check-label">Address</label><input name="address" type="text" class="form-control" [(ngModel)]="newUser.address.address">
-  <label for="email" class="form-check-label">Address2</label><input name="address2" type="text" class="form-control" [(ngModel)]="newUser.address.address2">
-  <label for="email" class="form-check-label">City</label><input name="city" type="text" class="form-control" [(ngModel)]="newUser.address.city">
-  <label for="email" class="form-check-label">State</label><input name="stateAbbr" type="text" class="form-control" [(ngModel)]="newUser.address.stateAbbr">
-  <label for="email" class="form-check-label">ZIP</label><input name="postalCode" type="text" class="form-control" [(ngModel)]="newUser.address.postalCode">
-  <label for="password" class="form-check-label">Password</label><input type="password" name ="password" class="form-control" [(ngModel)]="newUser.password"><br>
-  <input class="btn btn-outline-success" value="Create Account" (click)="register()">
-  <!-- <input class="btn btn-outline-success" (click)="register(thisForm)" value="Create Account"> -->
-</form>
+<div class="container-fluid">
+  <div class="register-form">
+    <h1 class="display-4">Create an account to get started</h1> <br>
+    <form name="registerForm" class="row g-3">
+      <div class="col-md-6">
+        <label for="username" class="form-check-label">Username</label
+        ><input
+          type="text"
+          name="username"
+          class="form-control"
+          [(ngModel)]="newUser.username"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="password" class="form-check-label">Password</label
+        ><input
+          type="password"
+          name="password"
+          class="form-control"
+          [(ngModel)]="newUser.password"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="firstName" class="form-check-label">First Name</label
+        ><input
+          name="firstName"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.firstName"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="lastName" class="form-check-label">Last Name</label
+        ><input
+          name="lastName"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.lastName"
+        />
+      </div>
+      <div class="col-md-8">
+        <label for="email" class="form-check-label">Email</label
+        ><input
+          name="email"
+          type="email"
+          class="form-control"
+          [(ngModel)]="newUser.email"
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="phone" class="form-check-label">Phone</label
+        ><input
+          name="phone"
+          type="text"
+          class="form-control"
+          placeholder="ex: 000-000-0000"
+          [(ngModel)]="newUser.phone"
+        />
+      </div>
+      <div class="col-md-12">
+        <label for="address" class="form-check-label">Street</label
+        ><input
+          name="address"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.address.address"
+        />
+      </div>
+      <div class="col-md-12">
+        <label for="address2" class="form-check-label">Street 2</label
+        ><input
+          name="address2"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.address.address2"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="city" class="form-check-label">City</label
+        ><input
+          name="city"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.address.city"
+        />
+      </div>
+      <div class="col-md-2">
+        <label for="stateAbbr" class="form-check-label">State</label
+        ><input
+          name="stateAbbr"
+          type="text"
+          class="form-control"
+          placeholder="ex: CO"
+          [(ngModel)]="newUser.address.stateAbbr"
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="postalCode" class="form-check-label">ZIP</label
+        ><input
+          name="postalCode"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newUser.address.postalCode"
+        />
+      </div>
+      <div clas="col-md-12">
+        <input
+          class="btn btn-outline-light form-control"
+          value="Create Account"
+          (click)="register()"
+        />
+      </div>
+      <!-- <input class="btn btn-outline-success" (click)="register(thisForm)" value="Create Account"> -->
+    </form>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +45,22 @@ public class ExchangeController {
 		User user = uServe.findByUsername(principal.getName());
 		
 		List<Exchange> exchanges = eServe.findSellerExchangesByUserId(user.getId());
+		
+		return exchanges;
+	}
+	
+	@GetMapping("exchanges/seller/{sellerId}")
+	List<Exchange> getExchangesBySeller(@PathVariable int sellerId, HttpServletResponse resp){
+		
+		System.out.println("============================================================");
+		//System.out.println(user.toString());
+		System.out.println("============================================================");
+		//System.out.println(user.getUsername());
+		System.out.println("============================================================");
+		
+		//User resultUser = uServe.findByUsername(user.getUsername());
+		
+		List<Exchange> exchanges = eServe.findSellerExchangesByUserId(sellerId);
 		
 		return exchanges;
 	}
