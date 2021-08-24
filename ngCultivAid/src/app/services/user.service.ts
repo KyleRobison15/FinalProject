@@ -42,9 +42,25 @@ export class UserService {
     return result;
   }
 
+  editUser(user: User): Observable<User> {
+    return this.http.put<User>(this.baseUrl + 'api/users/' + user.id, user, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        return throwError('UserService.editUser(): Error updating user information');
+      })
+    );
+  }
+
   reroute(user: User){
     this.user = user;
     this.router.navigateByUrl(`/publicProfile/${this.user.username}`);
+  }
+
+  resetPassword(user: User): Observable<User> {
+    return this.http.put<User>(this.baseUrl + 'api/users/password', user, this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        return throwError('UserServce.resetPassword(): Error updating password');
+      })
+    );
   }
 
 

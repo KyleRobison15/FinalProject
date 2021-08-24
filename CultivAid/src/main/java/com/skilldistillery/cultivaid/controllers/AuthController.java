@@ -17,7 +17,7 @@ import com.skilldistillery.cultivaid.services.AuthService;
 // We do not use api pathway here! Because those pathways require authentication...
 
 @RestController
-@CrossOrigin({"*", "http://localhost:4210"})
+@CrossOrigin({"*", "http://localhost:4210/*"})
 public class AuthController {
 
 	@Autowired
