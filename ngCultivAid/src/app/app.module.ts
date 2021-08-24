@@ -29,6 +29,7 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progress.pipe';
 import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
+import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.p
     FilterCategoryPipe,
     FilterProducePipe,
     FilterExchangesInProgressPipe,
-    FilterIncomingExchangesPipe
+    FilterIncomingExchangesPipe,
+    FilterBuyerExchangesPipe
   ],
   imports: [
     BrowserModule,
