@@ -10,7 +10,7 @@ export class Message {
   active: boolean;
   sendingUser: User;
   receivingUser: User;
-  inReplyToMessage: Message;
+  // inReplyToMessage: Message;
   replies: Message [];
 
   constructor(
@@ -22,7 +22,7 @@ export class Message {
     active: boolean = true,
     sendingUser: User = new User(),
     receivingUser: User = new User(),
-    inReplyToMessage: Message = new Message(),
+    // inReplyToMessage: Message = new Message(),
     replies: Message [] = []
   )
 
@@ -36,7 +36,7 @@ export class Message {
     this.active = active;
     this.sendingUser = sendingUser;
     this.receivingUser = receivingUser;
-    this.inReplyToMessage = inReplyToMessage;
+    // this.inReplyToMessage = inReplyToMessage;
     this.replies = replies;
 
   }

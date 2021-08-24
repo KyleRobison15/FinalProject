@@ -5,6 +5,7 @@ import { GardenItem } from 'src/app/models/garden-item';
 import { ApiExternalService } from 'src/app/services/api-external.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { GardenItemService } from 'src/app/services/garden-item.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private apiExt: ApiExternalService,
-    private gardenItemSvc: GardenItemService
+    private gardenItemSvc: GardenItemService,
+    private userService: UserService
   ) {}
 
   searchByZipForm: number[] = [];
@@ -73,5 +75,18 @@ export class HomeComponent implements OnInit {
 
   loggedIn(): boolean {
     return this.auth.checkLogin();
+  }
+
+  getUser(username: string) {
+    this.userService.getUserByUsername(username).subscribe(
+      (user) => {
+        this.userService.reroute(user);
+      },
+      (fail) => {
+        console.error(
+          'publicUserProfileComponent: error getting user by username'
+        );
+      }
+    );
   }
 }

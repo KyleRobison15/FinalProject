@@ -1,1 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+
+body, html {
+  width: 100%;
+  display: block;
+}

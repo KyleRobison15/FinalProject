@@ -21,21 +21,21 @@ public class MessageServiceImpl implements MessageService {
 	private UserRepository userRepo;
 	
 	@Override
-	public List<Message> index(String username) {
+	public List<Message> index(String username1, String username2) {
 		List<Message> messages = null; 
-		User user = userRepo.findByUsername(username);
+		User user = userRepo.findByUsername(username1);
 		
 		if(user != null) {
-			messages = messageRepo.findBySendingUser_Username(username);
+			messages = messageRepo.findBySendingUser_UsernameOrReceivingUser_Username(username1, username2);
 		}
 		
 		return messages;
 	}
 
 	@Override
-	public List<Message> show(String username, int userId) {
+	public List<Message> show(String username1, String username2, int userId) {
 		
-		List<Message> messages = index(username);
+		List<Message> messages = index(username1, username2);
 		List<Message> userMessages = new ArrayList<>(); 
 		
 		for(Message message : messages) {
@@ -47,15 +47,16 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	@Override
-	public Message create(Message message, String username, int receivingUserId) {
+	public Message create(Message message, String username, String username2) {
 		
 		User sender = userRepo.findByUsername(username);
-		User receiver = userRepo.findById(receivingUserId).get();
+		User receiver = userRepo.findByUsername(username2);
 		Message newMessage = null;
 		
 		if(sender != null && receiver != null) {
 			newMessage = new Message(); 
 			newMessage.setContent(message.getContent());
+			newMessage.setSubject(message.getSubject());
 			newMessage.setSendingUser(sender);
 			newMessage.setReceivingUser(receiver);
 			newMessage.setViewed(false);

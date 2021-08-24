@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExchangeItem } from 'src/app/models/exchange-item';
 import { User } from 'src/app/models/user';
+import { ApiExternalService } from 'src/app/services/api-external.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,11 +18,17 @@ export class PublicUserProfileComponent implements OnInit {
   exchangeItem = new ExchangeItem();
   exchangeData: any[] = [];
 
+  lat: number = 38.83628;
+  lng: number = -104.77553;
+
+  isCollapsed: boolean = true;
+
   constructor(
     private userService: UserService,
     private router: Router,
     private currentRoute: ActivatedRoute,
-    private exchangeSvc: ExchangeService
+    private exchangeSvc: ExchangeService,
+    private apiExt: ApiExternalService,
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +39,10 @@ export class PublicUserProfileComponent implements OnInit {
       exchangeObject['amount'] = 0;
       exchangeObject['checked'] = false;
       this.exchangeData.push(exchangeObject);
+      console.log(this.exchangeData);
+
     });
+    // this.searchByZip();
   }
 
   submitExchangeRequest() {
@@ -57,6 +67,18 @@ export class PublicUserProfileComponent implements OnInit {
     );
   }
 
-
+  searchByZip() {
+    this.apiExt.getLocationForZip(Number.parseInt(this.user.address.postalCode)).subscribe(
+      (data) => {
+        this.lat = data.results[0].geometry.location.lat;
+        this.lng = data.results[0].geometry.location.lng;
+      },
+      (err) => {
+        console.error(
+          'publicUserProfileComponent.searchByZip(): error getting location'
+        );
+      }
+    );
+  }
 
 }

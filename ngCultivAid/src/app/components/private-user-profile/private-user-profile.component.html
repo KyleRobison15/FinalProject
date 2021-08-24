@@ -2,62 +2,96 @@
 
 
 <!-- ///////////////////////////////// BASIC USER INFO //////////////////////////////////////// -->
-<div>
-  <br>
-  <h3>User Info: </h3>
+<div class="container bootstrap snippets bootdey">
+  <div class= "panel-body inf-content">
+    <div class="row">
+      <div class="col-md-4" style="margin: auto; display: flex;">
+        <img alt="" style="max-height: 300px; margin:auto;" class="rounded-circle img-thumbnail isTooltip" src="{{user.imageUrl}}">
+      </div>
+      <div class="col-md-8">
+        <div class="table-responsive">
+          <form>
+          <table class="table table-sm table-user-information">
+            <tbody>
+              <tr>
+                <th class="text-success">User Details</th>
+                <td>
+                  <button class="btn btn-sm btn-outline-success" *ngIf="editing || editingPicture" (click)="saveEdit(); editing = false; editingPicture = false;">Save Changes</button>
+                  <button class="btn btn-sm btn-outline-success" *ngIf="editing || editingPicture" (click)="cancelEdit(); editing = false; editingPicture = false;">Cancel</button>
+                  <button class="btn btn-sm btn-outline-success" *ngIf="!editing" (click)="editing = true">Edit Details</button>
+                  <button class="btn btn-sm btn-outline-success" *ngIf="!editingPicture" (click)="editingPicture = true">Change Profile Picture</button>
+                  <button class="btn btn-sm btn-outline-success" (click)="open(content)">Change Password</button>
 
-  <table>
-    <tbody>
-      <tr>
-        <th>Username: </th>
-        <td>{{user.username}}</td>
-      </tr>
-      <tr>
-        <th>First Name: </th>
-        <td>{{user.firstName}}</td>
-      </tr>
-      <tr>
-        <th>Last Name: </th>
-        <td>{{user.lastName}}</td>
-      </tr>
-      <tr>
-        <th>Email: </th>
-        <td>{{user.email}}</td>
-      </tr>
-      <tr>
-        <th>Phone: </th>
-        <td>{{user.phone}}</td>
-      </tr>
-      <tr>
-        <th>Picture: </th>
-        <td><img src="{{user.imageUrl}}" width="128px" height="128px"/></td>
-      </tr>
-      <tr>
-        <th>Address</th>
-      </tr>
-      <tr>
-        <td>Street: </td>
-        <td>{{user.address.address}}</td>
-      </tr>
-      <tr>
-        <td>Street 2:</td>
-        <td>{{user.address.address2}}</td>
-      </tr>
-      <tr>
-        <td>City:</td>
-        <td>{{user.address.city}}</td>
-      </tr>
-      <tr>
-        <td>Postal Code: </td>
-        <td>{{user.address.postalCode}}</td>
-      </tr>
-      <tr>
-        <td>State: </td>
-        <td>{{user.address.stateAbbr}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
+                </td>
+              </tr>
+              <tr *ngIf="editingPicture">
+                <td colspan="2">
+                  <input type="text" name="imageUrl" [(ngModel)]="editedUser.imageUrl" class="form-control form-control-sm">
+                </td>
+              </tr>
+              <tr>
+                <td class="text-success">Username: </td>
+                <td *ngIf="!editing">{{editedUser.username}}</td>
+                <td><input type="text" name="username" [(ngModel)]="editedUser.username" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+              <tr>
+                <td class="text-success">First Name: </td>
+                <td *ngIf="!editing">{{editedUser.firstName}}</td>
+                <td><input type="text" name="firstName" [(ngModel)]="editedUser.firstName" *ngIf="editing" class="form-control form-control-sm"/></td>
+              </tr>
+              <tr>
+                <td class="text-success">Last Name: </td>
+                <td *ngIf="!editing">{{editedUser.lastName}}</td>
+                <td><input type="text" name="lastName" [(ngModel)]="editedUser.lastName" *ngIf="editing" class="form-control form-control-sm"/></td>
+              </tr>
+              <tr>
+                <td class="text-success">Email: </td>
+                <td *ngIf="!editing">{{editedUser.email}}</td>
+                <td><input type="email" name="email" [(ngModel)]="editedUser.email" *ngIf="editing" class="form-control form-control-sm"/></td>
+              </tr>
+              <tr>
+                <td class="text-success">Phone: </td>
+                <td *ngIf="!editing">{{editedUser.phone}}</td>
+                <td><input type="text" name="phone" [(ngModel)]="editedUser.phone" *ngIf="editing" class="form-control form-control-sm"/></td>
+              </tr>
+              <br>
+              <tr>
+                <th class="text-success">Address</th>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="text-success">Street: </td>
+                <td *ngIf="!editing">{{editedUser.address.address}}</td>
+                <td><input type="text" name="address" [(ngModel)]="editedUser.address.address" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+              <tr>
+                <td class="text-success">Street 2:</td>
+                <td *ngIf="!editing">{{editedUser.address.address2}}</td>
+                <td><input type="text" name="address2" [(ngModel)]="editedUser.address.address2" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+              <tr>
+                <td class="text-success">City:</td>
+                <td *ngIf="!editing">{{editedUser.address.city}}</td>
+                <td><input type="text" name="city" [(ngModel)]="editedUser.address.city" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+              <tr>
+                <td class="text-success">Postal Code: </td>
+                <td *ngIf="!editing">{{editedUser.address.postalCode}}</td>
+                <td><input type="text" name="postalCode" [(ngModel)]="editedUser.address.postalCode" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+              <tr>
+                <td class="text-success">State: </td>
+                <td *ngIf="!editing">{{editedUser.address.stateAbbr}}</td>
+                <td><input type="text" name="stateAbbr" [(ngModel)]="editedUser.address.stateAbbr" *ngIf="editing" class="form-control form-control-sm"></td>
+              </tr>
+            </tbody>
+           </table>
+           </form>
+         </div>
+       </div>
+     </div>
+    <br>
+  </div>
 </div>
 
 <!-- ///////////////////////////////// User Listings Manager Wireframe //////////////////////////////////////// -->
@@ -82,97 +116,150 @@
 <!-- ///////////////////////////////// Create a New Listing Route //////////////////////////////////////// -->
 <button class="btn btn-success" [routerLink]="['/createListings']">Create New Listing</button><br><br>
 
+<!-- ///////////////////////////////// EXCHANGE CARDS //////////////////////////////////////// -->
 
-<!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
-<!-- ///// Incoming Requests ///// -->
-<div>
-  <div>
-    <h3>Incoming Exchanges</h3>
+<h1>Incoming Requests:</h1>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Requested Garden Items</th>
-          <th>Username</th>
-          <th>Date Requested</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exchange of sellerExchanges">
-            <td *ngIf="exchange.active && !exchange.accepted">{{exchange.buyer.username}}</td>
-            <td *ngIf="exchange.active && !exchange.accepted">{{exchange.createDate}}</td>
-            <td *ngIf="exchange.active && !exchange.accepted"><button (click)="acceptIncomingExchange(exchange)">Accept</button> | <button (click)="denyIncomingExchange(exchange)">Deny</button>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-<!-- ///// In Progress Requests ///// -->
-<div>
-  <h3>Exchanges In Progress: </h3>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Date Requested</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let exchange of sellerExchanges">
-          <td *ngIf="exchange.accepted && !exchange.complete">{{exchange.buyer.username}}</td>
-          <td *ngIf="exchange.accepted && !exchange.complete">{{exchange.createDate}}</td>
-          <td *ngIf="exchange.accepted && !exchange.complete"><button (click)="completeExchange(exchange)">Complete</button>
-      </tr>
-    </tbody>
-  </table>
-
-<!-- ///// Outgoing Requests ///// -->
-  <div>
-    <h3>Your Requests: </h3>
-
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Date Requested</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exchange of buyerExchanges">
-          <td>{{exchange.exchangeItems[0].gardenItem.user.username}}</td>
-          <td>{{exchange.createDate}}</td>
-          <td>{{getOutgoingExchangeStatus(exchange)}}</td>
-          <td><button *ngIf="exchange.complete">Review</button></td>
-        </tr>
-      </tbody>
-    </table>
-
+<div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length > 0">
+  <div class="row">
+    <div class="col container-sm" *ngFor="let exchange of (sellerExchanges | filterIncomingExchanges)">
+      <div class="card" style="width: 18rem;" *ngIf="exchange.active && !exchange.complete">
+        <div class="card-header">
+          <!-- Username -->
+          {{exchange.buyer.username}}
+          <!-- Exchange Status -->
+          -- {{getOutgoingExchangeStatus(exchange)}}
+        </div>
+        <!-- TODO: Change image url to produce image -->
+        <img src="{{exchange.buyer.imageUrl}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Exchange Items</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let item of exchange.exchangeItems">{{item.quantity}}x {{item.gardenItem.produce.name}} - {{item.gardenItem.variety}}</li>
+          </ul>
+          <button class="btn btn-success"(click)="acceptIncomingExchange(exchange)" *ngIf="exchange.active && !exchange.accepted">Accept</button><button class="btn btn-danger" (click)="denyIncomingExchange(exchange)" *ngIf="exchange.active && !exchange.accepted">Deny</button>
+          <button class="btn btn-primary" *ngIf="exchange.accepted" (click)="completeExchange(exchange)">Complete</button><button class="btn btn-danger" *ngIf="exchange.accepted" (click)="deactivateExchange(exchange)">X</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
+  No Incoming Requests
+</div>
+
+<!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
+
+
+<!-- ///// Outgoing Requests ///// -->
+  <!-- Parent Container -->
+  <div class="container-fluid bg-light px-0"  id="exchangeManager" >
+    <h3  id="exchangeManager" >Your Orders: </h3>
+
+    <!-- Button Block Container -->
+    <div class="container px-0 gx-0 bg-primary ">
+      <div class="row px-0 gx-0 bg-primary text-light py-3 px-0 border border-dark rounded">
+        <div class="col">Username</div>
+        <div class="col">Date Completed</div>
+        <div class="col">Status</div>
+      </div>
+      <div class="container-fluid" *ngIf="(buyerExchanges | filterBuyerExchanges).length > 0">
+        <div class="container-fluid" *ngFor="let exchange of (buyerExchanges | filterBuyerExchanges), let i = index" >
+          <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="exchange.active">
+
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
+              <!-- Status Column And Review Button Column -->
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
+                <div class="row">
+                  <div class="col">
+                    {{getOutgoingExchangeStatus(exchange)}}
+                  </div>
+                  <div class="col" *ngIf="exchange.complete && exchange.accepted">
+                    <button class="btn btn-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">Review</button> |
+                    <button class="btn btn-danger" (click)="deactivateExchange(exchange)">X</button>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Review Drop Down -->
+            <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
+            Review:
+              <div class="row">
+                <div class="col">* S T A R S * H E R E *</div>
+                <div class="col"><input type=text/></div>
+                <div class="col"><button>Submit</button></div>
+              </div>
+            </div>
+
+            <!-- Details Drop Down  -->
+            <div id="detailsDiv" class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true" >
+              <div class="row">
+                <div class = "row>">Exchange Items:</div>
+                <div class="col">Name:</div>
+                <div class="col">Amount:</div>
+              </div>
+              <div class="row" *ngFor="let item of exchange.exchangeItems">
+                <div class="col">{{item.gardenItem.produce.name}}</div>
+                <div class="col">{{item.quantity}}</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" *ngIf="(buyerExchanges | filterBuyerExchanges).length == 0">
+      No Active Orders...
+    </div>
+  </div>
+</div>
+
+
 <!-- /////////////////////// B U T T O N S //////////////////////////////// -->
 <button>Exchange History</button>
-<button (click)='goToPublicProfile()'>Public Profile</button>
+<button (click)="getUser(user.username)">Public Profile</button>
 
 <!-- ///////////////////////////////// ACCORDIAN TEST //////////////////////////////////////// -->
 
-<h1>Accordion Test</h1>
 
-<accordion>
-  <accordion-group heading="Static Header">
-    This content is straight in the template.
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-  <accordion-group heading="Another group">
-    <p>Some content</p>
-  </accordion-group>
-</accordion>
+
+<!-- ///////////////////////////////// MODAL //////////////////////////////////////// -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Password</h4>
+    <button class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="curPassword">Current Password</label>
+        <div class="input-group">
+          <input type="password" id="curPassword" class="form-control" name="curPassword" [(ngModel)]="passwordChangeForm.curPassword" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New Password</label>
+        <div class="input-group">
+          <input type="password" id="newPassword" class="form-control" name="newPassword" [(ngModel)]="passwordChangeForm.newPassword">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="matchPassword">Verify New Password</label>
+        <div class="input-group">
+          <input type="password" id="matchPassword" class="form-control" name="matchPassword" [(ngModel)]="passwordChangeForm.matchPassword">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <span class="text-danger" *ngIf="passwordChangeForm.newPassword !== passwordChangeForm.matchPassword">New Password Does Not Match!</span>
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')" [disabled]="passwordChangeForm.newPassword !== passwordChangeForm.matchPassword">Save</button>
+  </div>
+</ng-template>
+<pre>{{ closeResult }}</pre>
+
+
+
 

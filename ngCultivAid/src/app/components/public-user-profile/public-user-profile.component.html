@@ -1,57 +1,171 @@
+<div id="publicProfileBody">
 <div class="container">
-<h1 class="display-2">{{user.username}} Profile</h1>
-
-<div class="row">
-  <div class="col">
-    <img width="100" height="100" src="{{user.imageUrl}}" alt="User Profile Image">
+  <div class="row">
+    <div class="col-md-3">
+      <img
+        src="{{ user.imageUrl }}"
+        alt="User Profile Image"
+        id="publicImage"
+      />
+    </div>
+    <div class="col-md-6">
+      <div class="row text-center">
+        <h1 class="display-3">{{ user.username }}</h1>
+      </div>
+      <div class="row text-center">
+        <h1 class="display-5">Rating</h1>
+      </div>
+      <div class="row">
+      <button
+        class="btn btn-dark"
+        (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseBasic"
+      >
+        Message
+      </button>
+    </div>
+      <div [collapse]="isCollapsed" [isAnimated]="true">
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1"></label>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+          <button class="btn btn-outline-dark">Send</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <agm-map [latitude]='lat' [longitude]='lng'>
+        <agm-marker [latitude]='lat' [longitude]='lng'></agm-marker>
+      </agm-map>
+    </div>
   </div>
-  <div class="col">
-    <h6>{{user.username}}</h6>
-    <h6></h6>
-    <button class="btn btn-outline-dark">Message</button>
-  </div>
-  <div class="col">
-    <h1>MAP</h1>
-  </div>
-</div>
+  <hr>
+  <!-- ///////////////////////// EXCHANGE REQUEST FORM /////////////////////////// -->
 
- <!-- ///////////////////////// EXCHANGE REQUEST FORM /////////////////////////// -->
-
- <!-- //////// NOTE: The click events and ngModels for the Exchange Request Form are not working.
+  <!-- //////// NOTE: The click events and ngModels for the Exchange Request Form are not working.
                     Feel free to mess around with them.
                     Additional Info: The request body to add a form is a list of exhcnage items. /////////////////////////// -->
 
-<div>
-  <form>
-  <table class = "table">
-    <thead>
-      <tr>
-        <th>Add</th>
-        <th>Garden Item</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of user.gardenItems, let i = index">
-        <td><input type="checkbox" name="exchangeItem + i" [(ngModel)]="exchangeData[i].checked"/></td>
-        <td>{{item.produce.name}}</td>
-        <td><input type="number" name="amount + i" [(ngModel)]="exchangeData[i].amount"/> / {{item.amount}}</td>
-      </tr>
-    </tbody>
-    <button class="btn btn-success" (click)="submitExchangeRequest()">Submit Request</button>
-  </table>
-  </form>
+  <!-- <div>
+    <form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Add</th>
+            <th>Garden Item</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of user.gardenItems; let i = index">
+            <td>
+              <input
+                type="checkbox"
+                name="exchangeItem + i"
+                [(ngModel)]="exchangeData[i].checked"
+              />
+            </td>
+            <td>{{ item.produce.name }}</td>
+            <td>
+              <input
+                type="number"
+                name="amount + i"
+                [(ngModel)]="exchangeData[i].amount"
+              />
+              / {{ item.amount }}
+            </td>
+          </tr>
+        </tbody>
+        <button class="btn btn-dark" (click)="submitExchangeRequest()">
+          Submit Request
+        </button>
+      </table>
+    </form>
+  </div> -->
+
+  <!-- ///////////////////////////////// BASKET /////////////////////////////////////// -->
+<div class="row">
+  <div class="col-md-6">
+  <div id="basket">
+    <h1 class="display-5">Basket: </h1>
+    <form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Garden Item</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of user.gardenItems; let i = index">
+              <td *ngIf="exchangeData[i].checked">{{item.produce.name}}</td>
+              <td *ngIf="exchangeData[i].checked">{{exchangeData[i].amount}}</td>
+          </tr>
+        </tbody>
+        <button class="btn btn-dark" (click)="submitExchangeRequest()">
+          Submit Request
+        </button>
+      </table>
+    </form>
+  </div>
 </div>
 
-<!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->
+  <!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->
+ <div class="col-md-6">
+  <div class="recent-post-div">
+    <div
+      class="card recent-post-card"
+      *ngFor="let item of user.gardenItems; let i = index"
+    >
+        <div class="row" id="details">
+          <div class="col-md-2" id="imageCol">
+            <img src="{{ item.produce.imageUrl }}" alt="" id="image" />
+          </div>
 
-<div class="card" style="width: 18rem;" *ngFor="let item of user.gardenItems">
-  <!-- TODO: Change image url to produce image -->
-  <img src="{{item.produce.imageUrl}}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{item.produce.name}}</h5>
-    <p class="card-text">{{item.description}}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-md-10" id="detailsCol">
+            <div class="row" id="topRow">
+              <div class="col-md-8" id="title">
+                <h5>{{ item.produce.name }} -- {{ item.variety }}</h5>
+              </div>
+              <div class="col-md-4" id="grownBy">
+                <Strong>Quantity: </Strong>
+                <input
+                min = "0"
+                max = "{{item.amount}}"
+                type="number"
+                name="amount + i"
+                [(ngModel)]="exchangeData[i].amount"
+              />
+              / {{ item.amount }}
+              </div>
+            </div>
+
+            <div class="row" id="middleRow">
+              <div class="col-md-12" id="description">
+                {{ item.description }}
+              </div>
+            </div>
+
+            <div class="row" id="bottomRow">
+              <div class="col-md-8" id="amount">
+                <span class="card-text" *ngIf="item.pesticides && item.produce.category.name != 'Dairy'"> <strong>Pesticides:</strong> Yes | </span>
+                <span class="card-text" *ngIf="!item.pesticides && item.produce.category.name != 'Dairy'"> <strong>Pesticides:</strong> No | </span>
+                <span class="card-text" *ngIf="item.fertilizers && item.produce.category.name != 'Dairy'"> <strong>Fertilizers:</strong> Yes</span>
+                <span class="card-text" *ngIf="!item.fertilizers && item.produce.category.name != 'Dairy'"> <strong>Fertilizers:</strong> No</span>
+              </div>
+              <div class="col-md-4" id="addButton">
+                <button class="btn btn-dark" (click)="exchangeData[i].checked = true" id="basketAdd">Add to basket</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
 </div>

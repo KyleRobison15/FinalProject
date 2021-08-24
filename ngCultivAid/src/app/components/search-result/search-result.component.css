@@ -1,6 +1,104 @@
-#filter-col {
-  height: 90vh;
-  border: none;
-  border-right: solid green 2px;
+#content {
+  background-color: rgba(77, 175, 21, 0.8);
 }
 
+#filter-col {
+  min-height: calc(100vh - 56px);
+  margin: none;
+  padding: 1rem;
+  width: 100%;
+}
+
+#result-col {
+  margin: none;
+  padding: 0%;
+  max-width: 100%;
+}
+
+.row {
+  width: 100%;
+}
+
+.card {
+  margin: 1rem;
+  width: 90%;
+}
+
+.col-md-3 {
+  padding-right: 0%;
+}
+
+agm-map {
+  height: 15rem;
+}
+
+#details {
+  min-width: 100%;
+  height: 8rem;
+  margin: 0px;
+}
+
+#imageCol {
+  display: flex;
+ margin: auto;
+ height: 8rem;
+ padding: 0px;
+}
+
+#image {
+  margin: auto;
+  max-height: 84.375%;
+  max-width: 90%;
+  object-fit: contain;
+  padding: 0px;
+  border: solid black 1px;
+}
+
+#topRow #middleRow #bottomRow {
+  min-width: 100%;
+  margin: auto;
+}
+#detailsCol {
+  padding-top: 0.5rem;
+  padding-right: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+#grownBy {
+
+  text-align: right;
+  font-size: small;
+  font-style: italic;
+}
+
+#description {
+  min-width: 100%;
+}
+
+
+#amount {
+  font-size: small;
+}
+
+#topRow {
+ height: 25%;
+}
+#middleRow {
+  height: 50%;
+}
+#bottomRow {
+  height: 25%;
+}
+
+#distance {
+  text-align: right;
+  font-size: small;
+}
+
+#avatar {
+  object-fit:cover;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
