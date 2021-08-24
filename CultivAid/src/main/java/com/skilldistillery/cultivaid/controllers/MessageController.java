@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,6 +55,20 @@ public class MessageController {
 			) {
 		
 		return messageSvc.create(message, principal.getName(), username2);
+	}
+	
+	@PutMapping("api/messages/{id}")
+	public Message markAsViewed(@PathVariable("id") int messageId, Principal principal, HttpServletResponse res) {
+		
+		Message updatedMessage = messageSvc.markAsViewed(messageId, principal.getName());
+		
+		if (updatedMessage == null) {
+			res.setStatus(404);
+			return null;
+		}else {
+			return updatedMessage;
+		}
+		
 	}
 
 }

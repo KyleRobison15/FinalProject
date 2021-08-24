@@ -36,7 +36,25 @@ export class MessageService {
     return this.http.post<Message>(`${this.url}/${message.receivingUser.username}`, message, this.getHttpOptions())
     .pipe(catchError((err: any) => {
       console.log(err);
-      return throwError(`Error creating todo: ${err}`);
+      return throwError(`MessageService.create(): Error sending new message: ${err}`);
+    })
+    );
+  }
+
+  public markAsViewed(message: Message) {
+    return this.http.put<Message>(`${this.url}/${message.id}`, message, this.getHttpOptions())
+    .pipe(catchError((err: any) => {
+      console.log(err);
+      return throwError(`MessageService.markAsViewed(): Error marking message as viewed: ${err}`);
+    })
+    );
+  }
+
+  public deactivateMessage(message: Message) {
+    return this.http.delete<Message>(`${this.url}/${message.id}`, this.getHttpOptions())
+    .pipe(catchError((err: any) => {
+      console.log(err);
+      return throwError(`MessageService.deactivateMessage(): Error marking message as inactive: ${err}`);
     })
     );
   }

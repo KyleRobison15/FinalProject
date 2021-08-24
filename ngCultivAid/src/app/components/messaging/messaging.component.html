@@ -1,36 +1,50 @@
 <!-- /////////////////////////////////// MESSAGING NAV ////////////////////////////////////// -->
+<br><div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-outline-success" (click)="sendingMessage = true; open(newMessageModal)">New Message</button>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+          <div class="input-group">
+            <button class="btn btn-outline-success">Search</button>
+            <input type="text" class="form-control" placeholder="Search Messages">
+          </div>
+      </div>
+    </div>
+  </div>
+</div><br>
 
 <div class="container">
   <div id="messageNav">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" (click)="viewingInbox = true; viewingSent = false;">Inbox</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="viewingInbox = false; viewingSent = true;">Sent</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="sendingMessage = true; open(newMessageModal)">New Message</a>
-      </li>
-    </ul>
-  </div>
+    <div class="row">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="activeTab === 'inbox' ? 'active' : '' " aria-current="page" (click)="viewingInbox = true; viewingSent = false; selected=null; activeTab='inbox'">Inbox</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="activeTab === 'sent' ? 'active' : '' " (click)="viewingInbox = false; viewingSent = true; selected=null; activeTab='sent'" >Sent</a>
+          </li>
+        </ul>
+    </div>
+  </div><br>
 
 <!-- /////////////////////////////////// INBOX ////////////////////////////////////// -->
 
-  <div id="messageTable" *ngIf="viewingInbox">
+  <div id="messageTable" *ngIf="viewingInbox && !selected">
     <table class="table">
       <thead>
-        <th>From</th>
-        <th>Subject</th>
-        <th>Content</th>
-        <th>Viewed</th>
+        <th scope="col">From</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Date Received</th>
+        <th scope="col">Viewed</th>
       </thead>
       <tbody *ngFor="let message of receivedMessages">
-        <tr [ngClass]="markRead(message)">
+        <tr [ngClass]="markRead(message)" (click)="displaySingleMessage(message); markAsViewed(message)">
           <td>{{ message.sendingUser.username }}</td>
           <td>{{ message.subject }}</td>
-          <td>{{ message.content }}</td>
-          <td>{{ message.viewed }}</td>
+          <td>{{ message.createTime }}</td>
+          <td>{{ message.viewed}}</td>
         </tr>
       </tbody>
     </table>
@@ -39,21 +53,30 @@
 
 <!-- /////////////////////////////////// SENT ////////////////////////////////////// -->
 
-<div id="messageTable" *ngIf="viewingSent">
+<div id="messageTable" *ngIf="viewingSent && !selected">
   <table class="table">
     <thead>
       <th>To</th>
       <th>Subject</th>
-      <th>Content</th>
+      <th>Date Sent</th>
     </thead>
     <tbody *ngFor="let message of sentMessages">
-      <tr [ngClass]="markRead(message)">
+      <tr [ngClass]="markRead(message)" (click)="displaySingleMessage(message); message.viewed=true">
         <td>{{ message.receivingUser.username }}</td>
         <td>{{ message.subject }}</td>
-        <td>{{ message.content }}</td>
+        <td>{{ message.createTime }}</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- /////////////////////////////////// SINGLE MESSAGE VIEW ////////////////////////////////////// -->
+
+<div id="singleMessage" *ngIf="selected">
+  <h1 class="display-6">From: {{selected.sendingUser.username}}</h1>
+  <h1 class="display-6">To: {{selected.sendingUser.username}}</h1>
+  <hr>
+  <p>{{selected.content}}</p>
 </div>
 
 <!-- /////////////////////////////////// NEW MESSAGE MODAL ////////////////////////////////////// -->

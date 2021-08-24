@@ -22,6 +22,7 @@ export class MessagingComponent implements OnInit {
   viewingSent: boolean = false;
   newMessage: Message = new Message();
   closeResult = '';
+  activeTab: string = 'inbox';
 
   constructor(private messageService: MessageService, private modalService: NgbModal, private userService: UserService) { }
 
@@ -81,6 +82,20 @@ export class MessagingComponent implements OnInit {
     else{
       return '';
     }
+  }
+
+  markAsViewed(message: Message){
+    this.messageService.markAsViewed(message).subscribe(
+      data => {
+        this.receivedMessages = [];
+        this.sentMessages = [];
+        this.reload();
+      },
+      error =>{
+        console.log(error);
+        console.log("MessagingComponent.markAsViewed(): Error marking message as viewed");
+      }
+    );
   }
 
   createMessage(){
