@@ -24,6 +24,7 @@ export class PublicUserProfileComponent implements OnInit {
   lng: number = -104.77553;
 
   isCollapsed: boolean = true;
+  isReviewCollapsed: boolean[] = [];
 
   userExchanges: Exchange[] = [];
   rating:number = 0;
@@ -59,7 +60,15 @@ export class PublicUserProfileComponent implements OnInit {
 
             this.exchangeSvc.getSellerExchangesByUser(this.user).subscribe(
                 exchanges => {
-                  this.userExchanges = exchanges;
+
+                  for(let i=0; i<exchanges.length; i++){
+                    if(exchanges[i].complete){
+                      this.userExchanges.push(exchanges[i]);
+                      this.isReviewCollapsed.push(true);
+                    }
+                  }
+
+                  //this.userExchanges = exchanges;
                   console.log("User exchanges: " + this.userExchanges.length);
                   for(let exchange of this.userExchanges){
                     this.rating += exchange.rating;

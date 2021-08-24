@@ -56,6 +56,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('credentials');
     localStorage.removeItem('loggedInUsername');
+    console.log('logged out');
   }
 
   checkLogin() {
