@@ -4,20 +4,25 @@ import { Exchange } from 'src/app/models/exchange';
 import { User } from 'src/app/models/user';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { UserService } from 'src/app/services/user.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { resourceLimits } from 'worker_threads';
+import { isConstructorDeclaration } from 'typescript';
 
 @Component({
   selector: 'app-private-user-profile',
   templateUrl: './private-user-profile.component.html',
-  styleUrls: ['./private-user-profile.component.css']
+  styleUrls: ['./private-user-profile.component.css'],
 })
 export class PrivateUserProfileComponent implements OnInit {
-
   isBuyerCollapsed: boolean[] = [];
   isSellerCollapsed: boolean[] = [];
   isInProgressCollapsed: boolean[] = [];
   isReviewCollapsed: boolean[] = [];
 
   user: User = new User();
+  editedUser: User = new User();
 
   buyerExchanges: Exchange[] = [];
 
@@ -25,127 +30,147 @@ export class PrivateUserProfileComponent implements OnInit {
 
   sellerExchanges: Exchange[] = [];
 
+  editing: boolean = false;
+  editingPicture: boolean = false;
 
-  constructor(private userService: UserService, private exchangeService: ExchangeService, private router: Router) { }
+  closeResult = '';
+
+  passwordChangeForm = {
+    curPassword: '',
+    newPassword: '',
+    matchPassword: '',
+  };
+
+  constructor(
+    private userService: UserService,
+    private exchangeService: ExchangeService,
+    private router: Router,
+    private modalService: NgbModal,
+    private authSvc: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.userService.getLoggedInUser().subscribe(
-      user => {
+      (user) => {
         this.user = user;
-        console.log("Logged In User: " + this.user.username);
+        this.editedUser = Object.assign({}, user);
+        this.editedUser.address = Object.assign({}, user.address);
+        console.log('Logged In User: ' + this.user.username);
       },
-      fail => {
+      (fail) => {
         console.log('Invalid User ');
         this.router.navigateByUrl('notFound');
       }
-    )
+    );
 
     this.exchangeService.getBuyerExchanges().subscribe(
-      exchanges => {
+      (exchanges) => {
         this.buyerExchanges = exchanges;
-        console.log("in exchangeService init call private profile");
-        for(let i=0; i<exchanges.length; i++){
+        console.log('in exchangeService init call private profile');
+        for (let i = 0; i < exchanges.length; i++) {
           this.isBuyerCollapsed.push(true);
           this.isReviewCollapsed.push(true);
           this.buyerExchangesLoaded = true;
         }
       },
-      fail => {
-        console.log('In Private Profile Init(): Could not get buyer exchanges ');
+      (fail) => {
+        console.log(
+          'In Private Profile Init(): Could not get buyer exchanges '
+        );
         this.router.navigateByUrl('notFound');
       }
-    )
+    );
 
     this.exchangeService.getSellerExchanges().subscribe(
-      exchanges => {
+      (exchanges) => {
         this.sellerExchanges = exchanges;
-        console.log("in exchangeService init call private profile");
-        for(let i=0; i<exchanges.length; i++){
+        console.log('in exchangeService init call private profile');
+        for (let i = 0; i < exchanges.length; i++) {
           this.isSellerCollapsed.push(true);
           this.isInProgressCollapsed.push(true);
         }
       },
-      fail => {
-        console.log('In Private Profile Init(): Could not get seller exchanges ');
+      (fail) => {
+        console.log(
+          'In Private Profile Init(): Could not get seller exchanges '
+        );
         this.router.navigateByUrl('notFound');
       }
-    )
-
+    );
   }
 
-
-
-
-  goToPublicProfile(){
+  goToPublicProfile() {
     this.router.navigateByUrl('publicProfile');
   }
 
-  acceptIncomingExchange(exchange: Exchange){
+  acceptIncomingExchange(exchange: Exchange) {
     exchange.accepted = true;
     this.exchangeService.updateExchange(exchange).subscribe(
-      exchanges => {
+      (exchanges) => {
         //this.sellerExchanges = exchanges;
         //console.log("in exchangeService init call private profile");
       },
-      fail => {
-        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+      (fail) => {
+        console.log(
+          'In Private Profile acceptIncomingExchange(): Could not update exchange '
+        );
         this.router.navigateByUrl('notFound');
       }
-    )
+    );
   }
 
-  denyIncomingExchange(exchange: Exchange){
+  denyIncomingExchange(exchange: Exchange) {
     exchange.accepted = false;
     exchange.active = false;
     this.exchangeService.updateExchange(exchange).subscribe(
-      exchanges => {
+      (exchanges) => {
         //this.sellerExchanges = exchanges;
         //console.log("in exchangeService init call private profile");
       },
-      fail => {
-        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+      (fail) => {
+        console.log(
+          'In Private Profile acceptIncomingExchange(): Could not update exchange '
+        );
         this.router.navigateByUrl('notFound');
       }
-    )
+    );
   }
 
-  completeExchange(exchange: Exchange){
+  completeExchange(exchange: Exchange) {
     exchange.complete = true;
     this.exchangeService.updateExchange(exchange).subscribe(
-      exchanges => {
+      (exchanges) => {
         //this.sellerExchanges = exchanges;
         //console.log("in exchangeService init call private profile");
       },
-      fail => {
-        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+      (fail) => {
+        console.log(
+          'In Private Profile acceptIncomingExchange(): Could not update exchange '
+        );
         this.router.navigateByUrl('notFound');
       }
-    )
+    );
   }
 
-  getOutgoingExchangeStatus(exchange: Exchange): string{
-
-    if(!exchange.accepted && !exchange.complete){
-      return"pending";
+  getOutgoingExchangeStatus(exchange: Exchange): string {
+    if (!exchange.accepted && !exchange.complete) {
+      return 'pending';
     }
-    if(!exchange.accepted && exchange.complete){
-      return "denied";
+    if (!exchange.accepted && exchange.complete) {
+      return 'denied';
     }
-    if(exchange.accepted && !exchange.complete){
-      return "accepted";
+    if (exchange.accepted && !exchange.complete) {
+      return 'accepted';
     }
-    if(exchange.complete && exchange.accepted){
-      return "complete";
-    }
-    else{
-      return "";
+    if (exchange.complete && exchange.accepted) {
+      return 'complete';
+    } else {
+      return '';
     }
   }
 
-  displayExchangeDetails(): string{
-
-    return "details details details";
-
+  displayExchangeDetails(): string {
+    return 'details details details';
   }
 
   getUser(username: string) {
@@ -161,4 +186,69 @@ export class PrivateUserProfileComponent implements OnInit {
     );
   }
 
+  saveEdit() {
+    this.userService.editUser(this.editedUser).subscribe(
+      (user) => {
+        this.user = user;
+        this.editedUser = Object.assign({}, user);
+        this.editedUser.address = Object.assign({}, user.address);
+      },
+      (fail) => {
+        console.error(fail);
+        console.error(
+          'privateUserProfileComponent: error updating user information'
+        );
+      }
+    );
+  }
+  cancelEdit() {
+    this.editedUser = Object.assign({}, this.user);
+    this.editedUser.address = Object.assign({}, this.user.address);
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+          if (result === 'Save click') {
+            if (this.authSvc.getCredentials() === btoa(this.user.username + ':' + this.passwordChangeForm.curPassword)) {
+              this.editedUser.password = this.passwordChangeForm.matchPassword;
+              this.userService.resetPassword(this.editedUser).subscribe(
+                (userResult) => {
+                  this.authSvc.logout();
+                  this.login(userResult.username, this.editedUser.password);
+                },
+                (err) => {
+                  console.log(err);
+                }
+              );
+            }
+          }
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  login(username: string, password: string) {
+    this.authSvc.login(username, password).subscribe(
+      (loggedInUser) => {
+        this.router.navigateByUrl('/privateProfile');
+      },
+      (fail) => {
+        console.error('LoginComponent.login(): login failed');
+      }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }
