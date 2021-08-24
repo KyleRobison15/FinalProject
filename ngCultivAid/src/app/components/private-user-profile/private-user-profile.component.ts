@@ -9,7 +9,9 @@ import { FormControl, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { resourceLimits } from 'worker_threads';
 import { isConstructorDeclaration } from 'typescript';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Message } from 'src/app/models/message';
+import { MessageService } from 'src/app/services/message.service';
+
 
 @Component({
   selector: 'app-private-user-profile',
@@ -51,7 +53,8 @@ export class PrivateUserProfileComponent implements OnInit {
     private exchangeService: ExchangeService,
     private router: Router,
     private modalService: NgbModal,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -108,9 +111,35 @@ export class PrivateUserProfileComponent implements OnInit {
     this.router.navigateByUrl('publicProfile');
   }
 
+
   acceptIncomingExchange(exchange: Exchange) {
 
     //send default message to user here
+    let message: Message = new Message();
+    message.content = this.user.username + " accepted your request";
+    message.subject = this.user.username + " has accepted your request! Send them a message to coordinate a pickup.";
+    message.receivingUser = exchange.buyer;
+    //message.sendingUser = this.user;
+
+    console.log("==========================")
+    console.log(message);
+    console.log(message.receivingUser.username);
+    console.log(message.sendingUser.username);
+    console.log("==========================")
+
+
+    this.messageService.create(message).subscribe(
+      (message) => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      (fail) => {
+        console.log(
+          'In Private Profile acceptIncomingExchange(): Could not send message '
+        );
+        this.router.navigateByUrl('notFound');
+      }
+    );
 
     exchange.accepted = true;
     this.exchangeService.updateExchange(exchange).subscribe(
@@ -308,4 +337,6 @@ export class PrivateUserProfileComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
+
 }
