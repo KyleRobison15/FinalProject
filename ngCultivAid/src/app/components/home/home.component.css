@@ -1,39 +1,51 @@
 .container-home {
-  min-height: calc(100vh - 56px);
+  /* min-height: calc(100vh - 56px);
   overflow: hidden;
-  background-color: rgba(77, 175, 21, 0.8);
-  /* background-image: url("https://www.naturesproduce.com/wp-content/uploads/2018/08/healthy-eating-background-studio-photo-different-fruits-vegetables-old-wooden-table-high-resolution-product-68279554.jpg");
+  background-color: rgba(77, 175, 21, 0.8); */
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.15),
+  rgba(255, 255, 255, 0.15)), url("https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+  background-repeat: none;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: calc(100vh - 56px + 4rem);
+}
+
+.mainHome {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.15),
+  rgba(255, 255, 255, 0.15)), url("https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
 	background-repeat: none;
   background-size: cover;
-  background-position: static;
-  background-attachment: fixed; */
+  background-attachment: fixed;
 }
 
 .display-1 {
-  color: white;
+  color: black;
   text-align: center;
+  transform: translate(0, 20vh);
 }
 .display-8 {
-  color: white;
+  color: black;
   text-align: center;
+  transform: translate(0, 20vh);
 }
 
 .loggedInCss {
-  width: 80% !important;
+  width: 50% !important;
   height: 7rem !important;
   border: 3px solid #f1f1f1;
   background-color: rgba(77, 175, 21);
   border-radius: 10px;
   margin-bottom: 1rem !important;
   margin-top: none !important;
-  transform: translate(0px, 0px) !important;
+  transform: translate(0px, 1rem) !important;
   position: relative !important;
 }
 
 #search-card {
-  transform: translate(0px, 50%);
+  transform: translate(0px, 22vh);
 	margin: auto;
-	width: 60%;
+	width: 50%;
   height: 10rem;
 	border: 3px solid #f1f1f1;
 	background-color: rgba(77, 175, 21, 0.8);
@@ -55,9 +67,13 @@
 }
 
 .recent-post-div {
+  transform: translate(0, 2rem);
+  background-color: rgba(77, 175, 21, 0.8);
   margin:auto;
-  width: 70%;
+  margin-left: 3rem;
   min-height: calc(100vh - 56px - 7rem - 1rem);
+  border: 3px solid #f1f1f1;
+	border-radius: 10px;
 }
 
 .recent-post-div > h3 {
@@ -145,4 +161,27 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+#messageDiv {
+  margin-right: 5rem !important;
+  transform: translate(0, 2rem);
+  margin-top: 0px !important;
+  background-color: rgba(77, 175, 21, 0.8);
+  margin:auto;
+  border: 3px solid #f1f1f1;
+	border-radius: 10px;
+  min-height: 60vh;
+}
+
+#messageDiv > h3 {
+  color: white;
+  text-decoration: underline;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.app-messaging {
+  background-color: rgb(255, 255, 255, 0.9);
+  min-height: 50vh;
 }

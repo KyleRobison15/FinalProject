@@ -1,4 +1,4 @@
-<div class="container-home">
+<div class="container-home" [ngClass]="loggedIn() ? '' : 'mainHome'">
   <h1 class="display-1" *ngIf="!loggedIn()">CultivAid</h1>
   <h3 class="display-8" *ngIf="!loggedIn()">
     Saving produce 1 neighbor at a time.
@@ -26,7 +26,8 @@
     </div>
   </div>
 
-  <div class="recent-post-div" *ngIf="loggedIn()">
+  <div class="row">
+  <div class="recent-post-div col-md-6" *ngIf="loggedIn()">
     <H3>Recent Posts Near You!</H3><br />
     <div
       class="card recent-post-card"
@@ -84,5 +85,11 @@
         </div>
       </div>
     </div>
-  <!-- </div> -->
+    <div class="col-md-5" id="messageDiv" *ngIf="loggedIn()">
+      <H3>Messages</H3><br />
+      <div  class="app-messaging">
+      <app-messaging></app-messaging>
+      </div>
+    </div>
+  </div>
 </div>
