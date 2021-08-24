@@ -111,82 +111,46 @@
 <!-- ///////////////////////////////// Create a New Listing Route //////////////////////////////////////// -->
 <button class="btn btn-success" [routerLink]="['/createListings']">Create New Listing</button><br><br>
 
+<!-- ///////////////////////////////// EXCHANGE CARDS //////////////////////////////////////// -->
 
-<!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
+<h1>Incoming Requests:</h1>
 
-<!-- ///// Incoming Requests ///// -->
-<div id="exchangeManager" class="container border border-dark">
-
-    <!-- Parent Container -->
-    <div id="exchangeManager" class="container-fluid bg-light px-0">
-      <h3 id="exchangeManager" >Incoming Exchanges: </h3>
-
-      <!-- Button Block Container -->
-      <div class="container px-0 gx-0 bg-primary">
-        <div  id="exchangeRow" class="row px-0 gx-0 bg-primary text-light py-3 px-0 border border-dark rounded">
-          <div class="col">Username</div>
-          <div class="col">Date Requested</div>
+<div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length > 0">
+  <div class="row">
+    <div class="col container-sm" *ngFor="let exchange of (sellerExchanges | filterIncomingExchanges)">
+      <div class="card" style="width: 18rem;" *ngIf="exchange.active && !exchange.complete">
+        <div class="card-header">
+          <!-- Username -->
+          {{exchange.buyer.username}}
+          <!-- Exchange Status -->
+          -- {{getOutgoingExchangeStatus(exchange)}}
         </div>
-        <div class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngFor="let exchange of (sellerExchanges | filterIncomingExchanges), let i = index" >
-
-            <div class="col bg-light text-dark" (click)="isSellerCollapsed[i] = !isSellerCollapsed[i]" [attr.aria-expanded]="!isSellerCollapsed[i]" aria-controls="collapseBasic">{{exchange.buyer.username}}</div>
-            <div class="col bg-light text-dark" (click)="isSellerCollapsed[i] = !isSellerCollapsed[i]" [attr.aria-expanded]="!isSellerCollapsed[i]" aria-controls="collapseBasic">{{exchange.createDate}}</div>
-            <div class="col bg-light"><button (click)="acceptIncomingExchange(exchange)">Accept</button> | <button (click)="denyIncomingExchange(exchange)">Deny</button></div>
-
-           <!-- Details Drop Down  -->
-           <div id="detailsDiv" class="row text-dark" [collapse]="isSellerCollapsed[i]" [isAnimated]="true" *ngFor="let item of exchange.exchangeItems">
-            {{item.gardenItem.produce.name}}
-          </div>
-      </div>
-      <div  id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
-        <div class="col text-dark ">No incoming exchange requests</div>
-      </div>
-
-    </div>
-  </div>
-
-<!-- ///// In Progress Requests ///// -->
-
-  <!-- Parent Container -->
-  <div class="container-fluid bg-light px-0">
-    <h3 id="exchangeManager" >In Progress Requests: </h3>
-
-    <!-- Button Block Container -->
-    <div class="container px-0 gx-0 bg-primary">
-      <div class="row px-0 gx-0 bg-primary text-light py-3 px-0 border border-dark rounded">
-        <div class="col">Username</div>
-        <div class="col">Date Requested</div>
-      </div>
-      <div  id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngFor="let exchange of (sellerExchanges | filterExchangesInProgress), let i = index" >
-
-
-
-          <div class="col bg-light text-dark" (click)="isInProgressCollapsed[i] = !isInProgressCollapsed[i]" [attr.aria-expanded]="!isInProgressCollapsed[i]" aria-controls="collapseBasic">{{exchange.buyer.username}}</div>
-          <div class="col bg-light text-dark" (click)="isInProgressCollapsed[i] = !isInProgressCollapsed[i]" [attr.aria-expanded]="!isInProgressCollapsed[i]" aria-controls="collapseBasic">{{exchange.createDate}}</div>
-          <div class="col"><button class="btn btn-outline-success" (click)="completeExchange(exchange)">Complete</button></div>
-
-         <!-- Details Drop Down  -->
-         <div id="detailsDiv" class="row text-dark" [collapse]="isInProgressCollapsed[i]" [isAnimated]="true" *ngFor="let item of exchange.exchangeItems">
-           <div class="row">
-          <div class="col">{{item.gardenItem.produce.name}}</div>
-          <div class="col">{{item.quantity}}</div>
-          </div>
+        <!-- TODO: Change image url to produce image -->
+        <img src="{{exchange.buyer.imageUrl}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Exchange Items</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let item of exchange.exchangeItems">{{item.quantity}}x {{item.gardenItem.produce.name}} - {{item.gardenItem.variety}}</li>
+          </ul>
+          <button class="btn btn-success"(click)="acceptIncomingExchange(exchange)" *ngIf="exchange.active && !exchange.accepted">Accept</button><button class="btn btn-danger" (click)="denyIncomingExchange(exchange)" *ngIf="exchange.active && !exchange.accepted">Deny</button>
+          <button class="btn btn-primary" *ngIf="exchange.accepted" (click)="completeExchange(exchange)">Complete</button><button class="btn btn-danger" *ngIf="exchange.accepted" (click)="deactivateExchange(exchange)">X</button>
         </div>
+      </div>
     </div>
-
-    <div  id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="(sellerExchanges | filterExchangesInProgress).length == 0">
-      <div class="col text-dark ">No exchanges in progress</div>
-    </div>
-
   </div>
 </div>
 
+<div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
+  No Incoming Requests
+</div>
+
+<!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
 
 
 <!-- ///// Outgoing Requests ///// -->
   <!-- Parent Container -->
   <div class="container-fluid bg-light px-0"  id="exchangeManager" >
-    <h3  id="exchangeManager" >Your Requests: </h3>
+    <h3  id="exchangeManager" >Your Orders: </h3>
 
     <!-- Button Block Container -->
     <div class="container px-0 gx-0 bg-primary ">
@@ -195,56 +159,56 @@
         <div class="col">Date Completed</div>
         <div class="col">Status</div>
       </div>
-      <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngFor="let exchange of buyerExchanges, let i = index" >
+      <div class="container-fluid" *ngIf="(buyerExchanges | filterBuyerExchanges).length > 0">
+        <div class="container-fluid" *ngFor="let exchange of (buyerExchanges | filterBuyerExchanges), let i = index" >
+          <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="exchange.active">
 
-          <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
-          <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
-          <!-- Status Column And Review Button Column -->
-          <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
-            <div class="row">
-              <div class="col">
-                {{getOutgoingExchangeStatus(exchange)}}
-              </div>
-              <div class="col" *ngIf="exchange.complete && exchange.accepted">
-                <button class="btn btn-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">Review</button> |
-                <button class="btn btn-danger">X</button>
-              </div>
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
+              <!-- Status Column And Review Button Column -->
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
+                <div class="row">
+                  <div class="col">
+                    {{getOutgoingExchangeStatus(exchange)}}
+                  </div>
+                  <div class="col" *ngIf="exchange.complete && exchange.accepted">
+                    <button class="btn btn-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">Review</button> |
+                    <button class="btn btn-danger" (click)="deactivateExchange(exchange)">X</button>
+                  </div>
+                </div>
             </div>
 
-        </div>
-
-          <!-- Review Drop Down -->
-
-          <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
+            <!-- Review Drop Down -->
+            <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
             Review:
-            <div class="row">
-              <div class="col">* S T A R S * H E R E *</div>
-              <div class="col"><input type=text/></div>
-              <div class="col"><button>Submit</button></div>
+              <div class="row">
+                <div class="col">* S T A R S * H E R E *</div>
+                <div class="col"><input type=text/></div>
+                <div class="col"><button>Submit</button></div>
+              </div>
             </div>
-          </div>
 
-
-
-         <!-- Details Drop Down  -->
-        <div id="detailsDiv" class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true" >
-
-          <div class="row">
-            <div class = "row>">Exchange Items:</div>
-            <div class="col">Name:</div>
-            <div class="col">Amount:</div>
-          </div>
-          <div class="row" *ngFor="let item of exchange.exchangeItems">
-            <div class="col">{{item.gardenItem.produce.name}}</div>
-            <div class="col">{{item.quantity}}</div>
-          </div>
-
+            <!-- Details Drop Down  -->
+            <div id="detailsDiv" class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true" >
+              <div class="row">
+                <div class = "row>">Exchange Items:</div>
+                <div class="col">Name:</div>
+                <div class="col">Amount:</div>
+              </div>
+              <div class="row" *ngFor="let item of exchange.exchangeItems">
+                <div class="col">{{item.gardenItem.produce.name}}</div>
+                <div class="col">{{item.quantity}}</div>
+              </div>
+            </div>
         </div>
+      </div>
     </div>
-
+    <div class="container-fluid" *ngIf="(buyerExchanges | filterBuyerExchanges).length == 0">
+      No Active Orders...
+    </div>
   </div>
 </div>
-</div>
+
 
 <!-- /////////////////////// B U T T O N S //////////////////////////////// -->
 <button>Exchange History</button>
