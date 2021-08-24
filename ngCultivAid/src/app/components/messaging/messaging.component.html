@@ -2,7 +2,7 @@
 <br><div class="container">
   <div class="row">
     <div class="col-md-6">
-      <button class="btn btn-outline-success" (click)="sendingMessage = true; open(newMessageModal)">New Message</button>
+      <button class="btn btn-outline-success" (click)="sendingMessage = true; openNewMessage(newMessageModal)">New Message</button>
     </div>
     <div class="col-md-6">
       <div class="row">
@@ -38,13 +38,15 @@
         <th scope="col">Subject</th>
         <th scope="col">Date Received</th>
         <th scope="col">Viewed</th>
+        <th scope="col">Delete</th>
       </thead>
       <tbody *ngFor="let message of receivedMessages">
-        <tr [ngClass]="markRead(message)" (click)="displaySingleMessage(message); markAsViewed(message)">
-          <td>{{ message.sendingUser.username }}</td>
-          <td>{{ message.subject }}</td>
-          <td>{{ message.createTime }}</td>
-          <td>{{ message.viewed}}</td>
+        <tr *ngIf="message.active" [ngClass]="markRead(message)">
+          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.sendingUser.username }}</td>
+          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.subject }}</td>
+          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.createTime | date}}</td>
+          <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.viewed}}</td>
+          <td><button class="btn btn-outline-danger" (click)="openDeleteMessage(deleteMessageModal); messageToDelete = message">X</button></td>
         </tr>
       </tbody>
     </table>
@@ -99,5 +101,22 @@
   </div>
   <div class="modal-footer" *ngIf="sendingMessage">
     <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click'); createMessage(); sendingMessage = false">Send</button>
+  </div>
+</ng-template>
+
+<!-- /////////////////////////////////// DELETE CONFIRMATION ////////////////////////////////////// -->
+<ng-template #deleteMessageModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Message</h4>
+    <button type="button" class="btn btn-outline-dark" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <h3>Are you sure you want to delete this message?</h3>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Cancel</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click'); deactivateMessage(messageToDelete);">Delete</button>
   </div>
 </ng-template>

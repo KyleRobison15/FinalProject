@@ -82,5 +82,21 @@ public class MessageServiceImpl implements MessageService {
 		}
 		
 	}
+
+	@Override
+	public boolean deactivateMessage(int messageId, String username) {
+		
+		Optional<Message> mesOpt = messageRepo.findById(messageId);
+		Message managedMessage = null;
+		
+		if (mesOpt.isPresent()) {
+			managedMessage = mesOpt.get();
+			managedMessage.setActive(false);
+			messageRepo.saveAndFlush(managedMessage);
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 }

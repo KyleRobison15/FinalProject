@@ -9,4 +9,5 @@ public interface MessageService {
 	public List<Message> show(String username1, String username2, int userId); 
 	public Message create(Message message, String username1, String username2);
 	public Message markAsViewed(int messageId, String username);
+	public boolean deactivateMessage(int messageId, String username);
 }

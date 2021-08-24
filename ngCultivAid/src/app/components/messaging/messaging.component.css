@@ -1,6 +1,6 @@
-.viewed {
-  background-color: linear-gradient(rgba(255, 255, 255, 0.35),
-  rgba(255, 255, 255, 0.35)) !important;
+.notViewed {
+  background: rgb(37, 214, 37, 0.10) !important;
+  font-weight: bold;
 }
 
 .active{

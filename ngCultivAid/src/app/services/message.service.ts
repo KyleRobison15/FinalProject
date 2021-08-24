@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Message } from '../models/message';
+import { User } from '../models/user';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -56,6 +57,25 @@ export class MessageService {
       console.log(err);
       return throwError(`MessageService.deactivateMessage(): Error marking message as inactive: ${err}`);
     })
+    );
+  }
+
+  getMessageCount(){
+    let unreadMessageCount = 0;
+
+    this.index().subscribe(
+      data => {
+        data.forEach( (message) => {
+
+          if (message.viewed === false && message.receivingUser.username === localStorage.getItem('loggedInUser') && message.active === true) {
+            unreadMessageCount += 1;
+          }
+          localStorage.setItem('messageCount', '' + unreadMessageCount);
+        });
+      },
+      err => {
+        console.error('Error getting message count from service: ' + err);
+      }
     );
   }
 
