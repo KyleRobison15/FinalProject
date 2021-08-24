@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ExchangeItem } from '../models/exchange-item';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,16 @@ export class ExchangeService {
     );
   }
 
+  getSellerExchangesByUser(user: User): Observable<Exchange[]> {
+    return this.http.get<Exchange[]>(this.baseUrl + 'exchanges/seller/' + user.id, this.getHttpOptions())
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('ExchangeService.getSellerExchangesByUser(): error getting seller exchanges.');
+      })
+    );
+  }
+
   createExchange(exchangeItems: ExchangeItem[]) {
     return this.http.post<Exchange>(this.baseUrl + 'api/exchanges/', exchangeItems, this.getHttpOptions())
       .pipe(
@@ -61,16 +72,39 @@ export class ExchangeService {
     );
   }
 
+  // getHttpOptions() {
+  //   const credentials = this.auth.getCredentials();
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'X-Requested-With': 'XMLHttpRequest',
+  //       'Authorization': `Basic ${credentials}`
+  //     }),
+  //   };
+  //   return httpOptions;
+  // }
+
   getHttpOptions() {
     const credentials = this.auth.getCredentials();
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': `Basic ${credentials}`
-      }),
-    };
-    return httpOptions;
+    if (credentials) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': `Basic ${credentials}`
+        }),
+      };
+      return httpOptions;
+    }
+    else {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }),
+      };
+      return httpOptions;
+    }
   }
 
 }
