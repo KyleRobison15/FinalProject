@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exchange } from 'src/app/models/exchange';
+import { GardenItem } from 'src/app/models/garden-item';
 import { User } from 'src/app/models/user';
+import { CreateListingService } from 'src/app/services/create-listing.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
+import { GardenItemService } from 'src/app/services/garden-item.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,13 +21,25 @@ export class PrivateUserProfileComponent implements OnInit {
 
   sellerExchanges: Exchange[] = [];
 
-  constructor(private userService: UserService, private exchangeService: ExchangeService, private router: Router) { }
+  items: GardenItem[] = [];
+  userItems: GardenItem[] = [];
+  listingToUpdate: GardenItem | null = null;
+
+  constructor(
+    private userService: UserService,
+    private exchangeService: ExchangeService,
+    private router: Router,
+    private createListing: CreateListingService,
+    private gardenItemSvc: GardenItemService
+    ) { }
 
   ngOnInit(): void {
     this.userService.getLoggedInUser().subscribe(
       user => {
         this.user = user;
         console.log("Logged In User: " + this.user.username);
+        console.log(user.gardenItems.length);
+
       },
       fail => {
         console.log('Invalid User ');
@@ -53,6 +68,8 @@ export class PrivateUserProfileComponent implements OnInit {
         this.router.navigateByUrl('notFound');
       }
     )
+
+    this.indexGardenItems();
   }
 
 
@@ -122,6 +139,32 @@ export class PrivateUserProfileComponent implements OnInit {
     else{
       return "";
     }
+  }
+
+  indexGardenItems() {
+    this.gardenItemSvc.index().subscribe(
+      data => {
+
+        this.items = data;
+        console.log(this.items);
+
+        for (let item of this.items) {
+            if (item.user == this.user){
+            this.userItems.push(item);
+            console.log(this.userItems);
+
+          }
+        }
+      },
+      fail => {
+        console.log("Failure retrieving list of Garden Items for this User");
+        console.log(fail);
+      });
+  }
+
+  updateListing(item : GardenItem) {
+
+
   }
 
 }

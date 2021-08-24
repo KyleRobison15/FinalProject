@@ -21,6 +21,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SortRecentPipe } from './pipes/sort-recent.pipe';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { UpdateListingComponent } from './components/update-listing/update-listing.component';
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchResultComponent,
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
-    SortRecentPipe
+    SortRecentPipe,
+    UpdateListingComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     AccordionModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AlertModule.forRoot()
   ],
   providers: [
     AuthService

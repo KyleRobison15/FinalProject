@@ -64,14 +64,18 @@
 
 <table class="table table-bordered">
   <thead>
-
+    <th>Listing</th>
+    <th>Date Added</th>
+    <th>Actions</th>
+    <th></th>
   </thead>
   <tbody>
-    <tr>
-      <td>Listing 1 Here... (iterate over all listings)</td>
-      <td><button>Remove</button></td>
-      <td><button>Update</button></td>
-    </tr>
+    <tr *ngFor="let item of user.gardenItems">
+        <td>{{item.produce.name}} -- {{item.variety}}</td>
+        <td>{{item.createdDate}}</td>
+        <td><button>Update</button></td>
+        <td><button (click)="updateListing(item)">Remove</button></td>
+      </tr>
   </tbody>
 </table>
 
