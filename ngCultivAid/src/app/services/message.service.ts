@@ -19,12 +19,25 @@ export class MessageService {
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   public index(){
+    console.log('in Index');
+
     return this.http.get<Message[]>(this.url, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError('Error getting messages ' + err);
       })
+    );
+  }
+
+  public create(message: Message){
+    console.log(message.receivingUser.username);
+
+    return this.http.post<Message>(`${this.url}/${message.receivingUser.username}`, message, this.getHttpOptions())
+    .pipe(catchError((err: any) => {
+      console.log(err);
+      return throwError(`Error creating todo: ${err}`);
+    })
     );
   }
 

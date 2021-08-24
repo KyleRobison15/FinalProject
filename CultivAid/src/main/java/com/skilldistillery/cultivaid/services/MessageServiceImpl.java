@@ -47,15 +47,16 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	@Override
-	public Message create(Message message, String username, int receivingUserId) {
+	public Message create(Message message, String username, String username2) {
 		
 		User sender = userRepo.findByUsername(username);
-		User receiver = userRepo.findById(receivingUserId).get();
+		User receiver = userRepo.findByUsername(username2);
 		Message newMessage = null;
 		
 		if(sender != null && receiver != null) {
 			newMessage = new Message(); 
 			newMessage.setContent(message.getContent());
+			newMessage.setSubject(message.getSubject());
 			newMessage.setSendingUser(sender);
 			newMessage.setReceivingUser(receiver);
 			newMessage.setViewed(false);
