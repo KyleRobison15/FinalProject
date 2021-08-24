@@ -69,7 +69,7 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     RatingModule.forRoot(),
     AlertModule.forRoot(),
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AuthService
