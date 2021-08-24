@@ -4,20 +4,20 @@
   <div id="messageNav">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" (click)="sendingMessage = false">Inbox</a>
+        <a class="nav-link active" aria-current="page" (click)="viewingInbox = true; viewingSent = false;">Inbox</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Sent</a>
+        <a class="nav-link" (click)="viewingInbox = false; viewingSent = true;">Sent</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="sendingMessage = true">New Message</a>
+        <a class="nav-link" (click)="sendingMessage = true; open(newMessageModal)">New Message</a>
       </li>
     </ul>
   </div>
 
 <!-- /////////////////////////////////// INBOX ////////////////////////////////////// -->
 
-  <div id="messageTable" *ngIf="!sendingMessage">
+  <div id="messageTable" *ngIf="viewingInbox">
     <table class="table">
       <thead>
         <th>From</th>
@@ -25,7 +25,7 @@
         <th>Content</th>
         <th>Viewed</th>
       </thead>
-      <tbody *ngFor="let message of messages">
+      <tbody *ngFor="let message of receivedMessages">
         <tr [ngClass]="markRead(message)">
           <td>{{ message.sendingUser.username }}</td>
           <td>{{ message.subject }}</td>
@@ -39,14 +39,42 @@
 
 <!-- /////////////////////////////////// SENT ////////////////////////////////////// -->
 
-<!-- /////////////////////////////////// NEW MESSAGE ////////////////////////////////////// -->
-  <div id="newMessageForm" *ngIf="sendingMessage">
-    <form>
-      <label for="subject" class="form-check-label display-6">Subject: </label><input type="text" name="subject" class="form-control" [(ngModel)]="newMessage.subject">
-      <label for="receivingUser" class="form-check-label display-6">Username: </label><input type="text" name="receivingUser" class="form-control" [(ngModel)]="newMessage.receivingUser.username">
-      <label for="content" class="form-check-label display-6">Message Body: </label>
-      <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="newMessage.content"></textarea>
-      <button type="submit" class="btn btn-outline-success" (click)="createMessage(); sendingMessage=false">Send</button>
-    </form>
-  </div>
+<div id="messageTable" *ngIf="viewingSent">
+  <table class="table">
+    <thead>
+      <th>To</th>
+      <th>Subject</th>
+      <th>Content</th>
+    </thead>
+    <tbody *ngFor="let message of sentMessages">
+      <tr [ngClass]="markRead(message)">
+        <td>{{ message.receivingUser.username }}</td>
+        <td>{{ message.subject }}</td>
+        <td>{{ message.content }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<!-- /////////////////////////////////// NEW MESSAGE MODAL ////////////////////////////////////// -->
+<ng-template #newMessageModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Message</h4>
+    <button type="button" class="btn btn-outline-dark" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div id="newMessageForm" *ngIf="sendingMessage">
+      <form>
+        <label for="receivingUser" class="form-check-label">To:</label><input type="text" name="receivingUser" class="form-control" placeholder="Enter Username" [(ngModel)]="newMessage.receivingUser.username">
+        <label for="subject" class="form-check-label">Subject: </label><input type="text" name="subject" class="form-control" [(ngModel)]="newMessage.subject">
+        <label for="content" class="form-check-label">Message Body: </label>
+        <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="newMessage.content"></textarea>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer" *ngIf="sendingMessage">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click'); createMessage(); sendingMessage = false">Send</button>
+  </div>
+</ng-template>

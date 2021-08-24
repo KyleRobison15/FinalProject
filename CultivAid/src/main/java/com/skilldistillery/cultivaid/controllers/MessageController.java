@@ -26,7 +26,7 @@ public class MessageController {
 	@GetMapping("api/messages")
 	public List<Message> index(HttpServletResponse res, Principal principal) {
 		
-		List<Message> messages = messageSvc.index(principal.getName());
+		List<Message> messages = messageSvc.index(principal.getName(), principal.getName());
 		
 		if(messages == null) {
 			res.setStatus(404); 
@@ -42,7 +42,7 @@ public class MessageController {
 			@PathVariable int userId
 			) {
 		
-		return messageSvc.show(principal.getName(), userId);
+		return messageSvc.show(principal.getName(), principal.getName(), userId);
 	}
 	
 	@PostMapping("api/messages/{username}")

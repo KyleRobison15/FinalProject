@@ -21,21 +21,21 @@ public class MessageServiceImpl implements MessageService {
 	private UserRepository userRepo;
 	
 	@Override
-	public List<Message> index(String username) {
+	public List<Message> index(String username1, String username2) {
 		List<Message> messages = null; 
-		User user = userRepo.findByUsername(username);
+		User user = userRepo.findByUsername(username1);
 		
 		if(user != null) {
-			messages = messageRepo.findBySendingUser_Username(username);
+			messages = messageRepo.findBySendingUser_UsernameOrReceivingUser_Username(username1, username2);
 		}
 		
 		return messages;
 	}
 
 	@Override
-	public List<Message> show(String username, int userId) {
+	public List<Message> show(String username1, String username2, int userId) {
 		
-		List<Message> messages = index(username);
+		List<Message> messages = index(username1, username2);
 		List<Message> userMessages = new ArrayList<>(); 
 		
 		for(Message message : messages) {
