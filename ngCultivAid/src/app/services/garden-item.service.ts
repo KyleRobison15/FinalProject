@@ -50,8 +50,6 @@ export class GardenItemService {
       );
     }
 
-<<<<<<< HEAD
-=======
     //Get Http Options
     getHttpOptions() {
       const credentials = this.auth.getCredentials();
@@ -76,5 +74,4 @@ export class GardenItemService {
       }
     }
 
->>>>>>> 1e13cc83bd5f10d02690b0d1a84cfeb10c345aba
-}
+}//Service Class
