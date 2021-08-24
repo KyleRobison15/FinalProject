@@ -1,0 +1,33 @@
+.container-fluid {
+  background-attachment: fixed;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.15),
+  rgba(255, 255, 255, 0.15)), url("https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+  background-repeat: none;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: calc(100vh - 56px);
+}
+
+.display-4 {
+  text-align: center;
+  color: white;
+}
+
+
+.login-form {
+  transform: translate(0px, 10rem);
+  background-color: rgba(77, 175, 21, 0.8);
+  padding: 2rem;
+  margin:auto;
+  max-width: 30%;
+  border:1px solid #DDDDDD;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: white;
+}
