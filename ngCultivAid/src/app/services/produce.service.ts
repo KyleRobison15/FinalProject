@@ -30,6 +30,16 @@ export class ProduceService {
     );
   }
 
+  public calculateWasteSavings(){
+    return this.http.get<number>(this.baseUrl + 'produce')
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Error getting produce ' + err);
+      })
+    );
+  }
+
   getHttpOptions(){
     const credentials = this.auth.getCredentials();
     const httpOptions = {

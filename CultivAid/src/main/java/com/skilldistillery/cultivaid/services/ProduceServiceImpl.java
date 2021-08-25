@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.cultivaid.entities.Exchange;
+import com.skilldistillery.cultivaid.entities.ExchangeItem;
 import com.skilldistillery.cultivaid.entities.Produce;
 import com.skilldistillery.cultivaid.entities.User;
+import com.skilldistillery.cultivaid.repositories.ExchangeRepository;
 import com.skilldistillery.cultivaid.repositories.ProduceRepository;
 import com.skilldistillery.cultivaid.repositories.UserRepository;
 
@@ -17,7 +20,10 @@ public class ProduceServiceImpl implements ProduceService {
 	private ProduceRepository produceRepo;
 	
 	@Autowired 
-	private UserRepository userRepo; 
+	private UserRepository userRepo;
+	
+	@Autowired
+	private ExchangeRepository exchangeRepo;
 
 	@Override
 	public List<Produce> index(String username) {
@@ -54,6 +60,28 @@ public class ProduceServiceImpl implements ProduceService {
 		}
 		
 		return produce; 
+	}
+
+	@Override
+	public double calculateWastePrevented() {
+		
+		double ouncesFoodSaved = 0;
+		List<Exchange> allExchanges = exchangeRepo.findAll();
+		List<ExchangeItem> items = null;
+		
+		for (Exchange exchange : allExchanges) {
+			
+			if (exchange.isComplete()) {
+				items = exchange.getExchangeItems();
+				
+				for (ExchangeItem item : items) {
+					Double avgProduceWt = item.getGardenItem().getProduce().getAverageItemWeight();
+					ouncesFoodSaved += (avgProduceWt * item.getQuantity());
+				}
+			}
+		}
+		
+		return (ouncesFoodSaved / 16);
 	}
 	
 }
