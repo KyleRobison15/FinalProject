@@ -62,6 +62,17 @@ public class MessageServiceImpl implements MessageService {
 			newMessage.setReceivingUser(receiver);
 			newMessage.setViewed(false);
 			newMessage.setActive(true);
+			
+			if (message.getInReplyToMessage() != null) {
+				
+				Optional<Message> replyOpt = messageRepo.findById(message.getInReplyToMessage().getId());
+				
+				if (replyOpt.isPresent()) {
+					newMessage.setInReplyToMessage(replyOpt.get());
+				}
+				
+			}
+			
 		}
 	
 		return messageRepo.saveAndFlush(newMessage); 
