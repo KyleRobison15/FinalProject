@@ -115,10 +115,13 @@
   <!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->
  <div class="col-md-6">
   <div class="recent-post-div">
+    <ng-container class="card recent-post-card"
+    *ngFor="let item of user.gardenItems; let i = index"
+    >
     <div
       class="card recent-post-card"
-      *ngFor="let item of user.gardenItems; let i = index"
-    >
+      *ngIf="item.active"
+      >
         <div class="row" id="details">
           <div class="col-md-2" id="imageCol">
             <img src="{{ item.produce.imageUrl }}" alt="" id="image" />
@@ -162,6 +165,7 @@
           </div>
         </div>
       </div>
+    </ng-container>
     </div>
   </div>
   </div>

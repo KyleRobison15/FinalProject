@@ -24,7 +24,7 @@ export class GardenItemService {
     .pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError('Error saving changes ' + err);
+        return throwError('Error retrieving Garden Item Listings ' + err);
       })
     );
   }

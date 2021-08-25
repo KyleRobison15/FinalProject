@@ -76,7 +76,7 @@ export class PrivateUserProfileComponent implements OnInit {
     private exchangeImageService: ExchangeImageService,
     private bsmodalService: BsModalService,
     private produceSvc: ProduceService,
-    private updateSvc: UpdateListingService,
+    private updateSvc: UpdateListingService
   ) {}
 
 
@@ -491,17 +491,19 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
   activateListing(inactiveItemId:number) {
+
     this.gardenItemSvc.index().subscribe(
       items => {
-        for (let item of items) {
-          if(item.id === inactiveItemId) {
+        for (let inactiveItem of items) {
+          if(inactiveItem.id === inactiveItemId) {
 
-            item.active = true; //Sets Listing to 'active'
+            inactiveItem.active = true; //Sets Listing to 'active'
+            console.log("Test for Activate Listing");
 
-            this.updateSvc.update(item).subscribe(
+            this.updateSvc.update(inactiveItem).subscribe(
               data => {
                 console.log("Listing is active");
-                this.activeListings.push(item);
+                this.activeListings.push(inactiveItem);
                 this.indexGardenItems();
               },
               fail => {
@@ -523,6 +525,9 @@ export class PrivateUserProfileComponent implements OnInit {
         this.items = data;
         console.log("Getting all Items: " + this.items);
 
+        this.activeListings = [];
+        this.inactiveListings = [];
+
         for (let item of this.items) {
 
             if (item.user.id == this.user.id) {
@@ -531,9 +536,9 @@ export class PrivateUserProfileComponent implements OnInit {
 
 
             if(item.active === true) {
-                this.activeListings.push(item);
+                this.activeListings.push(item); //For Active Listings
             } else if(item.active === false) {
-                this.inactiveListings.push(item);
+                this.inactiveListings.push(item);//For Inactive Listings
             }
 
           }//Checks for ID

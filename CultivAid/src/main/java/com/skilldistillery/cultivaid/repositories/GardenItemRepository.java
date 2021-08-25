@@ -13,4 +13,6 @@ public interface GardenItemRepository extends JpaRepository<GardenItem, Integer>
 	public List<GardenItem> findByActiveTrueAndUser_Username(String username);
 	public List<GardenItem> findByActiveTrueAndUserAndAmountGreaterThan(User user, int amount);
 	public GardenItem findByActiveTrueAndId(int id);
+	public GardenItem findByActiveFalseAndId(int id);
+	public List<GardenItem> findAllByUser(User user); 
 }
