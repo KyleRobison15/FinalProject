@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Message {
@@ -45,9 +46,9 @@ public class Message {
 	
 	@ManyToOne
 	@JoinColumn(name = "in_reply_to_id")
+	@JsonIgnoreProperties({"replies"})
 	private Message inReplyToMessage;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "inReplyToMessage")
 	private List<Message> replies;
 	

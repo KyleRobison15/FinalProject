@@ -15,6 +15,10 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+<<<<<<< HEAD
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+>>>>>>> 97a07c9acd760ee0cfa8823dd929215a036da8a2
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
