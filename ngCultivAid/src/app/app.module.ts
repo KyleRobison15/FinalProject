@@ -30,6 +30,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progress.pipe';
 import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
 import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
+// import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     FilterProducePipe,
     FilterExchangesInProgressPipe,
     FilterIncomingExchangesPipe,
-    FilterBuyerExchangesPipe
+    FilterBuyerExchangesPipe,
+    // MessageCountPipe
   ],
   imports: [
     BrowserModule,
