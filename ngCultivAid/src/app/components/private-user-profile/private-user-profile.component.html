@@ -29,7 +29,7 @@
                   <input type="text" name="imageUrl" [(ngModel)]="editedUser.imageUrl" class="form-control form-control-sm">
                 </td>
                 <td colspan="2">
-                  <input type="file" (change)="onFileChanged($event)">
+                  <input type="file" accept="image/gif, image/jpeg, image/png" (change)="onFileChanged($event)">
                 </td>
               </tr>
               <tr>
@@ -224,7 +224,19 @@
 </div>
 
 <div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
-  <div class="row" id="title"> No Incoming Requests </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Nothing To See Here
+        </div>
+        <img src="https://img.itch.zone/aW1nLzI2ODMxNjkucG5n/original/YRmjNd.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">No Incoming Exchanges</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ///////////////////////////////// EXCHANGE REQUEST MANAGER //////////////////////////////////////// -->
@@ -237,7 +249,7 @@
     <div id="title" class="row "> <h1>Your Orders: </h1> </div>
 
     <!-- Button Block Container -->
-    <div class="container px-0 gx-0 bg-primary ">
+    <div class="container px-0 gx-0 bg-light ">
       <div class="row px-0 gx-0 bg-success text-light py-3 px-0 border border-dark rounded">
         <div class="col">Username</div>
         <div class="col">Date Completed</div>
@@ -272,6 +284,9 @@
                   <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
                 </div>
                 <div class="col"><input type="text" [(ngModel)]="exchange.buyerComment"/></div>
+                <div>
+                  <input type="file" accept="image/gif, image/jpeg, image/png" (change)="onFileChanged($event)">
+                </div>
                 <div class="col"><button (click)="updateExchangeReview(exchange)">Submit</button></div>
               </div>
             </div>
@@ -292,7 +307,8 @@
       </div>
     </div>
     <div class="container-fluid bg-light" *ngIf="(buyerExchanges | filterBuyerExchanges).length == 0">
-      No Active Orders...
+      <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded">
+        <div class="col text-dark">Nothing To See Here</div>
     </div>
   </div>
 </div>
@@ -301,8 +317,6 @@
 <!-- /////////////////////// B U T T O N S //////////////////////////////// -->
 <button>Exchange History</button>
 <button (click)="getUser(user.username)">Public Profile</button>
-
-<!-- ///////////////////////////////// ACCORDIAN TEST //////////////////////////////////////// -->
 
 
 
@@ -336,6 +350,8 @@
       </div>
     </form>
   </div>
+
+
   <div class="modal-footer">
     <span class="text-danger" *ngIf="passwordChangeForm.newPassword !== passwordChangeForm.matchPassword">New Password Does Not Match!</span>
     <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')" [disabled]="passwordChangeForm.newPassword !== passwordChangeForm.matchPassword">Save</button>

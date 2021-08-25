@@ -1,5 +1,7 @@
 package com.skilldistillery.cultivaid.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,19 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public List<String> getAllUsernames() {
+		
+		List<User> users = userRepo.findAll();
+		List<String> usernames = new ArrayList<>();
+		
+		for (User user : users) {
+			usernames.add(user.getUsername());
+		}
+		
+		return usernames;
 	}
 
 }
