@@ -189,6 +189,23 @@ export class MessagingComponent implements OnInit {
       : this.usernames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, this.usernames.length + 1))
   )
 
+  setInReplyToMessage(message: Message): void{
+
+    if (message.inReplyToMessage != null) {
+      this.newMessage.inReplyToMessage = message.inReplyToMessage;
+    } else {
+      this.newMessage.inReplyToMessage = message;
+    }
+    this.newMessage.receivingUser.username = message.sendingUser.username;
+    this.newMessage.subject = message.subject;
+  }
+
+  nullInReplyToMessage(){
+    this.newMessage.inReplyToMessage = null;
+    this.newMessage.receivingUser.username = '';
+    this.newMessage.subject = '';
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
