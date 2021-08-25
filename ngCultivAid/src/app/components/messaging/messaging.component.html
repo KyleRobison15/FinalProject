@@ -76,11 +76,22 @@
 
 <!-- /////////////////////////////////// SINGLE MESSAGE VIEW ////////////////////////////////////// -->
 
-<div id="singleMessage" *ngIf="selected">
-  <h1 class="display-6">From: {{selected.sendingUser.username}}</h1>
-  <h1 class="display-6">To: {{selected.sendingUser.username}}</h1>
+<div id="singleMessageThread" *ngIf="selected">
+      <h1>{{selected.subject}}</h1>
   <hr>
-  <p>{{selected.content}}</p>
+  <div id="singleMessage">
+    <div class="row">
+      <div class="col-md-9">
+        <h1 class="display-6">{{selected.sendingUser.username}}</h1>
+      </div>
+      <div class="col-md-3 text-end">
+        <h6>{{selected.createTime | date:'mediumDate'}}, {{selected.createTime | date:'shortTime'}}</h6>
+      </div>
+      <hr>
+    </div>
+        <p>{{selected.content}}</p>
+  </div>
+  <button class="btn btn-outline-dark">Reply</button>
 </div>
 
 <!-- /////////////////////////////////// NEW MESSAGE MODAL ////////////////////////////////////// -->
@@ -94,7 +105,11 @@
   <div class="modal-body">
     <div id="newMessageForm" *ngIf="sendingMessage">
       <form>
-        <label for="receivingUser" class="form-check-label">To:</label><input type="text" name="receivingUser" class="form-control" placeholder="Enter Username" [(ngModel)]="newMessage.receivingUser.username">
+
+        <!-- <label for="receivingUser">To:</label>
+        <input id="receivingUser" type="text" placeholder ="Enter Username" class="form-control" [(ngModel)]="newMessage.receivingUser.username" [ngbTypeahead]="search"/> -->
+
+        <label for="receivingUser" class="form-check-label">To:</label><input type="text" name="receivingUser" class="form-control" placeholder="Enter Username" [(ngModel)]="newMessage.receivingUser.username" [ngbTypeahead]="search">
         <label for="subject" class="form-check-label">Subject: </label><input type="text" name="subject" class="form-control" [(ngModel)]="newMessage.subject">
         <label for="content" class="form-check-label">Message Body: </label>
         <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="newMessage.content"></textarea>

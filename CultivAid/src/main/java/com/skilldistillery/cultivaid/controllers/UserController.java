@@ -1,6 +1,7 @@
 package com.skilldistillery.cultivaid.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,19 @@ public class UserController {
 		User user = userSvc.findByUsername(username);
 		
 		return user;
+	}
+	
+	@GetMapping("api/users/usernames")
+	public List<String> getAllUsernames(HttpServletResponse res, Principal principal) {
+		
+		User user = userSvc.findByUsername(principal.getName());
+		
+		if (user == null) {
+			res.setStatus(404);
+			return null;
+		}
+		
+		return userSvc.getAllUsernames();
 	}
 	
 	@GetMapping("api/users")

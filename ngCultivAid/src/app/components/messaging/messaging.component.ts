@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, OperatorFunction } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Message } from 'src/app/models/message';
 import { User } from 'src/app/models/user';
 import { MessageService } from 'src/app/services/message.service';
@@ -25,6 +27,7 @@ export class MessagingComponent implements OnInit {
   activeTab: string = 'inbox';
   messageToDelete: Message = new Message();
   unreadMessageCount: number = 0;
+  usernames: string[] = [];
 
   constructor(private messageService: MessageService,
               private modalService: NgbModal,
@@ -43,7 +46,16 @@ export class MessagingComponent implements OnInit {
       fail => {
         console.log('Invalid User ');
       }
-    )
+    );
+
+    this.userService.getAllUsernames().subscribe(
+      usernames => {
+        this.usernames = usernames;
+      },
+      fail => {
+        console.log('Invalid User ');
+      }
+    );
   }
 
   reload(){
@@ -168,6 +180,14 @@ export class MessagingComponent implements OnInit {
     },
     );
   }
+
+  search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
+  text$.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    map(term => term.length < 2 ? []
+      : this.usernames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, this.usernames.length + 1))
+  )
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

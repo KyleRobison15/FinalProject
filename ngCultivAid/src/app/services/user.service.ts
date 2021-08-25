@@ -63,6 +63,16 @@ export class UserService {
     );
   }
 
+  public getAllUsernames(){
+    return this.http.get<string[]>(`${this.baseUrl}api/users/usernames`, this.getHttpOptions())
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Error getting usernames ' + err);
+      })
+    );
+  }
+
 
   getHttpOptions() {
     const credentials = this.auth.getCredentials();
