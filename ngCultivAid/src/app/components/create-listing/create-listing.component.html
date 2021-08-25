@@ -31,6 +31,7 @@
 
   Pesticides<input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
   Fertilizers<input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
+
   <button
           [ngClass]="varietyName === '' || produceId <= 0 || newListing.amount <= 0
                                                                 ? 'disabled' : 'enabled' "
@@ -38,8 +39,9 @@
           (click)="addGardenItem(checkForCopy())" >
     Create Listing
   </button>
+  <button class="btn btn-outline-primary" [routerLink]="['/privateProfile']">Back to Profile</button>
 </form>
-<button class="btn btn-outline-primary" [routerLink]="['/privateProfile']">Back to Profile</button>
+
 
 <br>
 <div id='required'>* Required Field</div>

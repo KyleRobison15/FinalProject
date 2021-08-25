@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` VARCHAR(100) NULL,
   `phone` VARCHAR(25) NULL,
   `role` VARCHAR(25) NULL,
-  `image_url` VARCHAR(2000) NULL,
+  `image_url` LONGTEXT NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NOT NULL,
+  `active` TINYINT NOT NULL DEFAULT 1,
   `address_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_address_idx` (`address_id` ASC),
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `produce` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(75) NULL,
   `avg_item_weight` DOUBLE NULL,
-  `image_url` VARCHAR(2000) NULL,
+  `image_url` LONGTEXT NULL,
   `active` TINYINT NOT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -336,7 +336,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `em
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (2, 'admin2', '$2a$10$xgsGns34p0IDBrLwfqDPxu7RrBq8iEO3vzNZ1NU.zrPIH9NWpOPye', 'Jane', 'Smith', 'janesmith@example.com', '1234567891', 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1, 2);
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (3, 'TestUser1', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Nathan', 'MacKinnon', 'nathanm@example.com', '1111111111', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3041969.png&w=350&h=254', '2021-08-17', 1, 3);
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (4, 'TestUser2', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Gabriel', 'Landeskog', 'gabriell@example.com', '2222222222', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/2562609.png&w=350&h=254', '2021-08-17', 1, 4);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (5, 'TestUser3', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mikko', 'Rantanen', 'mikkor@example.com', '3333333333', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3899938.png&w=350&h=254', '2021-08-17', 1, 5);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (5, 'TestUser3', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mikko', 'Rantanen', 'mikkor@example.com', '3333333333', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3899938.png&w=350&h=254', NULL, DEFAULT, NULL);
 
 COMMIT;
 
@@ -409,7 +409,6 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (1, '2021-08-17', 5, 'Fricken\' amazing carrots!', 1, 1, '2021-08-17', 1, 2);
-INSERT INTO `exchange` (`id`, `exchange_date`, `rating`, `buyer_comment`, `complete`, `accepted`, `create_date`, `active`, `buyer_id`) VALUES (2, NULL, 0, NULL, 0, 0, '2021-08-17', 1, 1);
 
 COMMIT;
 
@@ -420,8 +419,6 @@ COMMIT;
 START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (1, 10, 1, 1, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (2, 3, 2, 3, 1);
-INSERT INTO `exchange_item` (`id`, `quantity`, `exchange_id`, `garden_item_id`, `active`) VALUES (3, 2, 2, 4, 1);
 
 COMMIT;
 

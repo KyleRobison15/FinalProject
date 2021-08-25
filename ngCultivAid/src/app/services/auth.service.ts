@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 // import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,7 +11,8 @@ import { User } from '../models/user';
 })
 
 export class AuthService {
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   // private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }

@@ -19,6 +19,8 @@ import { ProduceService } from 'src/app/services/produce.service';
 import { UpdateListingService } from 'src/app/services/update-listing.service';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
+import { ExchangeImage } from 'src/app/models/exchange-image';
+import { ExchangeImageService } from 'src/app/services/exchange-image.service';
 
 @Component({
   selector: 'app-private-user-profile',
@@ -42,7 +44,7 @@ export class PrivateUserProfileComponent implements OnInit {
 
   //For Index and Update Methods
   items: GardenItem[] = [];
-  userItems: GardenItem[] = [];
+  activeListings: GardenItem[] = [];
 
   //For Remove Method
   itemToRemove: GardenItem | null = null;
@@ -70,10 +72,11 @@ export class PrivateUserProfileComponent implements OnInit {
     private gardenItemSvc: GardenItemService,
     private modalService: NgbModal,
     private authSvc: AuthService,
+    private messageService: MessageService,
+    private exchangeImageService: ExchangeImageService,
     private bsmodalService: BsModalService,
     private produceSvc: ProduceService,
-    private updateSvc: UpdateListingService,
-    private messageService: MessageService
+    private updateSvc: UpdateListingService
   ) {}
 
 
@@ -126,7 +129,7 @@ export class PrivateUserProfileComponent implements OnInit {
       });
 
     //Show all of a User's Specific Garden Item Listings
-    // this.indexGardenItems();
+    this.indexGardenItems();
 
     //For Update Listing Form
     this.produceSvc.index().subscribe(
@@ -271,39 +274,39 @@ export class PrivateUserProfileComponent implements OnInit {
     );
   }
 
-  // indexGardenItems() {
-  //   this.gardenItemSvc.index().subscribe(
-  //     data => {
-
-  //       this.items = data;
-  //       // console.log(this.items);
-
-  //       for (let item of this.items) {
-
-  //           if (item.user == this.user) {
-
-  //           if(item.active == true) {
-  //               this.userItems.push(item);
-  //           } else if(item.active == false) {
-  //               this.inactiveListings.push(item);
-  //           }
-
-  //         }//Checks for ID
-  //       }
-  //     },
-  //     fail => {
-  //       console.log("Failure retrieving list of Garden Items for this User");
-  //       console.log(fail);
-  //     });
-  // }
 
   updateExchangeReview(exchange: Exchange){
+
+
+
     exchange.active = false;
     exchange.rating = this.rate;
+    var exchangeImage: ExchangeImage = new ExchangeImage();
+    //exchangeImage.exchange = exchange;
+
     this.exchangeService.updateExchange(exchange).subscribe(
       exchanges => {
-        //this.sellerExchanges = exchanges;
-        //console.log("in exchangeService init call private profile");
+
+        if (typeof this.ImageBaseData == 'string') {
+          console.log("IS STRING");
+          //let exchangeImage: ExchangeImage = new ExchangeImage();
+          exchangeImage.imageUrl = this.ImageBaseData;
+          exchangeImage.active = true;
+          exchangeImage.exchange = exchanges;
+          console.log("IMAGE TO BE ADDED: " + exchangeImage);
+          console.log("Exchange: " + exchangeImage.exchange);
+
+          this.exchangeImageService.addExchangeImage(exchangeImage).subscribe(
+            exchangeImage => {
+              this.ImageBaseData = null;
+            },
+            fail => {
+              console.log('In Private Profile acceptIncomingExchange(): Could not add image');
+              this.router.navigateByUrl('notFound');
+            });
+
+        }
+
       },
       fail => {
         console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
@@ -442,23 +445,9 @@ export class PrivateUserProfileComponent implements OnInit {
         this.message = 'Updated!';
         this.listingToUpdate = new GardenItem();
 
+        //Reloads the User's Garden Item Listings
+        this.indexGardenItems();
 
-        //This will reload the User's List of Garden Item Listings...indexGardenItems() is below
-        this.userService.getLoggedInUser().subscribe(
-          (user) => {
-            this.user = user;
-            this.editedUser = Object.assign({}, user);
-            this.editedUser.address = Object.assign({}, user.address);
-            console.log('Logged In User: ' + this.user.username);
-          },
-          (fail) => {
-            console.log('Invalid User ');
-            this.router.navigateByUrl('notFound');
-          }
-        );
-
-        //Loads the User's Garden Item Listings
-        // this.indexGardenItems();
         this.bsmodalService.hide();
         this.router.navigateByUrl('/privateProfile');
 
@@ -482,43 +471,83 @@ export class PrivateUserProfileComponent implements OnInit {
             this.updateSvc.update(item).subscribe(
               data => {
                 console.log("Listing is inctive");
-                console.log(item.active);
+                console.log("Item status is: " + item.active);
+                console.log("Item User is: " + item.user.username);
+
                 this.inactiveListings.push(item);
-
-
-
-                this.userService.getLoggedInUser().subscribe(
-                  (user) => {
-                    this.user = user;
-                    this.editedUser = Object.assign({}, user);
-                    this.editedUser.address = Object.assign({}, user.address);
-                    console.log('Logged In User: ' + this.user.username);
-                  },
-                  (fail) => {
-                    console.log('Invalid User ');
-                    this.router.navigateByUrl('notFound');
-                  }
-                );
-
-
-
-
+                this.indexGardenItems();
               },
               fail => {
                 console.log("Failed to inactivate listing");
                 console.log(fail);
-              }
-            );
-
+              });
 
           }
         }
       },
       fail => {
+        //Fail index GardenItems for Remove...not essential
+      });//Fail for index()
+  }
 
-      }
-    );
+  activateListing(inactiveItemId:number) {
 
+    this.gardenItemSvc.index().subscribe(
+      items => {
+        for (let inactiveItem of items) {
+          if(inactiveItem.id === inactiveItemId) {
+
+            inactiveItem.active = true; //Sets Listing to 'active'
+            console.log("Test for Activate Listing");
+
+            this.updateSvc.update(inactiveItem).subscribe(
+              data => {
+                console.log("Listing is active");
+                this.activeListings.push(inactiveItem);
+                this.indexGardenItems();
+              },
+              fail => {
+                console.log("Failed to activate listing");
+                console.log(fail);
+              });
+          }
+        }
+      },
+      fail => {
+        //Fail index GardenItems for Remove...not essential
+      });//Fail for index()
+  }
+
+  indexGardenItems() {
+    this.gardenItemSvc.index().subscribe(
+      data => {
+
+        this.items = data;
+        console.log("Getting all Items: " + this.items);
+
+        this.activeListings = [];
+        this.inactiveListings = [];
+
+        for (let item of this.items) {
+
+            if (item.user.id == this.user.id) {
+
+              console.log("After filter: " + item);
+
+
+            if(item.active === true) {
+                this.activeListings.push(item); //For Active Listings
+            } else if(item.active === false) {
+                this.inactiveListings.push(item);//For Inactive Listings
+            }
+
+          }//Checks for ID
+        }
+      },
+      fail => {
+        console.log("Failure retrieving list of Garden Items for this User");
+        console.log(fail);
+      });
   }
 
   ImageBaseData: string | ArrayBuffer | null = null;
@@ -538,5 +567,7 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
 
+
 }//Component Class
+
 
