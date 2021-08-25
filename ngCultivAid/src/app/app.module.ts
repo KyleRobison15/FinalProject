@@ -32,6 +32,7 @@ import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progr
 import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
 import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
+// import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FilterProducePipe,
     FilterExchangesInProgressPipe,
     FilterIncomingExchangesPipe,
-    FilterBuyerExchangesPipe
+    FilterBuyerExchangesPipe,
+    // MessageCountPipe
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AlertModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     AuthService

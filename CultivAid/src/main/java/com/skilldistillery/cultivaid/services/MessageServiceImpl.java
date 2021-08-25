@@ -2,6 +2,7 @@ package com.skilldistillery.cultivaid.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,37 @@ public class MessageServiceImpl implements MessageService {
 	
 		return messageRepo.saveAndFlush(newMessage); 
 	}
-	
 
+	@Override
+	public Message markAsViewed(int messageId, String username) {
+		
+		Optional<Message> mesOpt = messageRepo.findById(messageId);
+		Message managedMessage = null;
+		
+		if (mesOpt.isPresent()) {
+			managedMessage = mesOpt.get();
+			managedMessage.setViewed(true);
+			return messageRepo.saveAndFlush(managedMessage);
+		}else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public boolean deactivateMessage(int messageId, String username) {
+		
+		Optional<Message> mesOpt = messageRepo.findById(messageId);
+		Message managedMessage = null;
+		
+		if (mesOpt.isPresent()) {
+			managedMessage = mesOpt.get();
+			managedMessage.setActive(false);
+			messageRepo.saveAndFlush(managedMessage);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }

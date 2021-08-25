@@ -17,6 +17,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Produce } from 'src/app/models/produce';
 import { ProduceService } from 'src/app/services/produce.service';
 import { UpdateListingService } from 'src/app/services/update-listing.service';
+import { Message } from 'src/app/models/message';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-private-user-profile',
@@ -46,6 +48,8 @@ export class PrivateUserProfileComponent implements OnInit {
   itemToRemove: GardenItem | null = null;
   removeListItems: GardenItem[] = [];
   inactiveListings: GardenItem[] = [];
+  reviewedExchange: Exchange[] = [];
+
 
   editing: boolean = false;
   editingPicture: boolean = false;
@@ -68,7 +72,8 @@ export class PrivateUserProfileComponent implements OnInit {
     private authSvc: AuthService,
     private bsmodalService: BsModalService,
     private produceSvc: ProduceService,
-    private updateSvc: UpdateListingService
+    private updateSvc: UpdateListingService,
+    private messageService: MessageService
   ) {}
 
 
@@ -139,7 +144,36 @@ export class PrivateUserProfileComponent implements OnInit {
     this.router.navigateByUrl('publicProfile');
   }
 
+
   acceptIncomingExchange(exchange: Exchange) {
+
+    //send default message to user here
+    let message: Message = new Message();
+    message.content = this.user.username + " accepted your request";
+    message.subject = this.user.username + " has accepted your request! Send them a message to coordinate a pickup.";
+    message.receivingUser = exchange.buyer;
+    //message.sendingUser = this.user;
+
+    console.log("==========================")
+    console.log(message);
+    console.log(message.receivingUser.username);
+    console.log(message.sendingUser.username);
+    console.log("==========================")
+
+
+    this.messageService.create(message).subscribe(
+      (message) => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      (fail) => {
+        console.log(
+          'In Private Profile acceptIncomingExchange(): Could not send message '
+        );
+        this.router.navigateByUrl('notFound');
+      }
+    );
+
     exchange.accepted = true;
     this.exchangeService.updateExchange(exchange).subscribe(
       (exchanges) => {
@@ -263,12 +297,50 @@ export class PrivateUserProfileComponent implements OnInit {
   //     });
   // }
 
+  updateExchangeReview(exchange: Exchange){
+    exchange.active = false;
+    exchange.rating = this.rate;
+    this.exchangeService.updateExchange(exchange).subscribe(
+      exchanges => {
+        //this.sellerExchanges = exchanges;
+        //console.log("in exchangeService init call private profile");
+      },
+      fail => {
+        console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
+        this.router.navigateByUrl('notFound');
+      });
+  }
+
+  /////////////////////// Star Rating Variables /////////////////////
+  max = 5;
+  rate = 7;
+  isReadonly = false;
+
+  overStar: number | undefined;
+  percent: number = 0;
+
+  /////////////////////////////////////////////////////////////////////
+
+  hoveringOver(value: number): void {
+    this.overStar = value;
+    this.percent = (value / this.max) * 100;
+  }
+
+  resetStar(): void {
+    this.overStar = void 0;
+  }
+
   saveEdit() {
+    if (typeof this.ImageBaseData == 'string') {
+      console.log("IS STRING");
+      this.editedUser.imageUrl = this.ImageBaseData;
+    }
     this.userService.editUser(this.editedUser).subscribe(
       (user) => {
         this.user = user;
         this.editedUser = Object.assign({}, user);
         this.editedUser.address = Object.assign({}, user.address);
+        this.ImageBaseData = null;
       },
       (fail) => {
         console.error(fail);
@@ -449,4 +521,22 @@ export class PrivateUserProfileComponent implements OnInit {
 
   }
 
+  ImageBaseData: string | ArrayBuffer | null = null;
+
+
+  onFileChanged($event: any) {
+    let me = this;
+    let file = $event.target.files[0]
+    let reader: FileReader = new FileReader();
+    reader.onload = function () {
+      me.ImageBaseData = reader.result;
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+    reader.readAsDataURL(file);
+  }
+
+
 }//Component Class
+
