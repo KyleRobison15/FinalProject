@@ -74,4 +74,4 @@ export class GardenItemService {
       }
     }
 
-}
+}//Service Class

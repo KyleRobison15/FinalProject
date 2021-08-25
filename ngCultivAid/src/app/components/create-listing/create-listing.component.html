@@ -1,42 +1,45 @@
 <h1>Create Listing</h1>
 
 <alert type="danger" *ngIf=noProduceName>
-  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+  Must select a valid <strong>Produce Type</strong>
 </alert>
 
-<alert type="danger">
-  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+<alert type="danger" *ngIf=noProduceName>
+  Must input a valid <strong>Variety</strong>
 </alert>
 
+<alert type="danger" *ngIf="!checkForCopy()">
+  <strong>Cannot add a Duplicate</strong>
+</alert>
+
+<alert type="success" *ngIf=successfulAdd>
+  Listing was successfully added!
+</alert>
 
 <form>
-  Variety<input type="text" name="variety" class="form-control" [(ngModel)]="newListing.variety">
+
+  Variety*<input type="text" name="varietyName" class="form-control" [(ngModel)]="varietyName">
+
   Description<input name="description" type="text" class="form-control" [(ngModel)]="newListing.description">
-  Amount<input name="amount" type="number" class="form-control" [(ngModel)]="newListing.amount">
+  Amount*<input name="amount" type="number" class="form-control" [(ngModel)]="newListing.amount">
   Grow Method<input name="growMethod" type="text" class="form-control" [(ngModel)]="newListing.growMethod"><br>
 
-  <label>Produce Type</label>
-  <select name="produce" [(ngModel)]="produceItem.id">
+  <label>Produce Type*</label><br>
+  <select name="produceId" [(ngModel)]="produceId">
     <option *ngFor="let produce of produces" value="{{produce.id}}">{{produce.name}}</option>
-  </select><br>
+  </select><br><br>
 
   Pesticides<input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
   Fertilizers<input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
-  <input class="btn btn-outline-success" value="Create Listing" (click)="addGardenItem()" *ngIf=produceItem.id=0 >
-  </form>
+  <button
+          [ngClass]="varietyName === '' || produceId <= 0 || newListing.amount <= 0
+                                                                ? 'disabled' : 'enabled' "
+          class="btn btn-outline-success"
+          (click)="addGardenItem(checkForCopy())" >
+    Create Listing
+  </button>
+</form>
 
-  <accordion>
-    <accordion-group heading="Static Header">
-      This content is straight in the template.
-    </accordion-group>
-    <accordion-group heading="Another group">
-      <p>Some content</p>
-    </accordion-group>
-    <accordion-group heading="Another group">
-      <p>Some content</p>
-    </accordion-group>
-    <accordion-group heading="Another group">
-      <p>Some content</p>
-    </accordion-group>
-  </accordion>
+<br>
+<div id='required'>* Required Field</div>
 
