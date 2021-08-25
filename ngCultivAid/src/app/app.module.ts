@@ -24,12 +24,14 @@ import { FilterProducePipe } from './pipes/filter-produce.pipe';
 import { AgmCoreModule } from '@agm/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UpdateListingComponent } from './components/update-listing/update-listing.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progress.pipe';
 import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
 import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
+import { ModalModule } from 'ngx-bootstrap/modal';
 // import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
@@ -49,6 +51,7 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
     SortRecentPipe,
+    UpdateListingComponent,
     FilterCategoryPipe,
     FilterProducePipe,
     FilterExchangesInProgressPipe,
@@ -67,11 +70,14 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     }),
     AccordionModule.forRoot(),
     BrowserAnimationsModule,
+    AlertModule.forRoot(),
     CollapseModule.forRoot(),
     RatingModule.forRoot(),
     AlertModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    ModalModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     AuthService
