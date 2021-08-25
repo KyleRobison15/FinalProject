@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { interval } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -24,9 +25,10 @@ export class NavigationComponent implements OnInit {
     return this.auth.checkLogin();
   }
 
-  updateMessageCount(){
+  updateMessageCount() {
     return localStorage.getItem('messageCount');
   }
+
   // getMessageCount(user: User){
   //   this.messageService.index().subscribe(
   //     data => {
