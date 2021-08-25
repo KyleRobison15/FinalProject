@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.cultivaid.entities.GardenItem;
+import com.skilldistillery.cultivaid.entities.User;
 import com.skilldistillery.cultivaid.services.GardenItemService;
+import com.skilldistillery.cultivaid.services.UserService;
 
 @RestController
 @CrossOrigin({"*", "http://localhost:4210"})
@@ -26,6 +28,9 @@ public class GardenItemController {
 	
 	@Autowired
 	private GardenItemService itemSvc; 
+	
+	@Autowired
+	private UserService userSvc;
 	
 	// Non Authenticated
 	// Return all garden items
@@ -38,7 +43,8 @@ public class GardenItemController {
 //			res.setStatus(404); 
 //		}
 		
-		return itemSvc.index();
+		User user = userSvc.findByUsername(principal.getName());
+		return itemSvc.indexAll(user);
 	}
 	
 	// Return all garden items belonging to logged in user
@@ -99,7 +105,21 @@ public class GardenItemController {
 	
 	@PutMapping("api/gardenitems")
 	public GardenItem updateGardenItem(@RequestBody GardenItem gardenItem, HttpServletResponse res, Principal principal) {
-		GardenItem itemRequested = itemSvc.retrieveById(gardenItem.getId());
+		
+		GardenItem itemRequested = null; 
+		
+		System.out.println(gardenItem);
+		
+		//Check if Active if 'true' or 'false"
+		if(!gardenItem.isActive()) {
+			itemRequested = itemSvc.retrieveById(gardenItem.getId());
+		
+		} else {
+			itemRequested = itemSvc.retrieveByIdIfInactive(gardenItem.getId());
+		}
+		//
+		//
+		
 		if (itemRequested == null || !itemRequested.getUser().getUsername().equals(principal.getName())) {
 			res.setStatus(404);
 			return null;

@@ -34,8 +34,8 @@ public class GardenItemServiceImpl implements GardenItemService {
 	// Non Authenticated
 	// Return all Garden Items
 	@Override
-	public List<GardenItem> index() {
-		return itemRepo.findAll();
+	public List<GardenItem> indexAll(User user) {
+		return itemRepo.findAllByUser(user);
 	}
 
 	// Return all garden items belonging to user
@@ -128,6 +128,17 @@ public class GardenItemServiceImpl implements GardenItemService {
 		}
 		return item;
 	}
+	
+	@Override
+	public GardenItem retrieveByIdIfInactive(int id) {
+		GardenItem item = null;
+		try {
+			item = itemRepo.findByActiveFalseAndId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return item;
+	}
 
 	@Override
 	public GardenItem create(GardenItem item, String username) {
@@ -142,7 +153,18 @@ public class GardenItemServiceImpl implements GardenItemService {
 
 	@Override
 	public GardenItem update(GardenItem item) {
-		GardenItem itemToUpdate = retrieveById(item.getId());
+		
+		GardenItem itemToUpdate = null;
+		
+		//Check if Active if 'true' or 'false"
+		if(!item.isActive()) {
+			itemToUpdate = retrieveById(item.getId());
+		} else {
+			itemToUpdate = retrieveByIdIfInactive(item.getId());
+		}
+		//
+		//
+		
 		itemToUpdate.setDescription(item.getDescription());
 		itemToUpdate.setGrowMethod(item.getGrowMethod());
 		itemToUpdate.setDateExpected(item.getDateExpected());

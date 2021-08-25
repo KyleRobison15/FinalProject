@@ -98,7 +98,9 @@
 </div>
 
 <!-- ///////////////////////////////// User Listings Manager Wireframe //////////////////////////////////////// -->
-
+<br><br><br>
+<div class="row" id="title"> <h1>Manage Listings:</h1> </div>
+<hr>
 <table class="table table-bordered">
   <thead>
     <th>You Are Listing</th>
@@ -173,12 +175,14 @@
 <table class="table table-bordered">
   <thead>
     <th>Inactive Listings</th>
+    <th>Date Added</th>
     <th>Status</th>
     <th id="inactiveAction">Actions</th>
   </thead>
   <tbody>
     <tr *ngFor="let inactiveItem of inactiveListings">
     <td>{{inactiveItem.variety}} {{inactiveItem.produce.name}}</td>
+    <td>{{inactiveItem.createdDate | date}}</td>
     <!------ Active/Inactive for a Listing ------>
     <td *ngIf="inactiveItem.active">Active</td>
     <td *ngIf="!inactiveItem.active">Inactive</td>
