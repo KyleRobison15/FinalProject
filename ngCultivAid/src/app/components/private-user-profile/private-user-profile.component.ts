@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exchange } from 'src/app/models/exchange';
+import { GardenItem } from 'src/app/models/garden-item';
 import { User } from 'src/app/models/user';
+import { CreateListingService } from 'src/app/services/create-listing.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
+import { GardenItemService } from 'src/app/services/garden-item.service';
 import { UserService } from 'src/app/services/user.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { resourceLimits } from 'worker_threads';
 import { isConstructorDeclaration } from 'typescript';
+import { TemplateRef } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Produce } from 'src/app/models/produce';
+import { ProduceService } from 'src/app/services/produce.service';
+import { UpdateListingService } from 'src/app/services/update-listing.service';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
-
 
 @Component({
   selector: 'app-private-user-profile',
@@ -33,7 +40,14 @@ export class PrivateUserProfileComponent implements OnInit {
 
   sellerExchanges: Exchange[] = [];
 
+  //For Index and Update Methods
+  items: GardenItem[] = [];
+  userItems: GardenItem[] = [];
 
+  //For Remove Method
+  itemToRemove: GardenItem | null = null;
+  removeListItems: GardenItem[] = [];
+  inactiveListings: GardenItem[] = [];
   reviewedExchange: Exchange[] = [];
 
 
@@ -45,17 +59,23 @@ export class PrivateUserProfileComponent implements OnInit {
   passwordChangeForm = {
     curPassword: '',
     newPassword: '',
-    matchPassword: '',
+    matchPassword: ''
   };
 
   constructor(
     private userService: UserService,
     private exchangeService: ExchangeService,
     private router: Router,
+    private createListing: CreateListingService,
+    private gardenItemSvc: GardenItemService,
     private modalService: NgbModal,
     private authSvc: AuthService,
+    private bsmodalService: BsModalService,
+    private produceSvc: ProduceService,
+    private updateSvc: UpdateListingService,
     private messageService: MessageService
   ) {}
+
 
   ngOnInit(): void {
     this.userService.getLoggedInUser().subscribe(
@@ -103,8 +123,21 @@ export class PrivateUserProfileComponent implements OnInit {
           'In Private Profile Init(): Could not get seller exchanges '
         );
         this.router.navigateByUrl('notFound');
+      });
+
+    //Show all of a User's Specific Garden Item Listings
+    // this.indexGardenItems();
+
+    //For Update Listing Form
+    this.produceSvc.index().subscribe(
+      data => {
+        this.produces = data;
+      },
+      fail => {
+        console.log("Failed to load list of produce for update form");
+        console.log(fail);
       }
-    );
+    )
   }
 
   goToPublicProfile() {
@@ -238,6 +271,32 @@ export class PrivateUserProfileComponent implements OnInit {
     );
   }
 
+  // indexGardenItems() {
+  //   this.gardenItemSvc.index().subscribe(
+  //     data => {
+
+  //       this.items = data;
+  //       // console.log(this.items);
+
+  //       for (let item of this.items) {
+
+  //           if (item.user == this.user) {
+
+  //           if(item.active == true) {
+  //               this.userItems.push(item);
+  //           } else if(item.active == false) {
+  //               this.inactiveListings.push(item);
+  //           }
+
+  //         }//Checks for ID
+  //       }
+  //     },
+  //     fail => {
+  //       console.log("Failure retrieving list of Garden Items for this User");
+  //       console.log(fail);
+  //     });
+  // }
+
   updateExchangeReview(exchange: Exchange){
     exchange.active = false;
     exchange.rating = this.rate;
@@ -270,7 +329,6 @@ export class PrivateUserProfileComponent implements OnInit {
   resetStar(): void {
     this.overStar = void 0;
   }
-
 
   saveEdit() {
     if (typeof this.ImageBaseData == 'string') {
@@ -343,6 +401,126 @@ export class PrivateUserProfileComponent implements OnInit {
     }
   }
 
+  //Modal for Updating a User's Listing
+  message: string = '';
+  modalRef: BsModalRef | undefined;
+  produces: Produce[] = [];
+  produce: Produce = new Produce();
+  listingToUpdate: GardenItem = new GardenItem();
+  failedToUpdate: Boolean = false;
+  listItems: GardenItem[] = [];
+
+  openModal(template: TemplateRef<any>, itemId:number) {
+    this.gardenItemSvc.index().subscribe(
+      data => {
+        this.listItems = data;
+        for (let item of this.listItems) {
+          if(item.id == itemId) {
+            this.listingToUpdate = item;
+          }
+          console.log("Successfully reassigned to listingToUpdate");
+        }
+      },
+      fail => {
+        console.log("Failed to load Garden Items for Update Modal");
+      }
+    );
+
+    this.modalRef = this.bsmodalService.show(template, {class: 'modal-sm'});
+  }
+
+  decline() {
+    this.message = 'Cancel Update Listing Request';
+    this.listingToUpdate = new GardenItem();
+    this.bsmodalService.hide();
+  }
+
+  updateListing(listingToUpdate:GardenItem) {
+    this.updateSvc.update(this.listingToUpdate).subscribe(
+      data => {
+
+        this.message = 'Updated!';
+        this.listingToUpdate = new GardenItem();
+
+
+        //This will reload the User's List of Garden Item Listings...indexGardenItems() is below
+        this.userService.getLoggedInUser().subscribe(
+          (user) => {
+            this.user = user;
+            this.editedUser = Object.assign({}, user);
+            this.editedUser.address = Object.assign({}, user.address);
+            console.log('Logged In User: ' + this.user.username);
+          },
+          (fail) => {
+            console.log('Invalid User ');
+            this.router.navigateByUrl('notFound');
+          }
+        );
+
+        //Loads the User's Garden Item Listings
+        // this.indexGardenItems();
+        this.bsmodalService.hide();
+        this.router.navigateByUrl('/privateProfile');
+
+      },
+      fail => {
+        this.failedToUpdate = true;
+        console.error('Failed to Update Listing');
+        console.error(fail);
+      });
+  }
+
+  //Will set Listing to Inactive and move it to an 'Inactive Table'
+  remove(itemId:number) {
+
+    this.gardenItemSvc.index().subscribe(
+      items => {
+        for (let item of items) {
+          if(item.id === itemId) {
+            item.active = false;
+
+            this.updateSvc.update(item).subscribe(
+              data => {
+                console.log("Listing is inctive");
+                console.log(item.active);
+                this.inactiveListings.push(item);
+
+
+
+                this.userService.getLoggedInUser().subscribe(
+                  (user) => {
+                    this.user = user;
+                    this.editedUser = Object.assign({}, user);
+                    this.editedUser.address = Object.assign({}, user.address);
+                    console.log('Logged In User: ' + this.user.username);
+                  },
+                  (fail) => {
+                    console.log('Invalid User ');
+                    this.router.navigateByUrl('notFound');
+                  }
+                );
+
+
+
+
+              },
+              fail => {
+                console.log("Failed to inactivate listing");
+                console.log(fail);
+              }
+            );
+
+
+          }
+        }
+      },
+      fail => {
+
+      }
+    );
+
+  }
+
   ImageBaseData: string | ArrayBuffer | null = null;
 
 
@@ -360,4 +538,5 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
 
-}
+}//Component Class
+
