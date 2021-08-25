@@ -35,8 +35,7 @@ public class GardenItemServiceImpl implements GardenItemService {
 	// Return all Garden Items
 	@Override
 	public List<GardenItem> index() {
-		return itemRepo.findByActiveTrue();
-
+		return itemRepo.findAll();
 	}
 
 	// Return all garden items belonging to user
@@ -151,6 +150,7 @@ public class GardenItemServiceImpl implements GardenItemService {
 		itemToUpdate.setVariety(item.getVariety());
 		itemToUpdate.setPesticides(item.isPesticides());
 		itemToUpdate.setFertilizers(item.isFertilizers());
+		itemToUpdate.setActive(item.isActive());
 		if (item.getProduce() != null) {
 			itemToUpdate.setProduce(item.getProduce());
 		}

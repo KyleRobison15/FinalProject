@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { GardenItem } from '../models/garden-item';
 import { AuthService } from './auth.service';
@@ -22,8 +22,8 @@ export class UpdateListingService {
     private auth: AuthService
   ) { }
 
-  public update(item:GardenItem) {
-    return this.http.put<GardenItem>(this.url, item, this.getHttpOptions())
+  public update(gardenItem:GardenItem): Observable<GardenItem> {
+    return this.http.put<GardenItem>(this.url, gardenItem, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);
