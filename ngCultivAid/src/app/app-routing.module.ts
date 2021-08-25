@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './components/admin/admin.component';
 import { CreateListingComponent } from './components/create-listing/create-listing.component';
 import { GardenItemListingsComponent } from './components/garden-item-listings/garden-item-listings.component';
 import { HomeComponent } from './components/home/home.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'privateProfile', component: PrivateUserProfileComponent },
   { path: 'publicProfile', component: PublicUserProfileComponent },
   { path: 'publicProfile/:username', component: PublicUserProfileComponent },
+  { path: 'admin', component: AdminComponent },
   { path: '**', component: NotFoundComponent } // '**' is a wild card catch all path. We use this for our 404 page
 
 ];
