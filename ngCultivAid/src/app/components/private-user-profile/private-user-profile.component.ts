@@ -273,11 +273,16 @@ export class PrivateUserProfileComponent implements OnInit {
 
 
   saveEdit() {
+    if (typeof this.ImageBaseData == 'string') {
+      console.log("IS STRING");
+      this.editedUser.imageUrl = this.ImageBaseData;
+    }
     this.userService.editUser(this.editedUser).subscribe(
       (user) => {
         this.user = user;
         this.editedUser = Object.assign({}, user);
         this.editedUser.address = Object.assign({}, user.address);
+        this.ImageBaseData = null;
       },
       (fail) => {
         console.error(fail);
@@ -336,6 +341,22 @@ export class PrivateUserProfileComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  ImageBaseData: string | ArrayBuffer | null = null;
+
+
+  onFileChanged($event: any) {
+    let me = this;
+    let file = $event.target.files[0]
+    let reader: FileReader = new FileReader();
+    reader.onload = function () {
+      me.ImageBaseData = reader.result;
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+    reader.readAsDataURL(file);
   }
 
 
