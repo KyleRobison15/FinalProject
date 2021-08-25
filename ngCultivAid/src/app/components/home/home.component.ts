@@ -5,6 +5,7 @@ import { GardenItem } from 'src/app/models/garden-item';
 import { ApiExternalService } from 'src/app/services/api-external.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { GardenItemService } from 'src/app/services/garden-item.service';
+import { ProduceService } from 'src/app/services/produce.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,13 +19,15 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private apiExt: ApiExternalService,
     private gardenItemSvc: GardenItemService,
-    private userService: UserService
+    private userService: UserService,
+    private produceService: ProduceService
   ) {}
 
   searchByZipForm: number[] = [];
   gardenItemsAndDistance: any[] = [];
   defaultDistance: number = 1000;
   loggedInCss: string = '';
+  wastePrevented: number = 0;
 
   ngOnInit(): void {
     this.loggedInCss = '';
@@ -42,6 +45,9 @@ export class HomeComponent implements OnInit {
           }
         );
     }
+
+    this.getWasteSavings();
+
   }
 
   searchByZip(form: NgForm) {
@@ -89,4 +95,18 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+  getWasteSavings(){
+    this.produceService.calculateWasteSavings().subscribe(
+      (total) => {
+        this.wastePrevented = total;
+      },
+      (fail) => {
+        console.error(
+          'HomeComponent: error getting waste savings'
+        );
+      }
+    );
+  }
+
 }

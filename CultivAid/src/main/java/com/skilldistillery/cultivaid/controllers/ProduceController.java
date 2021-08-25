@@ -35,6 +35,11 @@ public class ProduceController {
 		return produce;
 	}
 	
+	@GetMapping("produce")
+	public double getWasteSaved(HttpServletResponse res) {
+		return produceSvc.calculateWastePrevented();
+	}
+	
 	@PostMapping("api/produce")
 	public Produce create(
 			HttpServletResponse res,

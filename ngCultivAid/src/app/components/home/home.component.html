@@ -2,8 +2,8 @@
   <h1 class="display-1" *ngIf="!loggedIn()">CultivAid</h1>
   <h3 class="display-8" *ngIf="!loggedIn()">
     Saving produce 1 neighbor at a time.
+    <h3>Over {{wastePrevented}} pounds of food waste saved on CultivAid to date.</h3>
   </h3>
-
   <div class="card" id="search-card" [ngClass]="loggedInCss">
     <div class="card-body">
       <H3>FIND FRESH PRODUCE NEAR YOU!</H3><br *ngIf="!loggedIn()" />
@@ -92,4 +92,5 @@
       </div>
     </div>
   </div>
+
 </div>
