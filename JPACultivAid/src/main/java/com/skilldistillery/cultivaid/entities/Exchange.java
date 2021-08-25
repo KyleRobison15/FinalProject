@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Exchange {
@@ -50,7 +50,7 @@ public class Exchange {
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeItem> exchangeItems; 
 	
-	@JsonIgnore
+	@JsonIgnoreProperties({"exchange"})
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeImage> exchangeImages;
 	

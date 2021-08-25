@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table (name="exchange_image")
 public class ExchangeImage {
@@ -22,7 +24,19 @@ public class ExchangeImage {
 	@Column (name="image_url")
 	private String imageUrl;
 	
-	private boolean active;
+	private boolean active = true;
+	
+//	| id            | int(11)    | NO   | PRI | NULL              | auto_increment |
+//	| exchange_date | date       | YES  |     | NULL              |                |
+//	| rating        | tinyint(4) | YES  |     | NULL              |                |
+//	| buyer_comment | text       | YES  |     | NULL              |                |
+//	| complete      | tinyint(4) | YES  |     | NULL              |                |
+//	| accepted      | tinyint(4) | YES  |     | NULL              |                |
+//	| create_date   | datetime   | YES  |     | CURRENT_TIMESTAMP |                |
+//	| active        | tinyint(4) | NO   |     | NULL              |                |
+//	| buyer_id      | int(11)    | NO   | MUL | NULL              |                |
+	
+	//@JsonIgnoreProperties({"buyer"})
 	
 	@ManyToOne
 	@JoinColumn (name="exchange_id")

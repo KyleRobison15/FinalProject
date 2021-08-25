@@ -11,6 +11,8 @@ import { resourceLimits } from 'worker_threads';
 import { isConstructorDeclaration } from 'typescript';
 import { Message } from 'src/app/models/message';
 import { MessageService } from 'src/app/services/message.service';
+import { ExchangeImage } from 'src/app/models/exchange-image';
+import { ExchangeImageService } from 'src/app/services/exchange-image.service';
 
 
 @Component({
@@ -54,7 +56,8 @@ export class PrivateUserProfileComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private authSvc: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private exchangeImageService: ExchangeImageService
   ) {}
 
   ngOnInit(): void {
@@ -239,12 +242,37 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
   updateExchangeReview(exchange: Exchange){
+
+
+
     exchange.active = false;
     exchange.rating = this.rate;
+    var exchangeImage: ExchangeImage = new ExchangeImage();
+    //exchangeImage.exchange = exchange;
+
     this.exchangeService.updateExchange(exchange).subscribe(
       exchanges => {
-        //this.sellerExchanges = exchanges;
-        //console.log("in exchangeService init call private profile");
+
+        if (typeof this.ImageBaseData == 'string') {
+          console.log("IS STRING");
+          //let exchangeImage: ExchangeImage = new ExchangeImage();
+          exchangeImage.imageUrl = this.ImageBaseData;
+          exchangeImage.active = true;
+          exchangeImage.exchange = exchanges;
+          console.log("IMAGE TO BE ADDED: " + exchangeImage);
+          console.log("Exchange: " + exchangeImage.exchange);
+
+          this.exchangeImageService.addExchangeImage(exchangeImage).subscribe(
+            exchangeImage => {
+              this.ImageBaseData = null;
+            },
+            fail => {
+              console.log('In Private Profile acceptIncomingExchange(): Could not add image');
+              this.router.navigateByUrl('notFound');
+            });
+
+        }
+
       },
       fail => {
         console.log('In Private Profile acceptIncomingExchange(): Could not update exchange ');
@@ -336,6 +364,22 @@ export class PrivateUserProfileComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  ImageBaseData: string | ArrayBuffer | null = null;
+
+
+  onFileChanged($event: any) {
+    let me = this;
+    let file = $event.target.files[0]
+    let reader: FileReader = new FileReader();
+    reader.onload = function () {
+      me.ImageBaseData = reader.result;
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+    reader.readAsDataURL(file);
   }
 
 
