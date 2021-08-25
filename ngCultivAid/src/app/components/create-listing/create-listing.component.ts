@@ -18,6 +18,7 @@ export class CreateListingComponent implements OnInit {
   newListing: GardenItem = new GardenItem();
   produces: Produce[] = [];
   produce: Produce = new Produce();
+  produceId: number = 0;
 
   //Will save Form Fields for Variety and Produce Name
   produceName: string = "";
@@ -62,8 +63,8 @@ export class CreateListingComponent implements OnInit {
 
       for (let item of this.user.gardenItems) {
 
-        if(this.produce.name == item.produce.name){
-          console.log(this.produce.name + "==" + item.produce.name);
+        if(this.produceId == item.produce.id){
+          console.log(this.produce.id + "==" + item.produce.id);
 
           if(this.varietyName == item.variety) {
             console.log(this.varietyName + "==" + item.variety);
@@ -78,23 +79,22 @@ export class CreateListingComponent implements OnInit {
 
   addGardenItem(canAdd:Boolean) {
 
-    // if(this.newListing.produce.id == 0 || this.produce.id == 0){
-    //   this.noProduceName = true;
-    // } else {
-    //   this.noProduceName = false;
-    // }
-
-    // if(this.varietyName == "" || this.varietyName == null){
-    //   this.noVarietyName = true;
-    // } else {
-    //   this.noVarietyName = false;
-    // }
-
     if(canAdd) {
 
-    this.newListing.produce.id = this.produce.id; //For Produce assignment
+    this.produce.id = this.produceId;
+    this.newListing.produce = this.produce; //For Produce assignment
     this.newListing.variety = this.varietyName;
     this.newListing.user = this.user;
+
+    console.log(this.newListing);
+    console.log(this.newListing.description);
+    console.log("Just the ID here: " + this.produceId);
+    console.log("New Produce ID: " + this.newListing.produce.id);
+    console.log(this.newListing.variety);
+    console.log(this.newListing.growMethod);
+
+
+
     this.persist();
 
       }

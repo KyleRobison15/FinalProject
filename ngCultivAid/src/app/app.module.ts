@@ -24,17 +24,14 @@ import { FilterProducePipe } from './pipes/filter-produce.pipe';
 import { AgmCoreModule } from '@agm/core';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
-import { AlertModule } from 'ngx-bootstrap/alert';
 import { UpdateListingComponent } from './components/update-listing/update-listing.component';
-=======
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FilterExchangesInProgressPipe } from './pipes/filter-exchanges-in-progress.pipe';
 import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.pipe';
 import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
->>>>>>> 1e13cc83bd5f10d02690b0d1a84cfeb10c345aba
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -53,15 +50,12 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     PrivateUserProfileComponent,
     PublicUserProfileComponent,
     SortRecentPipe,
-<<<<<<< HEAD
-    UpdateListingComponent
-=======
+    UpdateListingComponent,
     FilterCategoryPipe,
     FilterProducePipe,
     FilterExchangesInProgressPipe,
     FilterIncomingExchangesPipe,
     FilterBuyerExchangesPipe
->>>>>>> 1e13cc83bd5f10d02690b0d1a84cfeb10c345aba
   ],
   imports: [
     BrowserModule,
@@ -74,15 +68,13 @@ import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
     }),
     AccordionModule.forRoot(),
     BrowserAnimationsModule,
-<<<<<<< HEAD
-    AlertModule.forRoot()
-=======
+    AlertModule.forRoot(),
     CollapseModule.forRoot(),
     RatingModule.forRoot(),
     AlertModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
->>>>>>> 1e13cc83bd5f10d02690b0d1a84cfeb10c345aba
+    ModalModule.forRoot()
   ],
   providers: [
     AuthService
