@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UserService {
   //////////
   //Fields
   public user: User = new User();
-  private baseUrl = 'http://localhost:8095/';
+  // private baseUrl = 'http://localhost:8095/';
+  private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient, private auth: AuthService, private router: Router) { }
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Produce } from '../models/produce';
 import { AuthService } from './auth.service';
 
@@ -10,7 +11,8 @@ import { AuthService } from './auth.service';
 })
 export class ProduceService {
 
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/produce'
   // private baseUrl = environment.baseUrl;
 

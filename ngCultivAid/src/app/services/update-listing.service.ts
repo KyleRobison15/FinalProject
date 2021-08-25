@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { GardenItem } from '../models/garden-item';
 import { AuthService } from './auth.service';
 import { GardenItemService } from './garden-item.service';
@@ -12,7 +13,8 @@ import { UserService } from './user.service';
 })
 export class UpdateListingService {
 
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/gardenitems'
 
   constructor(
