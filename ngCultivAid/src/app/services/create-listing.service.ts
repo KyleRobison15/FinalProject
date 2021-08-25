@@ -4,12 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { GardenItem } from '../models/garden-item';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateListingService {
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/createListings'
 
   constructor(

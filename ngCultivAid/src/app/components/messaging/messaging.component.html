@@ -31,9 +31,9 @@
 
 <!-- /////////////////////////////////// INBOX ////////////////////////////////////// -->
 
-  <div id="messageTable" *ngIf="viewingInbox && !selected">
-    <table class="table">
-      <thead>
+  <div id="messageTableDiv" *ngIf="viewingInbox && !selected">
+    <table class="table" id="messageTable">
+      <thead >
         <th scope="col">From</th>
         <th scope="col">Subject</th>
         <th scope="col">Date Received</th>

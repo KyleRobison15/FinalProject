@@ -6,12 +6,14 @@ import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GardenItemService {
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/gardenitems'
   private altUrl = this.baseUrl + 'gardenitems'
 
