@@ -29,7 +29,7 @@
                   <input type="text" name="imageUrl" [(ngModel)]="editedUser.imageUrl" class="form-control form-control-sm">
                 </td>
                 <td colspan="2">
-                  <input type="file" (change)="onFileChanged($event)">
+                  <input type="file" accept="image/gif, image/jpeg, image/png" (change)="onFileChanged($event)">
                 </td>
               </tr>
               <tr>
