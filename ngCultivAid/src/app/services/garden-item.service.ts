@@ -13,12 +13,20 @@ import { User } from '../models/user';
 export class GardenItemService {
   private baseUrl = 'http://localhost:8095/';
   private url = this.baseUrl + 'api/gardenitems'
+  private altUrl = this.baseUrl + 'gardenitems'
+
   // private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient, private auth: AuthService, private userSvc: UserService) { }
 
-  index(): Observable<GardenItem[]> {
-    return this.http.get<GardenItem[]>(this.url, this.getHttpOptions());
+  public index(): Observable<GardenItem[]> {
+    return this.http.get<GardenItem[]>(this.altUrl, this.getHttpOptions())
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Error saving changes ' + err);
+      })
+    );
   }
 
   getItemsWithinDistanceOfZip(lat: number, lng: number, distance: number) : Observable<GardenItem[]> {
