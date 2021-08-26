@@ -51,6 +51,7 @@ public class Exchange {
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeItem> exchangeItems; 
 	
+	
 	@JsonIgnoreProperties({"exchange"})
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeImage> exchangeImages;

@@ -60,9 +60,9 @@ public class GardenItem {
 	
 	private boolean active = true;
 
-//	@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy="gardenItem")
-	@JsonIgnoreProperties({"gardenItem"})
+	//@JsonIgnoreProperties({"gardenItem"})
 	private List<ExchangeItem> exchangeItems; 
 	
 	@ManyToOne
