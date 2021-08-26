@@ -211,6 +211,9 @@ export class PrivateUserProfileComponent implements OnInit {
 
   completeExchange(exchange: Exchange) {
     exchange.complete = true;
+    //exchange.exchangeDate = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString();
+    let date = new Date();
+    exchange.exchangeDate = date.toISOString();
     this.exchangeService.updateExchange(exchange).subscribe(
       (exchanges) => {
         //this.sellerExchanges = exchanges;
@@ -302,28 +305,31 @@ export class PrivateUserProfileComponent implements OnInit {
 
   updateExchangeReview(exchange: Exchange){
 
-
-
     exchange.active = false;
     exchange.rating = this.rate;
-    var exchangeImage: ExchangeImage = new ExchangeImage();
-    //exchangeImage.exchange = exchange;
 
     this.exchangeService.updateExchange(exchange).subscribe(
-      exchanges => {
-
+      exchange => {
         if (typeof this.ImageBaseData == 'string') {
           console.log("IS STRING");
-          //let exchangeImage: ExchangeImage = new ExchangeImage();
-          exchangeImage.imageUrl = this.ImageBaseData;
-          exchangeImage.active = true;
-          exchangeImage.exchange = exchanges;
-          console.log("IMAGE TO BE ADDED: " + exchangeImage);
-          console.log("Exchange: " + exchangeImage.exchange);
+          this.addImageInput();
+          console.log("NUM IMAGES: " + this.imageBaseDataArray.length);
 
-          this.exchangeImageService.addExchangeImage(exchangeImage).subscribe(
-            exchangeImage => {
+          let exchangeImages: ExchangeImage[] = [];
+          for(let i=0; i<this.imageBaseDataArray.length; i++){
+            let exchangeImage: ExchangeImage = new ExchangeImage();
+            exchangeImage.imageUrl = this.imageBaseDataArray[i];
+            exchangeImage.active = true;
+            exchangeImage.exchange = exchange;
+            exchangeImages.push(exchangeImage);
+            console.log(exchangeImage);
+          }
+
+          this.exchangeImageService.addExchangeImages(exchangeImages).subscribe(
+            exchangeImages => {
               this.ImageBaseData = null;
+              this.imageBaseDataArray = [];
+              this.imageFields = [1];
             },
             fail => {
               console.log('In Private Profile acceptIncomingExchange(): Could not add image');
@@ -565,6 +571,38 @@ export class PrivateUserProfileComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  getExchangeStatusBadge(status: string){
+    if(status == "complete"){
+      return "badge-primary";
+    }
+    if(status == "pending"){
+      return "badge-warning";
+    }
+    if(status == "accepted"){
+      return "badge-success";
+    }
+    else{
+      return "";
+    }
+
+  }
+
+  imageBaseDataArray: string[] = [];
+  imageFields = [1];
+
+  addImageInput(){
+    if (typeof this.ImageBaseData == 'string') {
+      console.log("ImageBaseData is a STRING!");
+      this.imageBaseDataArray.push(this.ImageBaseData);
+      this.imageFields.push(1);
+    }
+  }
+
+  buttons: number[] = [];
+
+  addButton(i: number){
+    this.buttons.push(i);
+  }
 
 
 }//Component Class

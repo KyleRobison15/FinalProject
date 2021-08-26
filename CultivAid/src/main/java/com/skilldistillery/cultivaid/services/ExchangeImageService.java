@@ -9,6 +9,7 @@ public interface ExchangeImageService {
 	List<ExchangeImage> index();
 	List<ExchangeImage> getExchangeImagesByExchange(int exchangeId);
 	ExchangeImage add(ExchangeImage exchangeImage);
+	List<ExchangeImage> addMany(List<ExchangeImage> exchangeImages);
 	ExchangeImage update();
 
 }
