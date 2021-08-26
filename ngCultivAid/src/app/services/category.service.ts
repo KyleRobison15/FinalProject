@@ -1,47 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Produce } from '../models/produce';
+import { Category } from '../models/category';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProduceService {
+export class CategoryService {
 
-    // private baseUrl = 'http://localhost:8095/';
   private baseUrl = environment.baseUrl;
-  private url = this.baseUrl + 'api/produce'
-  // private baseUrl = environment.baseUrl;
-
-  private produceList: Produce[] = [];
+  private url = this.baseUrl + 'api/categories'
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  public index(){
-    return this.http.get<Produce[]>(this.url, this.getHttpOptions())
-    .pipe(
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Error getting produce ' + err);
-      })
-    );
-  }
-
-  create(produce: Produce) {
-    return this.http.post<Produce>(this.url, produce, this.getHttpOptions())
-    .pipe(
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Error getting produce ' + err);
-      })
-    );
-  }
-
-  public calculateWasteSavings(){
-    return this.http.get<number>(this.baseUrl + 'produce')
+  index(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.url, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);
