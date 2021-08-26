@@ -26,13 +26,17 @@ public class ExchangeImageServiceImpl implements ExchangeImageService {
 
 	@Override
 	public List<ExchangeImage> getExchangeImagesByExchange(int exchangeId) {
-
 		return eiRepo.findExchangeImageByExchangeId(exchangeId);
 	}
 
 	@Override
 	public ExchangeImage add(ExchangeImage exchangeImage) {
 		return eiRepo.saveAndFlush(exchangeImage);
+	}
+	
+	@Override
+	public List<ExchangeImage> addMany(List<ExchangeImage> exchangeImages) {
+		return eiRepo.saveAllAndFlush(exchangeImages);
 	}
 
 	@Override

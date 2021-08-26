@@ -205,17 +205,22 @@
 <div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length > 0">
   <div class="row">
     <div class="col-sm-4" *ngFor="let exchange of (sellerExchanges | filterIncomingExchanges)">
-      <div class="card" style="width: 18rem;" *ngIf="exchange.active && !exchange.complete">
+      <div id="requestCard" class="card" style="width: 18rem;" *ngIf="exchange.active && !exchange.complete">
         <div class="card-header">
           <!-- Username -->
-          {{exchange.buyer.username}}
+          <span (click)="getUser(exchange.buyer.username)">
+          <span><img src="{{exchange.buyer.imageUrl}}" height="30px" width="30px" class="rounded-circle"></span>
+          <span class="text-primary">  {{exchange.buyer.username}}</span>
+          </span>
           <!-- Exchange Status -->
-          -- {{getOutgoingExchangeStatus(exchange)}}
+          --
+          <span [ngClass]="getExchangeStatusBadge(getOutgoingExchangeStatus(exchange))">{{getOutgoingExchangeStatus(exchange)}}</span>
         </div>
         <!-- TODO: Change image url to produce image -->
         <img src="{{exchange.buyer.imageUrl}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">Exchange Items</h5>
+          <h6>{{exchange.createDate}}</h6>
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let item of exchange.exchangeItems">{{item.quantity}}x {{item.gardenItem.produce.name}} - {{item.gardenItem.variety}}</li>
           </ul>
@@ -227,16 +232,17 @@
   </div>
 </div>
 
+<!-- NO REQUESTS CARD -->
 <div class="container" *ngIf="(sellerExchanges | filterIncomingExchanges).length == 0">
   <div class="row">
     <div class="col-sm-4">
-      <div class="card" style="width: 18rem;">
+      <div id="requestCard"class="card" style="width: 18rem;">
         <div class="card-header">
-            Nothing To See Here
+            No Incoming Exchanges
         </div>
         <img src="https://img.itch.zone/aW1nLzI2ODMxNjkucG5n/original/YRmjNd.png" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">No Incoming Exchanges</h5>
+          <h5 class="card-title">Nothing To See Here</h5>
         </div>
       </div>
     </div>
@@ -263,17 +269,25 @@
         <div class="container-fluid" *ngFor="let exchange of (buyerExchanges | filterBuyerExchanges), let i = index" >
           <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="exchange.active">
 
-              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
+              <div class="col bg-light text-primary" (click)="getUser(exchange.exchangeItems[0].gardenItem.user.username)" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
               <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
               <!-- Status Column And Review Button Column -->
               <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
                 <div class="row">
                   <div class="col">
-                    {{getOutgoingExchangeStatus(exchange)}}
+                    <span class="badge" [ngClass]="getExchangeStatusBadge(getOutgoingExchangeStatus(exchange))">{{getOutgoingExchangeStatus(exchange)}}</span>
                   </div>
                   <div class="col" *ngIf="exchange.complete && exchange.accepted">
-                    <button class="btn btn-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">Review</button> |
-                    <button class="btn btn-danger" (click)="deactivateExchange(exchange)">X</button>
+                    <div class="row">
+                    <button class="btn btn-dark col-sm-6" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">Review</button>
+                    <button id="deleteButton" class="btn btn-danger col-sm-3 pull-right" (click)="deactivateExchange(exchange)">X</button>
+                    </div>
+                  </div>
+                  <div class="col" *ngIf="!exchange.complete && !exchange.accepted">
+                    <div class="row">
+                      <button class="btn btn-light col-sm-6"></button>
+                      <button id="deleteButton" class="btn btn-danger col-sm-3 pull-right" (click)="deactivateExchange(exchange)">X</button>
+                      </div>
                   </div>
                 </div>
             </div>
@@ -282,16 +296,30 @@
             <div id="detailsDiv" class="row bg-warning text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true">
             Review:
               <div class="row">
+                <!-- Image Upload -->
+                <div class="col">
+                  <div *ngFor="let imageField of imageFields" [(ngModel)]="imageFields">
+                    <input class="btn btn-outline-dark" type="file" accept="image/gif, image/jpeg, image/png" (change)="onFileChanged($event)">
+                  </div>
+                  <button (click)="addImageInput()" class="btn btn-dark">Add New Image</button>
+                </div>
+                <!-- Review Comment and Rating -->
                 <div class="col">
                   <!-- Stars -->
-                  <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" [titles]="['one','two','three']"></rating>
-                  <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+                  <div class="row">
+                    <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" [titles]="['one','two','three']"></rating>
+                    <span class="label" [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+                  </div>
+                  <div class="row">
+                    <textarea type="text" [(ngModel)]="exchange.buyerComment" style="max-width: 100%"></textarea>
+                  </div>
                 </div>
-                <div class="col"><input type="text" [(ngModel)]="exchange.buyerComment"/></div>
-                <div>
-                  <input type="file" accept="image/gif, image/jpeg, image/png" (change)="onFileChanged($event)">
+                <!-- Submit Button -->
+                <div class="row">
+                  <div class="col-auto">
+                    <button (click)="updateExchangeReview(exchange)" class="btn btn-success">Submit</button>
+                  </div>
                 </div>
-                <div class="col"><button (click)="updateExchangeReview(exchange)">Submit</button></div>
               </div>
             </div>
 
@@ -362,6 +390,13 @@
   </div>
 </ng-template>
 <pre>{{ closeResult }}</pre>
+
+<h1>Dynamic Button Test</h1>
+
+<div *ngFor="let button of buttons, let i = index" [(ngModel)]="buttons">
+  <button>Button + {{i}}</button>
+</div>
+<button (click)="addButton(1)">Add Button</button>
 
 
 

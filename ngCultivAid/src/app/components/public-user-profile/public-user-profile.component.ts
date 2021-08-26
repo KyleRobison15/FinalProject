@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Exchange } from 'src/app/models/exchange';
+import { ExchangeImage } from 'src/app/models/exchange-image';
 import { ExchangeItem } from 'src/app/models/exchange-item';
 import { Message } from 'src/app/models/message';
 import { User } from 'src/app/models/user';
@@ -156,6 +157,18 @@ export class PublicUserProfileComponent implements OnInit {
     );
   }
 
+  largePictureUrl: string = "";
+
+  openPicture(addOrder: any, imageUrl: string) {
+    this.largePictureUrl = imageUrl;
+    this.modalService.open(addOrder, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    },
+    );
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -164,6 +177,16 @@ export class PublicUserProfileComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  alreadyHasOpenExchange(): boolean{
+
+    //if logged in user already has active but not completed exchange with user on page
+    //if loggedInUser.exchanges.id == userOnProfile.exchanges.id
+    //return true
+
+
+    return true;
   }
 
 }

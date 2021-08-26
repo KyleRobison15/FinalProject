@@ -16,8 +16,8 @@ export class ExchangeImageService {
     // private baseUrl = 'http://localhost:8095/';
     private baseUrl = environment.baseUrl;
 
-  addExchangeImage(exchangeImage: ExchangeImage){
-    return this.http.post<ExchangeImage>(this.baseUrl + 'exchangeImage', this.getHttpOptions())
+  addExchangeImages(exchangeImages: ExchangeImage[]){
+    return this.http.post<ExchangeImage[]>(this.baseUrl + 'exchangeImages', exchangeImages, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);
@@ -25,6 +25,8 @@ export class ExchangeImageService {
       })
     );
   }
+
+
 
   getHttpOptions() {
     const credentials = this.auth.getCredentials();

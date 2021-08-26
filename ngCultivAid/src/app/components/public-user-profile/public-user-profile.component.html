@@ -185,13 +185,15 @@
         <div class="col-sm-2">{{exchange.buyer.username}}</div>
         <div class="col-sm-1 text-left">{{exchange.rating}}</div>
         <div class="col-sm-6 text-left">{{exchange.buyerComment}}</div>
-        <div class="col"><button class="btn btn-outline-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">See Photos</button></div>
+        <div class="col" *ngIf="exchange.exchangeImages.length > 0"><button class="btn btn-outline-dark" (click)="isReviewCollapsed[i] = !isReviewCollapsed[i]" [attr.aria-expanded]="!isReviewCollapsed[i]" aria-controls="collapseBasic">See Photos</button></div>
       </div>
 
       <div id="detailsDiv" class="row well bg-light text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true" >
         Show Photos Here {{exchange.exchangeImages.length}}
-        <div class="row" *ngFor="let image of exchange.exchangeImages">
-          <div class="col"><img src={{image.imageUrl}} height="128px" width="128px"/></div>
+        <div class="container bg-secondary">
+          <div class="row">
+            <div *ngFor="let image of exchange.exchangeImages" class="col-sm-3"><img class=" rounded" (click)="openPicture(pictureModal, image.imageUrl)" src={{image.imageUrl}} height="128px" width="128px"/></div>
+          </div>
         </div>
       </div>
 
@@ -222,3 +224,19 @@
   </div>
 </ng-template>
 
+<!-- /////////////////////////////////// ENLARGED PICTURE MODAL ////////////////////////////////////// -->
+<ng-template #pictureModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="btn btn-outline-dark" aria-label="Close" aria-hidden="true" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="col"><img src="{{largePictureUrl}}" style="max-width: 100%;"/></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>

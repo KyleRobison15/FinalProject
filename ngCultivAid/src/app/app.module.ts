@@ -35,6 +35,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AdminComponent } from './components/admin/admin.component';
 import { FilterAdminPipe } from './pipes/filter-admin.pipe';
 import { CreateProduceComponent } from './components/create-produce/create-produce.component';
+import { SortAdminItemsPipe } from './pipes/sort-admin-items.pipe';
 // import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
@@ -63,6 +64,7 @@ import { CreateProduceComponent } from './components/create-produce/create-produ
     AdminComponent,
     FilterAdminPipe,
     CreateProduceComponent,
+    SortAdminItemsPipe,
     // MessageCountPipe
   ],
   imports: [

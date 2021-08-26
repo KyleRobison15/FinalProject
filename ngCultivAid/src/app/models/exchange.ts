@@ -4,6 +4,7 @@ import { User } from "./user";
 
 export class Exchange {
 
+  id: number;
   rating: number;
 	active: boolean;
 	buyerComment: string;
@@ -16,6 +17,7 @@ export class Exchange {
   exchangeImages: ExchangeImage[] = [];
 
   constructor(
+    id: number = 0,
     rating: number = 0,
     active: boolean = true,
     buyerComment: string = '',
@@ -27,6 +29,7 @@ export class Exchange {
     exchangeItems: ExchangeItem[] = [],
     exchangeImages: ExchangeImage[] = []
   ){
+    this.id = id;
     this.rating = rating;
     this.active = active;
     this.buyerComment = buyerComment;

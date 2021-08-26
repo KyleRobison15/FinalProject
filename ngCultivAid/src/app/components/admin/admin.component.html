@@ -4,7 +4,7 @@
     <button *ngIf="user.active" (click)="changeActiveStatus(user)">Deactivate User</button>
     <button *ngIf="!user.active" (click)="changeActiveStatus(user)">Activate User</button>
     <accordion>
-      <accordion-group heading="{{item.produce.name}} -- {{item.variety}}  // Created: {{item.createdDate}}" *ngFor="let item of user.gardenItems">
+      <accordion-group heading="{{item.produce.name}} -- {{item.variety}}  // Created: {{item.createdDate}}" *ngFor="let item of user.gardenItems | sortAdminItems">
         <div class="card recent-post-card">
           <div class="row" id="details">
             <div class="col-md-2" id="imageCol">
@@ -36,6 +36,24 @@
                 </div>
                 <div class="col-md-3" id="fert">
                   Fertilizers?: {{item.fertilizers}}
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <accordion>
+                      <accordion-group heading="Exchange with {{exchangeItem.exchange.buyer.username}}  //  Updated On: {{exchangeItem.exchange.createDate}}" *ngFor="let exchangeItem of item.exchangeItems">
+                        <div class="row">
+                          <div class="col-md-12">
+                            {{exchangeItem.exchange.buyerComment}}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <img src="{{image.imageUrl}}" *ngFor="let image of exchangeItem.exchange.exchangeImages" style="max-width: calc(100% / 6);">
+                          </div>
+                        </div>
+                      </accordion-group>
+                    </accordion>
+                  </div>
                 </div>
               </div>
             </div>

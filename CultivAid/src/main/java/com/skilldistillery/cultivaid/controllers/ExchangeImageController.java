@@ -33,4 +33,9 @@ public class ExchangeImageController {
 		return eiServe.add(exchangeImage);
 	}
 	
+	@PostMapping("exchangeImages")
+	List<ExchangeImage> addManyExchangeImages(@RequestBody List<ExchangeImage> exchangeImages){
+		return eiServe.addMany(exchangeImages);
+	}
+	
 }
