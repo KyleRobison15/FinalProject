@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` VARCHAR(100) NULL,
   `phone` VARCHAR(25) NULL,
   `role` VARCHAR(25) NULL,
-  `image_url` LONGTEXT NULL,
+  `image_url` VARCHAR(2000) NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` TINYINT NOT NULL DEFAULT 1,
+  `active` TINYINT NOT NULL,
   `address_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_address_idx` (`address_id` ASC),
@@ -323,6 +323,8 @@ INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`
 INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (3, '1685 Briargate Pkwy', NULL, 'Colorado Springs', 'CO', '80920', 1, 38.96292, -104.79560);
 INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (4, '1000 Chopper Cir', NULL, 'Denver', 'CO', '80204', 1, 39.74889, -105.00759);
 INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (5, '140 W Mountain Ave', NULL, 'Fort Collins', 'CO', '80524', 1, 40.58757, -105.07815);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (6, '7400 E Orchard Rd', 'Suite 1450', 'Greenwood Village', 'CO', '80111', 1, 39.60941, -104.90255);
+INSERT INTO `address` (`id`, `address`, `address2`, `city`, `state_abbreviation`, `postal_code`, `active`, `latitude`, `longitude`) VALUES (7, '158 N Fillmore St', NULL, 'Denver', 'CO', '80206', 1, 39.71951, -104.95340);
 
 COMMIT;
 
@@ -332,11 +334,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cultivaiddb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (1, 'admin1', '$2a$10$uOxHXmKzZrMuYN2WlTUC8ugOBw9DYFA23ZADWvg3ZlQ.DopRF6rQ2', 'Bob', 'Smith', 'bobsmith@example.com', '1234567890', 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1, 1);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (2, 'admin2', '$2a$10$xgsGns34p0IDBrLwfqDPxu7RrBq8iEO3vzNZ1NU.zrPIH9NWpOPye', 'Jane', 'Smith', 'janesmith@example.com', '1234567891', 'admin', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg', '2021-08-17', 1, 2);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (3, 'TestUser1', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Nathan', 'MacKinnon', 'nathanm@example.com', '1111111111', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3041969.png&w=350&h=254', '2021-08-17', 1, 3);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (4, 'TestUser2', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Gabriel', 'Landeskog', 'gabriell@example.com', '2222222222', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/2562609.png&w=350&h=254', '2021-08-17', 1, 4);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (5, 'TestUser3', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mikko', 'Rantanen', 'mikkor@example.com', '3333333333', 'standard', 'https://a.espncdn.com/combiner/i?img=/i/headshots/nhl/players/full/3899938.png&w=350&h=254', NULL, DEFAULT, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (1, 'admin1', '$2a$10$uOxHXmKzZrMuYN2WlTUC8ugOBw9DYFA23ZADWvg3ZlQ.DopRF6rQ2', 'Bob', 'Smith', 'bobsmith@example.com', '1234567890', 'admin', 'https://hips.hearstapps.com/wdy.h-cdn.co/assets/17/39/1506709524-cola-0247.jpg?crop=1.00xw:0.750xh;0,0.226xh&resize=980:*', '2021-08-17', 1, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (2, 'admin2', '$2a$10$xgsGns34p0IDBrLwfqDPxu7RrBq8iEO3vzNZ1NU.zrPIH9NWpOPye', 'Jane', 'Smith', 'janesmith@example.com', '1234567891', 'admin', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/lifestyle-bestdogbreeds-1577128927.png?crop=1.00xw:1.00xh;0,0&resize=980:*', '2021-08-17', 1, 2);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (3, 'TestUser1', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Nathan', 'MacKinnon', 'nathanm@example.com', '1111111111', 'standard', 'https://www.warrenphotographic.co.uk/photography/bigs/38689-English-Pointer-puppy-white-background.jpg', '2021-08-17', 1, 3);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (4, 'TestUser2', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Gabriel', 'Landeskog', 'gabriell@example.com', '2222222222', 'standard', 'https://minigoldendoodlepuppies.ca/wp-content/uploads/2018/08/mini-golden-doodle-toronto-e-small.jpg?is-pending-load=1', '2021-08-17', 1, 4);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (5, 'TestUser3', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mikko', 'Rantanen', 'mikkor@example.com', '3333333333', 'standard', 'https://i.ytimg.com/vi/Dcoz5sQzmKY/maxresdefault.jpg', '2021-08-17', 1, 5);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (6, 'JohnSmith', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'John', 'Smith', 'jsmith@example.com', '9701234567', 'standard', 'https://www.wideopenpets.com/wp-content/uploads/2020/12/Boy-Dog-Names.png', '2021-08-17', 1, 6);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `role`, `image_url`, `create_date`, `active`, `address_id`) VALUES (7, 'MaryJackson', '$2a$10$kIX1c9FoOAu0/kX0NBzXPegrt44JPc1wjyxHTadMJKM5DixZ2Xlhi', 'Mary', 'Jackson', 'mjackson@example.com', '7199876543', 'standard', 'https://www.thesprucepets.com/thmb/FxYh0OvXUE-ylwlrnKy0cwwtIyw=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-107109200-0a22adeba60548d0bd0c51ef55123546.jpg', '2021-08-17', 1, 7);
 
 COMMIT;
 
@@ -399,6 +403,7 @@ INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, 
 INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (7, 'Extra eggs!', 'Sustainable', '2021-08-17', 12, 'Chicken', 0, 0, '2021-08-17', 1, 4, 18);
 INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (8, 'Extra apples!', 'Sustainable', '2021-08-17', 16, 'Honeycrisp', 0, 0, '2021-08-17', 1, 4, 11);
 INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (9, 'Extra peaches', 'Non-Sustainable', '2021-08-17', 20, 'Palisaide', 1, 1, '2021-08-17', 1, 5, 15);
+INSERT INTO `garden_item` (`id`, `description`, `grow_method`, `date_expected`, `amount`, `variety`, `pesticides`, `fertilizers`, `create_date`, `active`, `user_id`, `produce_id`) VALUES (10, 'Zuchinni Available!', 'Sustainable', '2021-08-24', 8, 'Dunja', 0, 0, '2021-08-24', 1, 6, 2);
 
 COMMIT;
 
@@ -440,6 +445,9 @@ START TRANSACTION;
 USE `cultivaiddb`;
 INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (1, 'Hello!', 'Hello CultivAid!', '2021-08-17', 1, 1, 2, 1, NULL);
 INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (2, 'Hello Reply', 'Reply to Hello!', '2021-08-17', 1, 1, 1, 2, 1);
+INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (3, 'Zuchinni Still Available?', 'Hello! I would be happy to take 4 or 5 of the zuchinni you have. Let me know if they are still available / when and where I can pick them up!', '2021-08-25 09:17:12', 1, 1, 7, 6, NULL);
+INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (4, 'Zuchinni Still Available?', 'Yes, I still have plenty. I\'m free anytime you want to pick them up!', '2021-08-25 10:20:03', 0, 1, 6, 7, 3);
+INSERT INTO `message` (`id`, `subject`, `content`, `create_time`, `viewed`, `active`, `sender_id`, `reciever_id`, `in_reply_to_id`) VALUES (5, 'Zuchinni Still Available?', 'Wonderful! I\'ll stop by this afternoon.', '2021-08-25 10:25:22', 0, 1, 7, 6, 3);
 
 COMMIT;
 
