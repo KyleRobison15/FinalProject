@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   searchByZipForm: number[] = [];
   gardenItemsAndDistance: any[] = [];
-  defaultDistance: number = 1000;
+  defaultDistance: number = 50;
   loggedInCss: string = '';
   wastePrevented: number = 0;
 

@@ -1,10 +1,12 @@
 import { stringify } from '@angular/compiler/src/util';
+import { Exchange } from 'src/app/models/exchange';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Category } from 'src/app/models/category';
 import { GardenItem } from 'src/app/models/garden-item';
 import { Produce } from 'src/app/models/produce';
 import { User } from 'src/app/models/user';
+import { ExchangeService } from 'src/app/services/exchange.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { GardenItemService } from 'src/app/services/garden-item.service';
 import { ProduceService } from 'src/app/services/produce.service';
@@ -26,12 +28,16 @@ export class AdminComponent implements OnInit {
     private updateGISvc: UpdateListingService,
     private produceSvc: ProduceService,
     private bsmodalService: BsModalService,
-    private catSvc: CategoryService
+    private catSvc: CategoryService,
+    private exchSvc: ExchangeService
     ) { }
 
   private baseUrl = environment.redirectUrl;
 
   allUsers: User[] = [];
+  totalUsers: number | null = null;
+  usersTraversed: number = 0;
+
 
   //Will list all Produce
   produces: Produce[] = [];
@@ -45,7 +51,9 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.userSvc.getAllUsers().subscribe(
       list => {
+        this.totalUsers = list.length;
         this.allUsers = list;
+        this.buildUserList();
       },
       err => {
         console.log("Error getting all users");
@@ -87,6 +95,25 @@ export class AdminComponent implements OnInit {
   goToUserProfile(username: string){
     window.open(this.baseUrl + "#/publicProfile/" + username, "_blank");
   }
+
+  buildUserList() {
+    this.allUsers.forEach(user => {
+      this.exchSvc.getSellerExchangesByUser(user).subscribe(
+        exchanges => {
+          console.log(exchanges);
+          user.exchanges = [];
+          exchanges.forEach(exchange => {
+            user.exchanges.push(exchange);
+          });
+          this.usersTraversed += 1;
+        },
+        err => {
+          console.error("Cannot get exchanges")
+        }
+      );
+    });
+  }
+
 
   //This will index the Produces
   indexProduce() {

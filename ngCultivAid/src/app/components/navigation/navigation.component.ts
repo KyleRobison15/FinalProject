@@ -29,6 +29,15 @@ export class NavigationComponent implements OnInit {
     return localStorage.getItem('messageCount');
   }
 
+  isAdmin() {
+    if (localStorage.getItem('role') === 'admin') {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   // getMessageCount(user: User){
   //   this.messageService.index().subscribe(
   //     data => {

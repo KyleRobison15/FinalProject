@@ -57,7 +57,8 @@ export class PublicUserProfileComponent implements OnInit {
     if(username){
       this.userService.getUserByUsername(username).subscribe(
         user => {
-            this.user = user;
+          this.user = user;
+          this.searchByZip();
 
             this.checkViewingOwnProfile();
 

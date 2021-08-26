@@ -68,6 +68,7 @@
   transform: translate(0, 2rem);
   background-color: rgba(77, 175, 21, 0.8);
   margin:auto;
+  position: static;
   min-height: calc(100vh - 56px - 7rem - 1rem);
   border: 3px solid #f1f1f1;
 	border-radius: 10px;
@@ -161,6 +162,7 @@
 }
 
 #messageDiv {
+  position: static;
   max-width: 45% !important;
   transform: translate(0, 2rem);;
   margin-top: 0px !important;
