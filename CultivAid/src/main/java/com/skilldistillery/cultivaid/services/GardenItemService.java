@@ -16,5 +16,5 @@ public interface GardenItemService {
 	public boolean delete(int id);
 	public List<ArrayList<Object>> indexWithinDistance(Double latitude, Double longitude, int distance);  //NON AUTHENTICATED
 	public List<ArrayList<Object>> indexWithinDistance(String username, int distance);
-	public GardenItem retrieveByIdIfInactive(int id);
+	public GardenItem retrieveByIdForUpdate(int id);
 }
