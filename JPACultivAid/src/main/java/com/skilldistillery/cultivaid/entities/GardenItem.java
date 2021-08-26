@@ -62,6 +62,8 @@ public class GardenItem {
 
 	@JsonIgnore
 	@OneToMany(mappedBy="gardenItem")
+
+	//@JsonIgnoreProperties({"gardenItem"})
 //	@JsonIgnoreProperties({"gardenItem"})
 	private List<ExchangeItem> exchangeItems; 
 	
