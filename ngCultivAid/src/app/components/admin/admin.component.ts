@@ -40,6 +40,7 @@ export class AdminComponent implements OnInit {
   findProducesForCreate: Produce[] = [];
   message: string = '';
   modalRef: BsModalRef | undefined;
+  successfulAdd: Boolean = false;
 
   ngOnInit(): void {
     this.userSvc.getAllUsers().subscribe(
@@ -119,6 +120,7 @@ export class AdminComponent implements OnInit {
       data => {
         console.log('Produce added');
         this.indexProduce();
+        this.successfulAdd = true;
       },
       fail => {
         console.log("Failed to add Produce");

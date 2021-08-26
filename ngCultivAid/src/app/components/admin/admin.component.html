@@ -79,6 +79,13 @@
 <ng-template #template>
 <div class="modal-body text-center">
 <p><b>Add New Produce</b></p>
+<hr>
+
+<!-- Alert for Successful Add -->
+<alert type="success" *ngIf="successfulAdd">
+  Produce Successfully Added
+</alert>
+<!------------------------------->
 <form>
 Name*<input type="text" name="name" class="form-control" [(ngModel)]="newProduce.name"><br>
 Average Weight*<input type="number" name="averageItemWeight" class="form-control" [(ngModel)]="newProduce.averageItemWeight"><br>
@@ -88,6 +95,7 @@ Image<input type="text" name="imageUrl" class="form-control" [(ngModel)]="newPro
   <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
 </select><br><br>
 </form>
+<hr>
 <button
 [ngClass]="newProduce.name === '' || newProduce.averageItemWeight <= 0 || newProduce.category.id <= 0
 ? 'disabled' : 'enabled' "
