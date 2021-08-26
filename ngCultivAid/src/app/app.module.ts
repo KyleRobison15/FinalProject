@@ -33,6 +33,8 @@ import { FilterIncomingExchangesPipe } from './pipes/filter-incoming-exchanges.p
 import { FilterBuyerExchangesPipe } from './pipes/filter-buyer-exchanges.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AdminComponent } from './components/admin/admin.component';
+import { FilterAdminPipe } from './pipes/filter-admin.pipe';
+import { SortAdminItemsPipe } from './pipes/sort-admin-items.pipe';
 // import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
@@ -59,6 +61,8 @@ import { AdminComponent } from './components/admin/admin.component';
     FilterIncomingExchangesPipe,
     FilterBuyerExchangesPipe,
     AdminComponent,
+    FilterAdminPipe,
+    SortAdminItemsPipe,
     // MessageCountPipe
   ],
   imports: [

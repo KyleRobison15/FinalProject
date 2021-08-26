@@ -25,6 +25,16 @@ public class UserController {
 	@Autowired
 	private UserService userSvc;
 
+	@GetMapping("api/users/all")
+	public List<User> getAllUser(HttpServletResponse res, Principal principal) {
+		if ((userSvc.findByUsername(principal.getName()).getRole().equals("admin"))) {
+			return userSvc.index();
+		}
+		else {
+			return null;
+		}
+	}
+	
 	@GetMapping("users/{username}")
 	public User getUserByUsername(@PathVariable String username, HttpServletResponse res) {
 		
@@ -62,8 +72,10 @@ public class UserController {
 	@PutMapping("api/users/{id}")
 	public User updateUserAccount(@RequestBody User user, @PathVariable("id") int userId, HttpServletResponse res, Principal principal) {
 		User userRequested = userSvc.findByUserId(userId);
-		
-		if (userRequested == null || !userRequested.getUsername().equals(principal.getName())) {
+		User loggedInUser = userSvc.findByUsername(principal.getName());
+		Boolean isAdmin = loggedInUser.getRole().equals("admin") ? true : false;
+
+		if (userRequested == null || !isAdmin && !userRequested.getUsername().equals(principal.getName())) {
 			res.setStatus(404);
 			return null;
 		}

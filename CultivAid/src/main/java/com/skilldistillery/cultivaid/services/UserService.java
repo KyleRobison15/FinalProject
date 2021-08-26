@@ -12,5 +12,6 @@ public interface UserService {
 	User resetPassword(User user);
 	User updateUserAccount(User user);
 	boolean deleteUser(User user);
+	List<User> index();
 
 }

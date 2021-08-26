@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Message } from '../models/message';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
@@ -11,7 +12,8 @@ import { AuthService } from './auth.service';
 })
 export class MessageService {
 
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/messages'
   // private baseUrl = environment.baseUrl;
 

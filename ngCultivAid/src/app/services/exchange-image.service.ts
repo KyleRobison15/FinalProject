@@ -4,6 +4,7 @@ import { ExchangeImage } from '../models/exchange-image';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class ExchangeImageService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  private baseUrl = 'http://localhost:8095/';
+    // private baseUrl = 'http://localhost:8095/';
+    private baseUrl = environment.baseUrl;
 
   addExchangeImages(exchangeImages: ExchangeImage[]){
     return this.http.post<ExchangeImage[]>(this.baseUrl + 'exchangeImages', exchangeImages, this.getHttpOptions())

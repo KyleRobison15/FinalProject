@@ -7,5 +7,6 @@ import com.skilldistillery.cultivaid.entities.Produce;
 public interface ProduceService {
 	List<Produce> index(String username); 
 	Produce create(String username, Produce produce); 
-	Produce update(String username, Produce produce); 
+	Produce update(String username, Produce produce);
+	double calculateWastePrevented();
 }
