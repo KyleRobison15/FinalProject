@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.cultivaid.entities.User;
 import com.skilldistillery.cultivaid.services.AuthService;
+import com.skilldistillery.cultivaid.services.UserService;
 
 // We do not use api pathway here! Because those pathways require authentication...
 
@@ -22,6 +23,8 @@ public class AuthController {
 
 	@Autowired
 	private AuthService authSrv;
+	@Autowired
+	private UserService userSvc;
 	
 	
 	
@@ -38,8 +41,9 @@ public class AuthController {
 	}
 
 	@GetMapping("authenticate")
-	public Principal authenticate(Principal principal) {
-	    return principal;
+	public User authenticate(Principal principal) {
+		
+	    return userSvc.findByUsername(principal.getName());
 	}
 
 	

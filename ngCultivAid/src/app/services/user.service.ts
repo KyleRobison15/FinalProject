@@ -23,6 +23,15 @@ export class UserService {
   ///////////
   //Methods
 
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'api/users/all', this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('UserSvc.getAllUsers(): error getting users');
+      })
+    );
+  }
+
   getLoggedInUser(): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'api/users', this.getHttpOptions())
     .pipe(
