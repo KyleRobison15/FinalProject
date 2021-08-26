@@ -12,18 +12,19 @@ export class User {
   email: string;
   username: string;
   password: string;
-  enabled: boolean;
+  active: boolean;
   imageUrl: string;
   role: string;
   address: Address;
   exchanges: Exchange [];
   gardenItems: GardenItem [];
   receivedMessages: Message [];
-  sentMessages: Message [];
+  sentMessages: Message[];
+  createDate: Date | null;
 
   constructor(id: number = 0, firstName: string = '', lastName: string = '', phone: string = '', email: string = '', username: string = '',
-              password: string = '', enabled: boolean = true, role: string = '', imageUrl: string = '', address: Address = new Address(),
-              exchanges: Exchange[] = [], gardenItems: GardenItem[] = [], receivedMessages: Message[] = [], sentMessages: Message[] = [])
+              password: string = '', active: boolean = true, role: string = '', imageUrl: string = '', address: Address = new Address(),
+    exchanges: Exchange[] = [], gardenItems: GardenItem[] = [], receivedMessages: Message[] = [], sentMessages: Message[] = [], createDate: Date | null = null)
   {
     this.id = id;
     this.firstName = firstName;
@@ -32,7 +33,7 @@ export class User {
     this.email = email;
     this.username = username;
     this.password = password;
-    this.enabled = enabled;
+    this.active = active;
     this.role = role;
     this.imageUrl = imageUrl;
     this.address = address;
@@ -40,6 +41,7 @@ export class User {
     this.gardenItems = gardenItems;
     this.receivedMessages = receivedMessages;
     this.sentMessages = sentMessages;
+    this.createDate = createDate;
   }
 
 }

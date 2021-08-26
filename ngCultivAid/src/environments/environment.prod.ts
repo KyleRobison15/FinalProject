@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: '/CultivAid/'
+  baseUrl: '/CultivAid/',
+  redirectUrl: '/CultivAid/'
 };

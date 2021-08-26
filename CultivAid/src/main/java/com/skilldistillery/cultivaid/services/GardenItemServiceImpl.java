@@ -33,6 +33,7 @@ public class GardenItemServiceImpl implements GardenItemService {
 
 	// Non Authenticated
 	// Return all Garden Items
+	
 	@Override
 	public List<GardenItem> indexAll(User user) {
 		return itemRepo.findAllByUser(user);

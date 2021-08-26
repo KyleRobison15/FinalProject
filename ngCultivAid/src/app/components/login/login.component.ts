@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     console.log(user);
     this.auth.login(user.username, user.password).subscribe(
       loggedInUser => {
-        console.log('LoginComponent.login(): User logged in');
         this.router.navigateByUrl('/home');
         this.messageService.getMessageCount();
       },

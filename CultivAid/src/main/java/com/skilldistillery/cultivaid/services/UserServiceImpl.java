@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passEncode;
 
 	@Override
+	public List<User> index() {
+		return userRepo.findAll();
+	}
+	
+	@Override
 	public User findByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
@@ -61,7 +66,7 @@ public class UserServiceImpl implements UserService {
 			managed.setPhone(user.getPhone());
 			managed.setImageUrl(user.getImageUrl());
 			managed.setImageUrl(user.getImageUrl());
-			
+			managed.setActive(user.isActive());
 			managed.getAddress().setAddress(user.getAddress().getAddress());
 			managed.getAddress().setAddress2(user.getAddress().getAddress2());
 			managed.getAddress().setCity(user.getAddress().getCity());

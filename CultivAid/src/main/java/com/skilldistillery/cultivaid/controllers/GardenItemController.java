@@ -34,6 +34,7 @@ public class GardenItemController {
 	
 	// Non Authenticated
 	// Return all garden items
+	
 	@GetMapping("gardenitems")
 	public List<GardenItem> index(HttpServletResponse res, Principal principal) {
 		
@@ -119,8 +120,10 @@ public class GardenItemController {
 		}
 		//
 		//
+		User loggedInUser = userSvc.findByUsername(principal.getName());
+		Boolean isAdmin = loggedInUser.getRole().equals("admin") ? true : false;
 		
-		if (itemRequested == null || !itemRequested.getUser().getUsername().equals(principal.getName())) {
+		if (itemRequested == null || !isAdmin && !itemRequested.getUser().getUsername().equals(principal.getName())) {
 			res.setStatus(404);
 			return null;
 		}

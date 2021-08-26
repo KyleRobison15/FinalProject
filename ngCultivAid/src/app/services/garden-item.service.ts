@@ -31,6 +31,16 @@ export class GardenItemService {
     );
   }
 
+  public indexAllAsAdmin(): Observable<GardenItem[]> {
+    return this.http.get<GardenItem[]>(this.url + '/all', this.getHttpOptions())
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Error retrieving Garden Item Listings ' + err);
+      })
+    );
+  }
+
   getItemsWithinDistanceOfZip(lat: number, lng: number, distance: number) : Observable<GardenItem[]> {
     return this.http.get<GardenItem[]>(`${this.baseUrl}gardenitems/zipsearch/${lat}&${lng}&${distance}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
