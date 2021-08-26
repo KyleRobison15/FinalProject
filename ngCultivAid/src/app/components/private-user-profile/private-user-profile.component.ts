@@ -87,6 +87,8 @@ export class PrivateUserProfileComponent implements OnInit {
         this.editedUser = Object.assign({}, user);
         this.editedUser.address = Object.assign({}, user.address);
         console.log('Logged In User: ' + this.user.username);
+            //Show all of a User's Specific Garden Item Listings
+        this.indexGardenItems();
       },
       (fail) => {
         console.log('Invalid User ');
@@ -128,8 +130,7 @@ export class PrivateUserProfileComponent implements OnInit {
         this.router.navigateByUrl('notFound');
       });
 
-    //Show all of a User's Specific Garden Item Listings
-    this.indexGardenItems();
+
 
     //For Update Listing Form
     this.produceSvc.index().subscribe(
