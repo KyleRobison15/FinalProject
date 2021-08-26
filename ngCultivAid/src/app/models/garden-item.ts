@@ -1,3 +1,4 @@
+import { ExchangeItem } from "./exchange-item";
 import { Produce } from "./produce";
 import { User } from "./user";
 
@@ -15,13 +16,13 @@ export class GardenItem {
   createdDate: string;
   user: User;
   // gardenItemComments
-  // exchangeItems
+  exchangeItems: ExchangeItem[];
   produce: Produce;
 
 
   constructor(id: number = 0, description: string = '', growMethod: string = '', dateExpected: string = '', amount: number = 0, variety: string = '',
               pesticides: boolean = false, fertilizers: boolean = false, active: boolean = true, createdDate: string = '',
-              user: User = new User(), produce: Produce = new Produce ())
+              user: User = new User(), produce: Produce = new Produce (), exchangeItems: ExchangeItem[] = [])
   {
     this.id = id;
     this.description = description;
@@ -35,5 +36,6 @@ export class GardenItem {
     this.createdDate = createdDate;
     this.user = user;
     this.produce = produce;
+    this.exchangeItems = exchangeItems;
   }
 }
