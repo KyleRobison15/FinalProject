@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,10 +132,13 @@ public class GardenItemServiceImpl implements GardenItemService {
 	}
 	
 	@Override
-	public GardenItem retrieveByIdIfInactive(int id) {
+	public GardenItem retrieveByIdForUpdate(int id) {
 		GardenItem item = null;
 		try {
-			item = itemRepo.findByActiveFalseAndId(id);
+			Optional<GardenItem> itemToFind = itemRepo.findById(id);
+			if(itemToFind.isPresent()) {
+				item = itemToFind.get();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -158,11 +162,7 @@ public class GardenItemServiceImpl implements GardenItemService {
 		GardenItem itemToUpdate = null;
 		
 		//Check if Active if 'true' or 'false"
-		if(!item.isActive()) {
-			itemToUpdate = retrieveById(item.getId());
-		} else {
-			itemToUpdate = retrieveByIdIfInactive(item.getId());
-		}
+		itemToUpdate = retrieveByIdForUpdate(item.getId());
 		//
 		//
 		
