@@ -92,9 +92,9 @@
           <p>{{selected.content}}</p>
     </div>
 
-    <div id="replies" *ngFor="let reply of selected.replies">
+    <div id="replies" *ngFor="let reply of selected.replies" [ngClass]="reply.sendingUser.username === user.username ? 'otherUserReply' : ''">
 
-      <div class="row">
+      <div class="row" >
         <div class="col-md-9">
           <h1 class="display-6">{{reply.sendingUser.username}}</h1>
         </div>

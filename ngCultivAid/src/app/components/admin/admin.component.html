@@ -1,10 +1,10 @@
-<accordion>
+<accordion *ngIf="usersTraversed === totalUsers">
   <accordion-group heading="{{user.username}}  //  Created: {{user.createDate}}" *ngFor="let user of allUsers | filterAdmin">
     <button (click)="goToUserProfile(user.username)"> View User Profile</button>
     <button *ngIf="user.active" (click)="changeActiveStatus(user)">Deactivate User</button>
     <button *ngIf="!user.active" (click)="changeActiveStatus(user)">Activate User</button>
     <accordion>
-      <accordion-group heading="{{item.produce.name}} -- {{item.variety}}  // Created: {{item.createdDate}}" *ngFor="let item of user.gardenItems | sortAdminItems">
+      <accordion-group heading="{{item.produce.name}} -- {{item.variety}}  // Created: {{item.createdDate}}" *ngFor="let item of user.gardenItems| sortAdminItems: user">
         <div class="card recent-post-card">
           <div class="row" id="details">
             <div class="col-md-2" id="imageCol">
@@ -40,7 +40,8 @@
                 <div class="row">
                   <div class="col-md-12">
                     <accordion>
-                      <accordion-group heading="Exchange with {{exchangeItem.exchange.buyer.username}}  //  Updated On: {{exchangeItem.exchange.createDate}}" *ngFor="let exchangeItem of item.exchangeItems">
+                      <div *ngFor="let exchange of user.exchanges">
+                      <accordion-group heading="Exchange with {{exchangeItem.exchange.buyer.username}}  //  Updated On: {{exchangeItem.exchange.createDate}}" *ngFor="let exchangeItem of exchange.exchangeItems">
                         <div class="row">
                           <div class="col-md-12">
                             {{exchangeItem.exchange.buyerComment}}
@@ -52,6 +53,7 @@
                           </div>
                         </div>
                       </accordion-group>
+                      </div>
                     </accordion>
                   </div>
                 </div>
@@ -79,6 +81,13 @@
 <ng-template #template>
 <div class="modal-body text-center">
 <p><b>Add New Produce</b></p>
+<hr>
+
+<!-- Alert for Successful Add -->
+<alert type="success" *ngIf="successfulAdd">
+  Produce Successfully Added
+</alert>
+<!------------------------------->
 <form>
 Name*<input type="text" name="name" class="form-control" [(ngModel)]="newProduce.name"><br>
 Average Weight*<input type="number" name="averageItemWeight" class="form-control" [(ngModel)]="newProduce.averageItemWeight"><br>
@@ -88,6 +97,7 @@ Image<input type="text" name="imageUrl" class="form-control" [(ngModel)]="newPro
   <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
 </select><br><br>
 </form>
+<hr>
 <button
 [ngClass]="newProduce.name === '' || newProduce.averageItemWeight <= 0 || newProduce.category.id <= 0
 ? 'disabled' : 'enabled' "

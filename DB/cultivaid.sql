@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` VARCHAR(100) NULL,
   `phone` VARCHAR(25) NULL,
   `role` VARCHAR(25) NULL,
-  `image_url` VARCHAR(2000) NULL,
+  `image_url` LONGTEXT NULL,
   `create_date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `active` TINYINT NOT NULL,
   `address_id` INT NULL,

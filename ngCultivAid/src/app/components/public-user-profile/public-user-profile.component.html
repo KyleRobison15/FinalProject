@@ -87,30 +87,37 @@
 
   <!-- ///////////////////////////////// BASKET /////////////////////////////////////// -->
 <div class="row">
-  <div class="col-md-6">
-  <div id="basket">
-    <h1 class="display-5">Basket: </h1>
-    <form>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Garden Item</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of user.gardenItems; let i = index">
-              <td *ngIf="exchangeData[i].checked">{{item.produce.name}}</td>
-              <td *ngIf="exchangeData[i].checked">{{exchangeData[i].amount}}</td>
-          </tr>
-        </tbody>
-        <button class="btn btn-dark" (click)="submitExchangeRequest()">
-          Submit Request
-        </button>
-      </table>
-    </form>
+  <div class="col-md-6" *ngIf="!hasOpenExchange" [(ngModel)]="hasOpenExchange">
+    <div id="basket">
+      <h1 class="display-5">Basket: </h1>
+      <form>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Garden Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of user.gardenItems; let i = index">
+                <td *ngIf="exchangeData[i].checked">{{item.produce.name}}</td>
+                <td *ngIf="exchangeData[i].checked">{{exchangeData[i].amount}}</td>
+            </tr>
+          </tbody>
+          <button *ngIf="!isViewingOwnProfile" class="btn btn-dark" (click)="submitExchangeRequest()">
+            Submit Request
+          </button>
+        </table>
+      </form>
+    </div>
   </div>
-</div>
+
+  <div class="col-md-6" *ngIf="hasOpenExchange" [(ngModel)]="hasOpenExchange">
+    <div id="basket">
+      <h1 class="display-5"> You already have an exchange open with this user </h1>
+    </div>
+  </div>
+
 
   <!-- ///////////////////////// GARDEN ITEM CARD INVENTORY /////////////////////////// -->
  <div class="col-md-6">
@@ -158,7 +165,7 @@
                 <span class="card-text" *ngIf="item.fertilizers && item.produce.category.name != 'Dairy'"> <strong>Fertilizers:</strong> Yes</span>
                 <span class="card-text" *ngIf="!item.fertilizers && item.produce.category.name != 'Dairy'"> <strong>Fertilizers:</strong> No</span>
               </div>
-              <div class="col-md-4" id="addButton">
+              <div *ngIf="!hasOpenExchange" [(ngModel)]="hasOpenExchange" class="col-md-4" id="addButton">
                 <button class="btn btn-dark" (click)="exchangeData[i].checked = true" id="basketAdd">Add to basket</button>
               </div>
             </div>

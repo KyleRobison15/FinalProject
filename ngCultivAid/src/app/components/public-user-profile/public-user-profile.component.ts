@@ -49,13 +49,18 @@ export class PublicUserProfileComponent implements OnInit {
   ngOnInit(): void {
     let username = this.currentRoute.snapshot.paramMap.get('username');
 
+    //If viewing own public profile
     if (!username) {
       username = this.authService.getLoggedInUsername();
     }
+
     if(username){
       this.userService.getUserByUsername(username).subscribe(
         user => {
-            this.user = user;
+          this.user = user;
+          this.searchByZip();
+
+            this.checkViewingOwnProfile();
 
             this.user.gardenItems.forEach((item) => {
                 let exchangeObject = Object();
@@ -113,6 +118,7 @@ export class PublicUserProfileComponent implements OnInit {
         console.log('succesfully created exchange and items');
         this.exchangeItems = [];
         this.exchangeItem = new ExchangeItem();
+        this.checkForOpenExchange();
       },
       error => {
         console.log('failed to create exchange and exchange items');
@@ -179,14 +185,86 @@ export class PublicUserProfileComponent implements OnInit {
     }
   }
 
-  alreadyHasOpenExchange(): boolean{
+  isViewingOwnProfile: boolean = false;
 
-    //if logged in user already has active but not completed exchange with user on page
-    //if loggedInUser.exchanges.id == userOnProfile.exchanges.id
-    //return true
+  checkViewingOwnProfile(){
+    console.log("In checkViewingOwnProfile()");
+    this.userService.getLoggedInUser().subscribe(
+      userToCheck => {
+        if(this.user.username == userToCheck.username){
+          this.isViewingOwnProfile = true;
+        }
+        else{
+          this.checkForOpenExchange();
+        }
+        console.log("IS VIEWING OWN PROFILE? : " + this.isViewingOwnProfile);
+      },
+      fail => {
+        console.log("In public profile: failed to get user in checkViewingOwnProfile()");
 
-
-    return true;
+      }
+    )
   }
+
+  hasOpenExchange: boolean = false;
+
+  checkForOpenExchange(){
+    console.log("In checkForOpenExchange()");
+
+    this.userService.getLoggedInUser().subscribe(
+      loggedInUser => {
+        console.log("LOGGED IN USER: ");
+        console.log(loggedInUser);
+            this.exchangeSvc.getSellerExchangesByUser(this.user).subscribe(
+              sellerExchanges => {
+                console.log("USER PROFILE EXCHANGES: ");
+                console.log(sellerExchanges);
+                for(let i=0; i<sellerExchanges.length; i++){
+                  if(sellerExchanges[i].active && !sellerExchanges[i].complete && sellerExchanges[i].buyer.username == loggedInUser.username){
+                    this.hasOpenExchange = true;
+                    console.log("HAS OPEN EXCHANGE: " + this.hasOpenExchange);
+                  }
+                }
+              },
+              fail => {
+                console.log("In public profile: failed to get sellerExchanges in checkForOpenExchange()");
+              }
+            )
+          },
+      fail => {
+        console.log("In public user profile: Could not get loggedInUser in checkForOpenExchange()");
+      }
+    )
+
+
+  }
+
+  // alreadyHasOpenExchange: boolean = false;
+
+  // checkForOpenExchange(){
+  //   let loggedInUser = new User();
+
+  //   this.userService.getLoggedInUser().subscribe(
+  //     loggedUser =>{
+  //       loggedInUser = loggedUser;
+
+  //       for(let i=0; i<this.user.exchanges.length; i++){
+  //         for(let j=0; j<loggedInUser.exchanges.length; i++){
+  //           if(loggedInUser.exchanges[j].active){
+  //             if(loggedInUser.exchanges[j].id == this.user.exchanges[i].id){
+  //               this.alreadyHasOpenExchange = true;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     },
+  //     fail =>{
+  //       console.log("In public user profile: Failed to get logged in user");
+  //     }
+  //   )
+  //   //if logged in user already has active but not completed exchange with user on page
+  //   //if loggedInUser.exchanges.id == userOnProfile.exchanges.id
+  //   //return true
+  // }
 
 }

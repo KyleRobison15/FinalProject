@@ -13,8 +13,8 @@ import { UserService } from './user.service';
 })
 export class UpdateListingService {
 
-    // private baseUrl = 'http://localhost:8095/';
-    private baseUrl = environment.baseUrl;
+  // private baseUrl = 'http://localhost:8095/';
+  private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/gardenitems'
 
   constructor(

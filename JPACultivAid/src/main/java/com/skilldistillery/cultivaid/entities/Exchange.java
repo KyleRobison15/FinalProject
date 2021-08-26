@@ -47,9 +47,9 @@ public class Exchange {
 	@JoinColumn(name="buyer_id")
 	private User buyer;
 	
-	
 	@OneToMany(mappedBy="exchange")
 	private List<ExchangeItem> exchangeItems; 
+	
 	
 	@JsonIgnoreProperties({"exchange"})
 	@OneToMany(mappedBy="exchange")
