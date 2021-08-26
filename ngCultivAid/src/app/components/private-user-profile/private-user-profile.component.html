@@ -102,7 +102,7 @@
 <div class="row" id="title"> <h1>Manage Listings:</h1> </div>
 <hr>
 <table class="table table-bordered">
-  <thead>
+  <thead class="container px-0 gx-0 bg-success text-light">
     <th>You Are Listing</th>
     <th>Amount</th>
     <th>Description</th>
@@ -136,9 +136,10 @@
           <ng-template #template>
             <div class="modal-body text-center">
               <p><b>Update Listing</b></p>
+              <hr>
 
               <!-- Will show if Update Fails -->
-
+              <!-------------------------------------------------------------------------------------------------------------------------------->
               <alert type="danger" *ngIf="failedToUpdate">
                 Failed to Update Listing
               </alert>
@@ -157,14 +158,15 @@
                 Fertilizers<input name="fertilizers" type="checkbox" [(ngModel)]="listingToUpdate.fertilizers"><br>
                 Pesticides<input name="pesticides" type="checkbox" [(ngModel)]="listingToUpdate.pesticides"><br><br>
               </form>
+              <hr>
               <button type="button" class="btn btn-outline-success" (click)="updateListing(listingToUpdate)">Update Listing</button>
               <button type="button" class="btn btn-outline-warning" (click)="decline()">Cancel</button>
             </div>
           </ng-template>
-
+          <!-------------------------------------------------------------------------------------------------------------------------------->
         </td>
         <!-- Set Garden Item Field 'active' to 'false' -->
-        <td><button class="btn btn-outline-danger" (click)="remove(item.id)">Remove</button></td>
+        <td><button class="btn btn-outline-danger" (click)="remove(item)">Remove</button></td>
       </tr>
   </tbody>
 </table>
@@ -173,7 +175,7 @@
 
 <div *ngIf="inactiveListings.length > 0">
 <table class="table table-bordered">
-  <thead>
+  <thead class="container px-0 gx-0 bg-success text-light">
     <th>Inactive Listings</th>
     <th>Date Added</th>
     <th>Status</th>

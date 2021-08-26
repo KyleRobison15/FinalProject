@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 export class ProduceService {
 
     // private baseUrl = 'http://localhost:8095/';
-    private baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
   private url = this.baseUrl + 'api/produce'
   // private baseUrl = environment.baseUrl;
 
@@ -22,6 +22,16 @@ export class ProduceService {
 
   public index(){
     return this.http.get<Produce[]>(this.url, this.getHttpOptions())
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Error getting produce ' + err);
+      })
+    );
+  }
+
+  create(produce: Produce) {
+    return this.http.post<Produce>(this.url, produce, this.getHttpOptions())
     .pipe(
       catchError((err: any) => {
         console.log(err);

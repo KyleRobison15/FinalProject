@@ -5,7 +5,7 @@ export class Produce {
 
   id: number;
   name: string;
-  avgItemWeight: number;
+  averageItemWeight: number;
   imageUrl: string;
   active: boolean;
   gardenItems: GardenItem [];
@@ -14,7 +14,7 @@ export class Produce {
   constructor(
     id: number = 0,
     name: string = '',
-    avgItemWeight: number = 0,
+    averageItemWeight: number = 0,
     imageUrl: string = '',
     active: boolean = true,
     gardenItems: GardenItem [] = [],
@@ -23,7 +23,7 @@ export class Produce {
   {
     this.id = id;
     this.name = name;
-    this.avgItemWeight = avgItemWeight;
+    this.averageItemWeight = averageItemWeight;
     this.imageUrl = imageUrl;
     this.active = active;
     this.gardenItems = gardenItems;

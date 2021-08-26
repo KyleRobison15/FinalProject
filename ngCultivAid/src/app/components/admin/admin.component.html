@@ -67,3 +67,56 @@
     </accordion>
   </accordion-group>
 </accordion>
+
+<br>
+<br>
+<br>
+
+<h3>Manage Produce Users can choose from:</h3>
+
+<!----------------------------------------- Create New Produce Form ------------------------------------------------>
+<button type="button" class="btn btn-outline-success" (click)="openModal(template)">Add Produce</button>
+<br><br>
+
+<ng-template #template>
+<div class="modal-body text-center">
+<p><b>Add New Produce</b></p>
+<hr>
+
+<!-- Alert for Successful Add -->
+<alert type="success" *ngIf="successfulAdd">
+  Produce Successfully Added
+</alert>
+<!------------------------------->
+<form>
+Name*<input type="text" name="name" class="form-control" [(ngModel)]="newProduce.name"><br>
+Average Weight*<input type="number" name="averageItemWeight" class="form-control" [(ngModel)]="newProduce.averageItemWeight"><br>
+Image<input type="text" name="imageUrl" class="form-control" [(ngModel)]="newProduce.imageUrl"><br>
+<label>Category*</label><br>
+<select name="category" [(ngModel)]="newProduce.category.id">
+  <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+</select><br><br>
+</form>
+<hr>
+<button
+[ngClass]="newProduce.name === '' || newProduce.averageItemWeight <= 0 || newProduce.category.id <= 0
+? 'disabled' : 'enabled' "
+type="button" class="btn btn-outline-success"
+(click)="createProduce(newProduce)">Create</button>
+<button type="button" class="btn btn-outline-warning" (click)="decline()">Cancel</button>
+</div>
+<div id='required'>* Required Field</div>
+</ng-template>
+<!------------------------------------------------------------------------------------------------------------------>
+
+<ng-container>
+  <accordion>
+    <accordion-group heading="Listed Produce">
+      <ul *ngFor="let produce of produces">
+        <li>{{produce.name}}</li>
+      </ul>
+
+    </accordion-group>
+  </accordion>
+</ng-container>
+

@@ -109,28 +109,47 @@ public class GardenItemController {
 		
 		GardenItem itemRequested = null; 
 		
+		System.out.println("======================================================================================");
 		System.out.println(gardenItem);
+		System.out.println("======================================================================================");
 		
 		//Check if Active if 'true' or 'false"
-		if(!gardenItem.isActive()) {
-			itemRequested = itemSvc.retrieveById(gardenItem.getId());
-		
-		} else {
-			itemRequested = itemSvc.retrieveByIdIfInactive(gardenItem.getId());
-		}
+		itemRequested = itemSvc.retrieveByIdForUpdate(gardenItem.getId());
+//		if(!gardenItem.isActive()) {
+//          Line 117 was here
+//			System.out.println("======================================================================================");
+//			System.out.println("In IF " + itemRequested);
+//			System.out.println("======================================================================================");
+//		} else {
+//			itemRequested = itemSvc.retrieveById(gardenItem.getId());
+//			System.out.println("======================================================================================");
+//			System.out.println("In ELSE " + itemRequested);
+//			System.out.println("======================================================================================");
+//		}
 		//
 		//
 		User loggedInUser = userSvc.findByUsername(principal.getName());
 		Boolean isAdmin = loggedInUser.getRole().equals("admin") ? true : false;
 		
+		System.out.println("======================================================================================");
+		System.out.println(itemRequested);
+		System.out.println(loggedInUser);
+		System.out.println(isAdmin);
+		System.out.println("======================================================================================");
+		
 		if (itemRequested == null || !isAdmin && !itemRequested.getUser().getUsername().equals(principal.getName())) {
 			res.setStatus(404);
 			return null;
-		}
+		} 
+		System.out.println("======================================================================================");
+		System.out.println("Reached this comment");
+		System.out.println("======================================================================================");
 		GardenItem itemUpdated = itemSvc.update(gardenItem);
+		
 		if (itemUpdated == null) {
 			res.setStatus(400);
 		}
+		
 		return itemUpdated;
 	}
 	

@@ -448,7 +448,6 @@ export class PrivateUserProfileComponent implements OnInit {
   updateListing(listingToUpdate:GardenItem) {
     this.updateSvc.update(this.listingToUpdate).subscribe(
       data => {
-
         this.message = 'Updated!';
         this.listingToUpdate = new GardenItem();
 
@@ -457,7 +456,6 @@ export class PrivateUserProfileComponent implements OnInit {
 
         this.bsmodalService.hide();
         this.router.navigateByUrl('/privateProfile');
-
       },
       fail => {
         this.failedToUpdate = true;
@@ -467,34 +465,23 @@ export class PrivateUserProfileComponent implements OnInit {
   }
 
   //Will set Listing to Inactive and move it to an 'Inactive Table'
-  remove(itemId:number) {
+  remove(item:GardenItem) {
 
-    this.gardenItemSvc.index().subscribe(
-      items => {
-        for (let item of items) {
-          if(item.id === itemId) {
-            item.active = false;
+    item.active = false;
 
-            this.updateSvc.update(item).subscribe(
-              data => {
-                console.log("Listing is inctive");
-                console.log("Item status is: " + item.active);
-                console.log("Item User is: " + item.user.username);
+      this.updateSvc.update(item).subscribe(
+        data => {
+          console.log("Listing is inctive");
+          console.log("Item status is: " + item.active);
+          console.log("Item User is: " + item.user.username);
 
-                this.inactiveListings.push(item);
-                this.indexGardenItems();
-              },
-              fail => {
-                console.log("Failed to inactivate listing");
-                console.log(fail);
-              });
-
-          }
-        }
-      },
-      fail => {
-        //Fail index GardenItems for Remove...not essential
-      });//Fail for index()
+          this.inactiveListings.push(item);
+          this.indexGardenItems();
+          },
+        fail => {
+          console.log("Failed to inactivate listing");
+          console.log(fail);
+          });
   }
 
   activateListing(inactiveItemId:number) {
@@ -530,7 +517,6 @@ export class PrivateUserProfileComponent implements OnInit {
       data => {
 
         this.items = data;
-        console.log("Getting all Items: " + this.items);
 
         this.activeListings = [];
         this.inactiveListings = [];
