@@ -49,13 +49,15 @@ export class PublicUserProfileComponent implements OnInit {
   ngOnInit(): void {
     let username = this.currentRoute.snapshot.paramMap.get('username');
 
+
     if (!username) {
       username = this.authService.getLoggedInUsername();
     }
     if(username){
       this.userService.getUserByUsername(username).subscribe(
         user => {
-            this.user = user;
+          this.user = user;
+          this.searchByZip();
 
             this.user.gardenItems.forEach((item) => {
                 let exchangeObject = Object();

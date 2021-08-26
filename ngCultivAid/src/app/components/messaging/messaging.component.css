@@ -55,6 +55,10 @@
   margin-bottom: 1rem;
 }
 
+.otherUserReply {
+  background-color: white !important;
+}
+
 /* #messageTableDiv {
   transform: translate(0px, 10rem);
   background-color: rgba(77, 175, 21, 0.8);

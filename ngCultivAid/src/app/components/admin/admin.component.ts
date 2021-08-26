@@ -1,7 +1,9 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import { Exchange } from 'src/app/models/exchange';
 import { GardenItem } from 'src/app/models/garden-item';
 import { User } from 'src/app/models/user';
+import { ExchangeService } from 'src/app/services/exchange.service';
 import { GardenItemService } from 'src/app/services/garden-item.service';
 import { UpdateListingService } from 'src/app/services/update-listing.service';
 import { UserService } from 'src/app/services/user.service';
@@ -15,16 +17,21 @@ import { isTemplateHead } from 'typescript';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private userSvc: UserService, private gardenItemSvc: GardenItemService, private updateGISvc: UpdateListingService) { }
+  constructor(private userSvc: UserService, private gardenItemSvc: GardenItemService, private updateGISvc: UpdateListingService, private exchSvc: ExchangeService) { }
 
   private baseUrl = environment.redirectUrl;
 
   allUsers: User[] = [];
+  totalUsers: number | null = null;
+  usersTraversed: number = 0;
+
 
   ngOnInit(): void {
     this.userSvc.getAllUsers().subscribe(
       list => {
+        this.totalUsers = list.length;
         this.allUsers = list;
+        this.buildUserList();
       },
       err => {
         console.log("Error getting all users");
@@ -63,4 +70,21 @@ export class AdminComponent implements OnInit {
     window.open(this.baseUrl + "#/publicProfile/" + username, "_blank");
   }
 
+  buildUserList() {
+    this.allUsers.forEach(user => {
+      this.exchSvc.getSellerExchangesByUser(user).subscribe(
+        exchanges => {
+          console.log(exchanges);
+          user.exchanges = [];
+          exchanges.forEach(exchange => {
+            user.exchanges.push(exchange);
+          });
+          this.usersTraversed += 1;
+        },
+        err => {
+          console.error("Cannot get exchanges")
+        }
+      );
+    });
+  }
 }

@@ -149,11 +149,11 @@ export class PrivateUserProfileComponent implements OnInit {
 
 
   acceptIncomingExchange(exchange: Exchange) {
-
+    console.log(exchange);
     //send default message to user here
     let message: Message = new Message();
-    message.content = this.user.username + " accepted your request";
-    message.subject = this.user.username + " has accepted your request! Send them a message to coordinate a pickup.";
+    message.subject = this.user.username + " accepted your request";
+    message.content = this.user.username + " has accepted your request! Send them a message to coordinate a pickup.";
     message.receivingUser = exchange.buyer;
     //message.sendingUser = this.user;
 
@@ -214,6 +214,7 @@ export class PrivateUserProfileComponent implements OnInit {
     //exchange.exchangeDate = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString();
     let date = new Date();
     exchange.exchangeDate = date.toISOString();
+    console.log(exchange);
     this.exchangeService.updateExchange(exchange).subscribe(
       (exchanges) => {
         //this.sellerExchanges = exchanges;
