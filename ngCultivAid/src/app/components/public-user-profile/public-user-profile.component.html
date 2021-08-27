@@ -114,7 +114,7 @@
 
   <div class="col-md-6" *ngIf="hasOpenExchange" [(ngModel)]="hasOpenExchange">
     <div id="basket">
-      <h3> You an exchange in progress with this user </h3>
+      <h3> You have an exchange in progress with this user </h3>
 
       <div *ngFor="let item of userExchange.exchangeItems">
         <hr>
@@ -203,8 +203,7 @@
       </div>
 
       <div id="detailsDiv" class="row well bg-light text-dark" [collapse]="isReviewCollapsed[i]" [isAnimated]="true" >
-        Show Photos Here {{exchange.exchangeImages.length}}
-        <div class="container bg-secondary">
+        <div class="container bg-light">
           <div class="row">
             <div *ngFor="let image of exchange.exchangeImages" class="col-sm-3"><img class=" rounded" (click)="openPicture(pictureModal, image.imageUrl)" src={{image.imageUrl}} height="128px" width="128px"/></div>
           </div>
