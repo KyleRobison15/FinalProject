@@ -1,4 +1,6 @@
-<h1>Create Listing</h1>
+<div class="background">
+<div class="container" id="innerContainer">
+<h1 class="text-center">Create Listing</h1>
 
 <alert type="danger" *ngIf=noProduceName>
   Must select a valid <strong>Produce Type</strong>
@@ -16,33 +18,36 @@
   Listing was successfully added!
 </alert>
 
-<form>
+<form id="newForm">
 
-  Variety*<input type="text" name="varietyName" class="form-control" [(ngModel)]="varietyName">
+  <div id="form" class="badge badge-dark" style="font-size: 1.25rem">Variety*</div><input type="text" name="varietyName" class="form-control bg-light" [(ngModel)]="varietyName"><br>
+  <div id="form" class="badge badge-dark" style="font-size: 1.25rem">Description</div><input name="description" type="text" class="form-control bg-light" [(ngModel)]="newListing.description"><br>
+  <div id="form" class="badge badge-dark" style="font-size: 1.25rem">Amount*</div><input name="amount" type="number" class="form-control bg-light" [(ngModel)]="newListing.amount"><br>
+  <div id="form" class="badge badge-dark" style="font-size: 1.25rem">Grow Method</div><input name="growMethod" type="text" class="form-control bg-light" [(ngModel)]="newListing.growMethod"><br>
 
-  Description<input name="description" type="text" class="form-control" [(ngModel)]="newListing.description">
-  Amount*<input name="amount" type="number" class="form-control" [(ngModel)]="newListing.amount">
-  Grow Method<input name="growMethod" type="text" class="form-control" [(ngModel)]="newListing.growMethod"><br>
-
-  <label>Produce Type*</label><br>
+  <div>
+  <label><div id="form" class="badge badge-dark" style="font-size: 1.25rem">Produce Type*</div></label><br>
   <select name="produceId" [(ngModel)]="produceId">
     <option *ngFor="let produce of produces" value="{{produce.id}}">{{produce.name}}</option>
   </select><br><br>
 
-  Pesticides<input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
-  Fertilizers<input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
+  <div id="form" class="badge badge-dark" style="font-size: 1rem">Pesticides</div><input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
+  <div id="form" class="badge badge-dark" style="font-size: 1rem">Fertilizers</div><input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
 
   <button
           [ngClass]="varietyName === '' || produceId <= 0 || newListing.amount <= 0
                                                                 ? 'disabled' : 'enabled' "
-          class="btn btn-outline-success"
+          class="btn btn-success"
           (click)="addGardenItem(checkForCopy())" >
     Create Listing
   </button>
-  <button class="btn btn-outline-primary" [routerLink]="['/privateProfile']">Back to Profile</button>
+  <button class="btn btn-primary" [routerLink]="['/privateProfile']">Back to Profile</button>
+  </div>
 </form>
 
 
 <br>
 <div id='required'>* Required Field</div>
+</div>
+</div>
 

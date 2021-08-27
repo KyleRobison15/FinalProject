@@ -10,6 +10,7 @@ import { ApiExternalService } from 'src/app/services/api-external.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { MessageService } from 'src/app/services/message.service';
+import { UpdateListingService } from 'src/app/services/update-listing.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -43,7 +44,8 @@ export class PublicUserProfileComponent implements OnInit {
     private apiExt: ApiExternalService,
     private messageService: MessageService,
     private modalService: NgbModal,
-    private authService: AuthService
+    private authService: AuthService,
+    private updateListingService: UpdateListingService
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +106,11 @@ export class PublicUserProfileComponent implements OnInit {
 }
 
   submitExchangeRequest() {
+
+    //subtract exchange item amounts from garden item amounts
+
+
+
     console.log(this.exchangeData);
     this.exchangeData.forEach(dataRow => {
       if (dataRow.checked) {
@@ -113,12 +120,15 @@ export class PublicUserProfileComponent implements OnInit {
         this.exchangeItem = new ExchangeItem();
       }
     });
+
+
     this.exchangeSvc.createExchange(this.exchangeItems).subscribe(
       exchange => {
         console.log('succesfully created exchange and items');
         this.exchangeItems = [];
         this.exchangeItem = new ExchangeItem();
         this.checkForOpenExchange();
+
       },
       error => {
         console.log('failed to create exchange and exchange items');
