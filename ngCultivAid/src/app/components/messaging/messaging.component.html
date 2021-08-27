@@ -31,7 +31,7 @@
 
 <!-- /////////////////////////////////// INBOX ////////////////////////////////////// -->
 
-  <div id="messageTableDiv" *ngIf="viewingInbox && !selected">
+  <div id="messageTableDiv" *ngIf="viewingInbox && !selected && receivedMessages.length > 0">
     <table class="table" id="messageTable">
       <thead >
         <th scope="col">From</th>
@@ -40,7 +40,7 @@
         <th scope="col">Time Received</th>
         <th scope="col">Delete</th>
       </thead>
-      <tbody *ngFor="let message of receivedMessages">
+      <tbody *ngFor="let message of receivedMessages | sortMessage">
         <tr *ngIf="message.active" [ngClass]="markRead(message)">
           <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.sendingUser.username }}</td>
           <td (click)="displaySingleMessage(message); markAsViewed(message)">{{ message.subject }}</td>
@@ -63,7 +63,7 @@
       <th>Date Sent</th>
       <th>Time Sent</th>
     </thead>
-    <tbody *ngFor="let message of sentMessages">
+    <tbody *ngFor="let message of sentMessages | sortMessage">
       <tr [ngClass]="markRead(message)" (click)="displaySingleMessage(message); message.viewed=true">
         <td>{{ message.receivingUser.username }}</td>
         <td>{{ message.subject }}</td>
@@ -77,12 +77,12 @@
 <!-- /////////////////////////////////// SINGLE MESSAGE VIEW ////////////////////////////////////// -->
 
 <div id="singleMessageThread" *ngIf="selected">
-      <h1>{{selected.subject}}</h1>
+      <h3>Subject: {{selected.subject}}</h3>
   <hr>
     <div id="singleMessage">
       <div class="row">
         <div class="col-md-9">
-          <h1 class="display-6">{{selected.sendingUser.username}}</h1>
+          <h1 class="display-8">From: {{selected.sendingUser.username}}</h1>
         </div>
         <div class="col-md-3 text-end">
           <h6>{{selected.createTime | date:'mediumDate'}}, {{selected.createTime | date:'shortTime'}}</h6>
