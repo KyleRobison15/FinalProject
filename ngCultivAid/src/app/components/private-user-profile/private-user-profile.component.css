@@ -58,4 +58,33 @@ th {
   align-content: right;
 }
 
+table {
+  text-align: center;
+}
+
+#inactive-column {
+  width: 40%;
+}
+
+#banner {
+  background-color: cadetblue;
+  color: white;
+}
+
+.privateUserContainer {
+  background-image: url("https://cdn.pixabay.com/photo/2021/01/26/15/48/vegetables-5951982_1280.jpg");
+  background-repeat: none;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#innerContainer{
+  padding-left: 75px;
+  padding-right: 75px;
+  padding-top: 30px;
+
+}
+
+
+
 
