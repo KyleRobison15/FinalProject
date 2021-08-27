@@ -37,10 +37,10 @@ export class SortAdminItemsPipe implements PipeTransform {
       });
       dates.sort((a: any, b: any) => {              //Sort dates array
         if (a < b) {
-          return 1;
+          return -1;
         }
         else if (a> b) {
-          return -1;
+          return 1;
         }
         else {
           return 0;
@@ -51,10 +51,10 @@ export class SortAdminItemsPipe implements PipeTransform {
     }
     ItemsAndDateArray.sort((a: any, b: any) => {        //Sort item and dates array by date
       if (a.date < b.date || a.date == null) {
-        return 1;
+        return -1;
       }
       else if (a.date > b.date || b.date == null) {
-        return -1;
+        return 1;
       }
       else {
         return 0;

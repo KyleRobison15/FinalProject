@@ -36,6 +36,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { FilterAdminPipe } from './pipes/filter-admin.pipe';
 import { CreateProduceComponent } from './components/create-produce/create-produce.component';
 import { SortAdminItemsPipe } from './pipes/sort-admin-items.pipe';
+import { SortMessagePipe } from './pipes/sort-message.pipe';
 // import { MessageCountPipe } from './pipes/message-count.pipe';
 
 
@@ -65,6 +66,7 @@ import { SortAdminItemsPipe } from './pipes/sort-admin-items.pipe';
     FilterAdminPipe,
     CreateProduceComponent,
     SortAdminItemsPipe,
+    SortMessagePipe,
     // MessageCountPipe
   ],
   imports: [

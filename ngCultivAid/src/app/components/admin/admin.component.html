@@ -3,7 +3,7 @@
     <button (click)="goToUserProfile(user.username)"> View User Profile</button>
     <button *ngIf="user.active" (click)="changeActiveStatus(user)">Deactivate User</button>
     <button *ngIf="!user.active" (click)="changeActiveStatus(user)">Activate User</button>
-    <accordion>
+    <accordion id="users">
       <accordion-group heading="{{item.produce.name}} -- {{item.variety}}  // Created: {{item.createdDate}}" *ngFor="let item of user.gardenItems| sortAdminItems: user">
         <div class="card recent-post-card">
           <div class="row" id="details">
@@ -39,20 +39,24 @@
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <accordion>
+                    <accordion id="exchanges">
                       <div *ngFor="let exchange of user.exchanges">
-                      <accordion-group heading="Exchange with {{exchangeItem.exchange.buyer.username}}  //  Updated On: {{exchangeItem.exchange.createDate}}" *ngFor="let exchangeItem of exchange.exchangeItems">
-                        <div class="row">
-                          <div class="col-md-12">
-                            {{exchangeItem.exchange.buyerComment}}
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <img src="{{image.imageUrl}}" *ngFor="let image of exchangeItem.exchange.exchangeImages" style="max-width: calc(100% / 6);">
-                          </div>
-                        </div>
-                      </accordion-group>
+                        <div *ngFor="let exchangeItem of exchange.exchangeItems">
+                          <div *ngIf="exchangeItem.gardenItem.id === item.id">
+                            <accordion-group heading="Exchange with {{exchangeItem.exchange.buyer.username}}  //  Updated On: {{exchangeItem.exchange.createDate}}">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  {{exchangeItem.exchange.buyerComment}}
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <img src="{{image.imageUrl}}" *ngFor="let image of exchangeItem.exchange.exchangeImages" style="max-width: calc(100% / 6);">
+                                </div>
+                              </div>
+                            </accordion-group>
+                           </div>
+                         </div>
                       </div>
                     </accordion>
                   </div>
