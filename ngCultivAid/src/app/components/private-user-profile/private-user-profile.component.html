@@ -287,7 +287,7 @@
           <div id="exchangeRow" class="row bg-light text-light py-3 px-0 border border-dark rounded" *ngIf="exchange.active">
 
               <div class="col bg-light text-primary" (click)="getUser(exchange.exchangeItems[0].gardenItem.user.username)" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeItems[0].gardenItem.user.username}}</div>
-              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate}}</div>
+              <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">{{exchange.exchangeDate | date}}</div>
               <!-- Status Column And Review Button Column -->
               <div class="col bg-light text-dark" (click)="isBuyerCollapsed[i] = !isBuyerCollapsed[i]" [attr.aria-expanded]="!isBuyerCollapsed[i]" aria-controls="collapseBasic">
                 <div class="row">
@@ -343,9 +343,10 @@
             <!-- Details Drop Down  -->
             <div id="detailsDiv" class="row bg-light text-dark" [collapse]="isBuyerCollapsed[i]" [isAnimated]="true" >
               <div class="row">
-                <div class = "row>">Exchange Items:</div>
+                <!-- <div class = "row>">Exchange Items:</div> -->
                 <div class="col">Name:</div>
                 <div class="col">Amount:</div>
+                <hr>
               </div>
               <div class="row" *ngFor="let item of exchange.exchangeItems">
                 <div class="col">{{item.gardenItem.produce.name}}</div>
@@ -408,14 +409,10 @@
 </ng-template>
 <pre>{{ closeResult }}</pre>
 
-<h1>Dynamic Button Test</h1>
-
-<div *ngFor="let button of buttons, let i = index" [(ngModel)]="buttons">
-  <button>Button + {{i}}</button>
-</div>
-<button (click)="addButton(1)">Add Button</button>
 
   </div>
 </div>
+</div>
+
 
 

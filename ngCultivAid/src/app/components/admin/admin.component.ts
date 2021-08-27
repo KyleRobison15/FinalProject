@@ -112,6 +112,7 @@ export class AdminComponent implements OnInit {
         }
       );
     });
+    console.log(this.allUsers);
   }
 
 
