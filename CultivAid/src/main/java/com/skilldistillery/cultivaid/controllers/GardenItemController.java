@@ -154,6 +154,7 @@ public class GardenItemController {
 	}
 	
 	
+	
 	@DeleteMapping("api/gardenitems/{id}")
 	public void deleteGardenItem(@PathVariable int id, HttpServletResponse res, Principal principal) {
 		GardenItem itemRequested = itemSvc.retrieveById(id);
