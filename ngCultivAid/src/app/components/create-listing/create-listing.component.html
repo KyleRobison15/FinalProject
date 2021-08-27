@@ -1,6 +1,6 @@
 <div class="background">
 <div class="container" id="innerContainer">
-<h1 class="text-center">Create Listing</h1>
+<h1 class="text-center text-dark">Create Listing</h1>
 
 <alert type="danger" *ngIf=noProduceName>
   Must select a valid <strong>Produce Type</strong>
@@ -26,22 +26,30 @@
   <div id="form" class="badge badge-dark" style="font-size: 1.25rem">Grow Method</div><input name="growMethod" type="text" class="form-control bg-light" [(ngModel)]="newListing.growMethod"><br>
 
   <div>
+
   <label><div id="form" class="badge badge-dark" style="font-size: 1.25rem">Produce Type*</div></label><br>
   <select name="produceId" [(ngModel)]="produceId">
     <option *ngFor="let produce of produces" value="{{produce.id}}">{{produce.name}}</option>
   </select><br><br>
 
-  <div id="form" class="badge badge-dark" style="font-size: 1rem">Pesticides</div><input name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"><br>
-  <div id="form" class="badge badge-dark" style="font-size: 1rem">Fertilizers</div><input name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"><br><br>
-
-  <button
-          [ngClass]="varietyName === '' || produceId <= 0 || newListing.amount <= 0
-                                                                ? 'disabled' : 'enabled' "
-          class="btn btn-success"
-          (click)="addGardenItem(checkForCopy())" >
-    Create Listing
-  </button>
-  <button class="btn btn-primary" [routerLink]="['/privateProfile']">Back to Profile</button>
+  <div class="row">
+    <div class="row">
+      <div class="row">
+        <div id="form" class="col-sm-2 badge badge-dark" style="font-size: 1rem">Pesticides<input class="col" name="pesticides" type="checkbox" [(ngModel)]="newListing.pesticides"></div>
+      </div>
+       <div class="row">
+        <div id="form" class="col-sm-2 badge badge-dark" style="font-size: 1rem">Fertilizers<input class="col" name="fertilizers" type="checkbox" [(ngModel)]="newListing.fertilizers"></div>
+      </div>
+    </div>
+    <button
+            [ngClass]="varietyName === '' || produceId <= 0 || newListing.amount <= 0
+                                                                  ? 'disabled' : 'enabled' "
+            class="btn btn-success col-sm-3"
+            (click)="addGardenItem(checkForCopy())" >
+      Create Listing
+    </button>
+    <button class="btn btn-primary col-sm-3" [routerLink]="['/privateProfile']">Back to Profile</button>
+  </div>
   </div>
 </form>
 

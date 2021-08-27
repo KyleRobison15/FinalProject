@@ -1,19 +1,29 @@
 #required {
-  font-size: small;
+  font-size: medium;
+  color: black;
 }
 
 .background {
   background-image: url("https://cdn.pixabay.com/photo/2021/04/14/00/19/wood-6176923_1280.png");
   background-repeat: none;
   background-size: cover;
+  height: 100%;
+  width: 100%;
+  background-position: center;
+
 }
 
 h1 {
   color: white;
-  padding-top: 56px;
+  padding-top: -200px;
 }
 
 #lowerForm {
   margin-left: auto;
+}
+
+#innerContainer{
+  padding: 150px;
+  padding-top: 15px;
 }
 
