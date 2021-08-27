@@ -2,10 +2,21 @@
   font-size: small;
 }
 
-/* h1, form {
-	margin: auto;
-	border: 3px solid #f1f1f1;
-	background-color: rgba(77, 175, 21, 0.8);
-	border-radius: 10px;
-  margin-bottom: 1rem !important;
-} */
+.background {
+  background-image: url("https://cdn.pixabay.com/photo/2021/04/14/00/19/wood-6176923_1280.png");
+  background-repeat: none;
+  background-size: cover;
+}
+
+h1 {
+  color: white;
+  padding-top: 56px;
+}
+
+#newForm {
+}
+
+#lowerForm {
+  margin-left: auto;
+}
+

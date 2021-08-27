@@ -440,6 +440,10 @@ export class PrivateUserProfileComponent implements OnInit {
     this.modalRef = this.bsmodalService.show(template, {class: 'modal-sm'});
   }
 
+  removeModal(templateRemove: TemplateRef<any>, item:GardenItem) {
+    this.modalRef = this.bsmodalService.show(templateRemove, {class: 'modal-sm'});
+  }
+
   decline() {
     this.message = 'Cancel Update Listing Request';
     this.listingToUpdate = new GardenItem();
@@ -477,6 +481,7 @@ export class PrivateUserProfileComponent implements OnInit {
           console.log("Item User is: " + item.user.username);
 
           this.inactiveListings.push(item);
+          this.bsmodalService.hide();
           this.indexGardenItems();
           },
         fail => {

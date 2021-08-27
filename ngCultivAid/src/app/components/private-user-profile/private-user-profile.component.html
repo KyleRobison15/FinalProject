@@ -1,6 +1,7 @@
-<h3>Private Profile</h3><br>
+<div class="privateUserContainer bg-light">
+<h2 class='text-center'><strong><u>Private Profile</u></strong></h2><br>
 
-
+<div class="container bg-light border-light rounded" id="innerContainer">
 <!-- ///////////////////////////////// BASIC USER INFO //////////////////////////////////////// -->
 <div class="container bootstrap snippets bootdey">
   <div class= "panel-body inf-content">
@@ -96,14 +97,18 @@
     <br>
   </div>
 </div>
+<!-- ///////////////////////////////// Container for whole page //////////////////////////////////////// -->
+
 
 <!-- ///////////////////////////////// User Listings Manager Wireframe //////////////////////////////////////// -->
 <br><br><br>
+<div class="container">
 <div class="row" id="title"> <h1>Manage Listings:</h1> </div>
 <hr>
 <table class="table table-bordered">
+  <thead><th colspan=9 id="banner">Active</th></thead> <!--Table Banner for Active-->
   <thead class="container px-0 gx-0 bg-success text-light">
-    <th>You Are Listing</th>
+    <th>Your Listing</th>
     <th>Amount</th>
     <th>Description</th>
     <th>Fertilizers</th>
@@ -126,7 +131,7 @@
         <td *ngIf="!item.pesticides">No</td>
         <td>{{item.createdDate | date}}</td>
         <!------ Active/Inactive for a Listing ------>
-        <td *ngIf="item.active">Active</td>
+        <td *ngIf="item.active" class="text-right">Active</td>
         <td *ngIf="!item.active">Inactive</td>
         <!-------------------------------------------->
         <td> <!-- Listing Update Form Below -->
@@ -166,15 +171,25 @@
           <!-------------------------------------------------------------------------------------------------------------------------------->
         </td>
         <!-- Set Garden Item Field 'active' to 'false' -->
-        <td><button class="btn btn-outline-danger" (click)="remove(item)">Remove</button></td>
+        <td><button class="btn btn-outline-danger" (click)="removeModal(templateRemove, item)">Remove</button></td>
+          <ng-template #templateRemove>
+            <br>
+            <p class="text-center"><strong>Are you sure? </strong></p>
+            <hr>
+            <p class="text-center">This will make your Listing Inactive.</p>
+            <p class="text-center">You may activate it again anytime.</p>
+            <button type="button" class="btn btn-danger" (click)="remove(item)">Accept</button>
+            <button type="button" class="btn btn-warning" (click)="decline()">Cancel</button>
+          </ng-template>
       </tr>
   </tbody>
 </table>
-
+</div>
 <!-- ///////////////////////////////// INACTIVE LISTINGS TABLE //////////////////////////////////////// -->
-
+<div class="container">
 <div *ngIf="inactiveListings.length > 0">
 <table class="table table-bordered">
+  <thead><th colspan=9 id="banner">Inactive</th></thead>
   <thead class="container px-0 gx-0 bg-success text-light">
     <th>Inactive Listings</th>
     <th>Date Added</th>
@@ -183,7 +198,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let inactiveItem of inactiveListings">
-    <td>{{inactiveItem.variety}} {{inactiveItem.produce.name}}</td>
+    <td id="inactive-column">{{inactiveItem.variety}} {{inactiveItem.produce.name}}</td>
     <td>{{inactiveItem.createdDate | date}}</td>
     <!------ Active/Inactive for a Listing ------>
     <td *ngIf="inactiveItem.active">Active</td>
@@ -194,7 +209,7 @@
   </tbody>
 </table>
 </div>
-
+</div>
 <!-- ///////////////////////////////// CREATE A NEW LISTING //////////////////////////////////////// -->
 
 <button class="btn btn-success" [routerLink]="['/createListings']">Create New Listing</button><br><br>
@@ -400,5 +415,7 @@
 </div>
 <button (click)="addButton(1)">Add Button</button>
 
+  </div>
+</div>
 
 
