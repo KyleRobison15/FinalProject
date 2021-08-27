@@ -114,7 +114,14 @@
 
   <div class="col-md-6" *ngIf="hasOpenExchange" [(ngModel)]="hasOpenExchange">
     <div id="basket">
-      <h1 class="display-5"> You already have an exchange open with this user </h1>
+      <h3> You an exchange in progress with this user </h3>
+
+      <div *ngFor="let item of userExchange.exchangeItems">
+        <hr>
+        <div>{{item.quantity}}x {{item.gardenItem.produce.name}} -- {{item.gardenItem.variety}}</div>
+      </div>
+      <hr>
+
     </div>
   </div>
 

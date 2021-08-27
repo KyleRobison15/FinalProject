@@ -217,6 +217,7 @@ export class PublicUserProfileComponent implements OnInit {
   }
 
   hasOpenExchange: boolean = false;
+  userExchange: Exchange = new Exchange();
 
   checkForOpenExchange(){
     console.log("In checkForOpenExchange()");
@@ -232,6 +233,7 @@ export class PublicUserProfileComponent implements OnInit {
                 for(let i=0; i<sellerExchanges.length; i++){
                   if(sellerExchanges[i].active && !sellerExchanges[i].complete && sellerExchanges[i].buyer.username == loggedInUser.username){
                     this.hasOpenExchange = true;
+                    this.userExchange = sellerExchanges[i];
                     console.log("HAS OPEN EXCHANGE: " + this.hasOpenExchange);
                   }
                 }
