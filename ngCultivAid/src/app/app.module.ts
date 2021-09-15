@@ -76,7 +76,7 @@ import { SortMessagePipe } from './pipes/sort-message.pipe';
     FormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyD2vR3KlcL9cbjPNUv1oHPb65w9hyh0TuI'
+      apiKey: 'AIzaSyD5kzuylAh2EijTFbbRHHk1PXRlbDWtP74'
     }),
     AccordionModule.forRoot(),
     BrowserAnimationsModule,

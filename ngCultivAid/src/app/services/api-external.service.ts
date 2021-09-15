@@ -11,7 +11,7 @@ import { User } from '../models/user';
 
 export class ApiExternalService {
   private geotagBaseUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-  private mapsKey = '&key=AIzaSyBTIpKik_QLi-7lMw73oqiNABd7tV-JMgY';
+  private mapsKey = '&key=AIzaSyD5kzuylAh2EijTFbbRHHk1PXRlbDWtP74';
   // private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
